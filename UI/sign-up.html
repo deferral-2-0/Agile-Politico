@@ -36,7 +36,7 @@
           /><br /><br />
 
           <div id="submit-button">
-            <input type="submit" id="submit" disabled=true value="Submit" ></input>
+            <input type="submit" id="submit" disabled="true" value="Submit" />
           </div>
         </form>
       </div>
@@ -59,7 +59,6 @@
         console.log(validateEmail(email));
         createSubmitButton();
         if (validateEmail(email)) {
-
         }
       };
       // monitor username field
@@ -85,7 +84,6 @@
         event.preventDefault();
         console.log(email);
       };
-
     </script>
   </body>
 </html>
