@@ -9,5 +9,25 @@
     <h1>Header</h1>
     <div id="root"></div>
     <script src="./Js/render.js"></script>
+    <script type="text/javascript">
+      const a = {
+        type: "ul",
+        props: { class: "list" },
+        children: [
+          {
+            type: "li",
+            props: {},
+            children: ["item 1"]
+          },
+          {
+            type: "li",
+            props: {},
+            children: ["Item 2"]
+          }
+        ]
+      };
+      const $root = document.getElementById("root");
+      $root.appendChild(createElement(a));
+    </script>
   </body>
 </html>

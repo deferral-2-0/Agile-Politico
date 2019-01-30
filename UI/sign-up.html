@@ -13,7 +13,7 @@
   <body>
     <div class="center">
       <div class="maxwidth500">
-        <form>
+        <form id="sigin-in-form">
           <label for="email">Enter your email here</label>
           <input type="email" name="email" id="email" /><br />
           <label for="username">Enter your Username here</label>
@@ -35,9 +35,57 @@
             id="politician"
           /><br /><br />
 
-          <input disabled type="submit" value="Submit" />
+          <div id="submit-button">
+            <input type="submit" id="submit" disabled=true value="Submit" ></input>
+          </div>
         </form>
       </div>
     </div>
+    <script src="./Js/render.js"></script>
+    <script src="./Js/validation.js"></script>
+    <script type="text/javascript">
+      let email, username, password, reenterpassword;
+
+      // handles the disabled property of the submit button
+      let disabledprop = { disabled: true };
+
+      function getValue(event) {
+        return event.target.value;
+      }
+      // monitor email field
+      document.getElementById("email").oninput = function(event) {
+        // your logic
+        email = getValue(event);
+        console.log(validateEmail(email));
+        createSubmitButton();
+        if (validateEmail(email)) {
+
+        }
+      };
+      // monitor username field
+      document.getElementById("username").oninput = function(event) {
+        username = getValue(event);
+      };
+      // monitor ID field
+      document.getElementById("id").oninput = function(event) {
+        id = getValue(event);
+      };
+
+      //monitor password field
+      document.getElementById("password").oninput = function(event) {
+        password = getValue(event);
+      };
+
+      // monitor re-enter password field
+      document.getElementById("reenter-password").oninput = function(event) {
+        reenterpassword = getValue(event);
+      };
+
+      document.getElementById("sigin-in-form").onsubmit = function(event) {
+        event.preventDefault();
+        console.log(email);
+      };
+
+    </script>
   </body>
 </html>
