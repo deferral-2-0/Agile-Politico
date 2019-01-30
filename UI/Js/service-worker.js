@@ -5,6 +5,7 @@ console.log("SERVICE WORKER IS LIVE.");
 var version = "Politico1::";
 
 var offlineResources = [
+  "",
   "../admindash.html",
   "../index.html",
   "../login.html",
