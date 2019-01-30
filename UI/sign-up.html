@@ -11,6 +11,7 @@
     />
   </head>
   <body>
+    <div id="heading-container"></div>
     <div class="center">
       <div class="maxwidth500">
         <form id="sigin-in-form">
@@ -121,6 +122,9 @@
           window.location.href = "index.html";
         }
       };
+
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
     </script>
   </body>
 </html>

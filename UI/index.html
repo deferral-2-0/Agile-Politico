@@ -4,8 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Politico</title>
+    <link rel="stylesheet" type="text/css" href="./main.css" />
   </head>
   <body>
+    <div id="heading-container"></div>
+
     <h1>Header</h1>
     <div id="root"></div>
     <script src="./Js/render.js"></script>
@@ -28,6 +31,9 @@
       };
       const $root = document.getElementById("root");
       $root.appendChild(createElement(a));
+
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
     </script>
   </body>
 </html>

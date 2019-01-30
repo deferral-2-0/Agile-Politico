@@ -11,3 +11,30 @@ function createElement(node) {
   node.children.map(createElement).forEach($el.appendChild.bind($el));
   return $el;
 }
+
+const layout = {
+  type: "header",
+  props: { class: "topnav" },
+  children: [
+    {
+      type: "a",
+      props: { href: "index.html" },
+      children: ["Politico"]
+    },
+    {
+      type: "div",
+      props: { class: "flex" },
+      children: []
+    },
+    {
+      type: "a",
+      props: { href: "login.html" },
+      children: ["Login"]
+    },
+    {
+      type: "a",
+      props: { href: "sign-up.html" },
+      children: ["Sign Up"]
+    }
+  ]
+};
