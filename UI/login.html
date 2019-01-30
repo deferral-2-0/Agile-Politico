@@ -4,8 +4,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="./main.css" />
   </head>
   <body>
+    <div id="heading-container"></div>
     <h1>Login Page</h1>
+    <script src="./Js/render.js"></script>
+    <script type="text/javascript">
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
+    </script>
   </body>
 </html>
