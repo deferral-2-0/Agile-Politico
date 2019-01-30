@@ -1,6 +1,6 @@
 const a = {
   type: "ul",
-  props: {},
+  props: { class: "list" },
   children: [
     {
       type: "li",
@@ -22,6 +22,9 @@ function createElement(node) {
     return document.createTextNode(node);
   }
   const $el = document.createElement(node.type);
+  for (let val in node.props) {
+    $el.setAttribute(val, node.props[val]);
+  }
   node.children.map(createElement).forEach($el.appendChild.bind($el));
   return $el;
 }
