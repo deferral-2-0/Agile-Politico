@@ -13,6 +13,7 @@
 
 .maxwidth500 {
   max-width: 600px;
+  width: 100%;
 }
 
 input {
@@ -24,6 +25,7 @@ input {
   padding: 15px;
   background: rgba(255, 255, 255, 0.5);
   margin: 0 0 10px 0;
+  width: 100%;
 }
 
 input[type="submit"] {
@@ -38,6 +40,10 @@ input[type="submit"] {
 input[type="submit"]:disabled {
   color: rgba(255, 255, 255, 0.596);
   background-color: gray;
+}
+
+input[type="checkbox"] {
+  box-shadow: none;
 }
 
 label {
