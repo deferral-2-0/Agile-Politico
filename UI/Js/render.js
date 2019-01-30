@@ -15,6 +15,8 @@ const a = {
   ]
 };
 
+//the createElement function renders the items provided and calls itself recursively
+// based on whether children are provided or not
 function createElement(node) {
   if (typeof node === "string") {
     return document.createTextNode(node);
