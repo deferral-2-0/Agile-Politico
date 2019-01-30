@@ -38,3 +38,17 @@ const layout = {
     }
   ]
 };
+
+if ("serviceWorker" in navigator) {
+  console.log("CLIENT: service worker registration in progress.");
+  navigator.serviceWorker.register("./Js/service-worker.js").then(
+    function() {
+      console.log("CLIENT: service worker registration complete.");
+    },
+    function(e) {
+      console.log("CLIENT: service worker registration failure.", e);
+    }
+  );
+} else {
+  console.log("CLIENT: service worker is not supported.");
+}

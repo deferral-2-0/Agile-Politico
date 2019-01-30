@@ -10,3 +10,4 @@ function areValuesEqual(val1, val2) {
 function doesFieldContainValidValue(value) {
   return /\S/.test(value) && Boolean(value);
 }
+
