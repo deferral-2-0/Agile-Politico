@@ -3,6 +3,10 @@ function validateEmail(email) {
   return re.test(email);
 }
 
-function areEqual(val1, val2) {
+function areValuesEqual(val1, val2) {
   return val1 === val2;
+}
+
+function doesFieldContainValidValue(value) {
+  return /\S/.test(value) && Boolean(value);
 }

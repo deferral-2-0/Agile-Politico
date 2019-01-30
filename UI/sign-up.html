@@ -55,45 +55,71 @@
     <script src="./Js/render.js"></script>
     <script src="./Js/validation.js"></script>
     <script type="text/javascript">
-      let email, username, password, reenterpassword;
-
-      // handles the disabled property of the submit button
-      let disabledprop = { disabled: true };
+      let email, username, id, password, reenterpassword;
+      let submitbtn = document.getElementById("submit");
+      let politicianBoolean = document.getElementById("politician");
 
       function getValue(event) {
         return event.target.value;
       }
+
+      //pred function for making sure the SUBMIT BUTTON IS disabled or active
+      function shouldSubmitBeActive() {
+        if (
+          validateEmail(email) &&
+          doesFieldContainValidValue(username) &&
+          doesFieldContainValidValue(password) &&
+          doesFieldContainValidValue(id) &&
+          doesFieldContainValidValue(reenterpassword) &&
+          areValuesEqual(password, reenterpassword)
+        ) {
+          submitbtn.removeAttribute("disabled");
+        } else {
+          submitbtn.setAttribute("disabled", true);
+        }
+      }
+
       // monitor email field
       document.getElementById("email").oninput = function(event) {
-        // your logic
         email = getValue(event);
-        console.log(validateEmail(email));
-        createSubmitButton();
-        if (validateEmail(email)) {
-        }
+        shouldSubmitBeActive();
       };
       // monitor username field
       document.getElementById("username").oninput = function(event) {
         username = getValue(event);
+        shouldSubmitBeActive();
       };
       // monitor ID field
       document.getElementById("id").oninput = function(event) {
         id = getValue(event);
+        shouldSubmitBeActive();
       };
 
       //monitor password field
       document.getElementById("password").oninput = function(event) {
         password = getValue(event);
+        shouldSubmitBeActive();
       };
 
       // monitor re-enter password field
       document.getElementById("reenter-password").oninput = function(event) {
         reenterpassword = getValue(event);
+        shouldSubmitBeActive();
       };
 
       document.getElementById("sigin-in-form").onsubmit = function(event) {
         event.preventDefault();
-        console.log(email);
+        console.log(politicianBoolean);
+        if (politicianBoolean.checked) {
+          // redirect to politician page
+          window.location.href = "politiciandashboard.html";
+        } else if (email === "admin.@politico.com") {
+          // redirect to login page
+          window.location.href = "login.html";
+        } else {
+          // redirect to home  page
+          window.location.href = "index.html";
+        }
       };
     </script>
   </body>
