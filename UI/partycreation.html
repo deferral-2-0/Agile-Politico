@@ -1,0 +1,104 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Party Creation Page</title>
+    <link rel="stylesheet" type="text/css" href="./main.css" />
+  </head>
+  <body>
+    <div id="heading-container"></div>
+
+    <div class="center">
+      <div class="maxwidth500">
+        <form id="sigin-in-form">
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Party Name"
+          /><br /><br />
+
+          <div id="submit-button">
+            <input
+              type="submit"
+              id="submit"
+              disabled="true"
+              value="Create Party"
+            />
+          </div>
+        </form>
+        <div style="height: 30px"></div>
+        <h4 class="how_it_works">List of political Parties Present</h4>
+        <div style="height: 30px"></div>
+        <div id="list-of-parties"></div>
+      </div>
+    </div>
+
+    <script src="./Js/render.js"></script>
+    <script src="./Js/validation.js"></script>
+    <script>
+      let partyname;
+      let submitbtn = document.getElementById("submit");
+      let partylistcontainer = document.getElementById("list-of-parties");
+      let partylist = document.getElementById("partylist");
+
+      function getValue(event) {
+        return event.target.value;
+      }
+
+      let parties = [
+        "House Stark",
+        "House Baratheon",
+        "House GreyJoy",
+        "House Lannister"
+      ];
+
+      const renderingList = {
+        type: "ul",
+        props: { id: "partylist" },
+        children: parties.map(party => ({
+          type: "li",
+          props: {},
+          children: [party]
+        }))
+      };
+
+      function shouldSubmitBeActive() {
+        if (doesFieldContainValidValue(partyname)) {
+          if (parties.includes(partyname)) {
+            submitbtn.setAttribute("value", "Party name already exists");
+            submitbtn.setAttribute("disabled", true);
+          } else {
+            submitbtn.removeAttribute("disabled");
+          }
+        }
+      }
+
+      document.getElementById("name").oninput = function(event) {
+        partyname = getValue(event);
+        shouldSubmitBeActive();
+      };
+
+      // submit name
+      document.getElementById("sigin-in-form").onsubmit = function(event) {
+        event.preventDefault();
+        parties = [...parties, partyname];
+        const p = {
+          type: "li",
+          props: {},
+          children: [partyname]
+        };
+        document.getElementById("partylist").appendChild(createElement(p));
+        document.getElementById("name").value = "";
+        submitbtn.setAttribute("disabled", true);
+      };
+
+      // RENDER THE LIST OF PARTIES PRESENT
+      partylistcontainer.appendChild(createElement(renderingList));
+
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
+    </script>
+  </body>
+</html>
