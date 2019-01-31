@@ -1,0 +1,65 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Party Viewership</title>
+    <link rel="stylesheet" type="text/css" href="./main.css" />
+  </head>
+  <body>
+    <div id="heading-container"></div>
+    <div class="center">
+      <div class="maxwidth500">
+        <h1 class="how_it_works">All registered Parties</h1>
+        <div style="height: 40px"></div>
+        <div id="render-parties"></div>
+      </div>
+    </div>
+    <div><div></div></div>
+    <script src="./Js/render.js"></script>
+    <script src="./Js/validation.js"></script>
+    <script>
+      const partiescontainer = document.getElementById("render-parties");
+      const allparties = [
+        {
+          datecreated: new Date(),
+          name: "House Stark"
+        },
+        {
+          datecreated: new Date(),
+          name: "House Lannister"
+        },
+        {
+          datecreated: new Date(),
+          name: "House Baratheon"
+        }
+      ];
+
+      const partiestoBeRendered = {
+        type: "ol",
+        props: {},
+        children: allparties.map((party, idx) => ({
+          type: "li",
+          props: {},
+          children: [
+            {
+              type: "span",
+              props: {},
+              children: [`${idx}.`]
+            },
+            {
+              type: "p",
+              props: {},
+              children: [
+                ` ${party.name} : Created at: ${formatDate(party.datecreated)} `
+              ]
+            }
+          ]
+        }))
+      };
+      partiescontainer.appendChild(createElement(partiestoBeRendered));
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
+    </script>
+  </body>
+</html>
