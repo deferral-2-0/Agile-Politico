@@ -13,7 +13,9 @@ var offlineResources = [
   "../sign-up.html",
   "./render.js",
   "./validation.js",
-  "../main.css"
+  "../main.css",
+  "../images/crowd.jpeg",
+  "../images/crowd-min.jpeg"
 ];
 
 self.addEventListener("install", function(event) {
