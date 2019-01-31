@@ -54,6 +54,18 @@ input {
   width: 100%;
 }
 
+select {
+  border: 5px solid white;
+  -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1),
+    0 0 16px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  margin: 0 0 10px 0;
+  width: 100%;
+}
+
 input[type="submit"] {
   /* And that ain't all of them... */
   width: 100%;
@@ -172,4 +184,8 @@ label:after {
 
 .white {
   color: white;
+}
+
+.slim-header {
+  font-weight: 300;
 }
