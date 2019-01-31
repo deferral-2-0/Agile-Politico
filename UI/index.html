@@ -9,8 +9,56 @@
   <body>
     <div id="heading-container"></div>
 
-    <h1>Header</h1>
     <div id="root"></div>
+    <div class="landing-image-container">
+      <img class="landing-page-image" src="./images/crowd.jpeg" alt="" />
+      <div class="image-backdrop"></div>
+    </div>
+    <div>
+      <div class="center white">
+        <div class="maxwidth500">
+          <h3>Politico Platform</h3>
+          <br /><br />
+          <br />
+          <br />
+          <p class="text-2">Driving Political Change One Vote At A Time</p>
+          <br />
+          <br />
+          <br />
+        </div>
+      </div>
+
+      <div class="center">
+        <div class="maxwidth500">
+          <h4 class="how_it_works">How it works</h4>
+          <div>
+            <div>
+              <h4>Voters</h4>
+              <ul>
+                <li>Create an account or sign in</li>
+                <li>View all politicians who are vying for certain posts</li>
+                <li>Vote for one politician on each post</li>
+                <li>View your voting activity in your profile page</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Politicians</h4>
+              <ul>
+                <li>Create an account and mark that you are a politician</li>
+                <li>Select post you are interested in vying</li>
+                <li>Vote for certain</li>
+                <li>View your voting activity in your profile page</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="space-evenly">
+        <button class="button button-color">Login</button>
+        <button class="button button-color">Sign Up</button>
+      </div>
+      <div style="height: 50px"></div>
+    </div>
     <script src="./Js/render.js"></script>
     <script type="text/javascript">
       const a = {
@@ -29,8 +77,8 @@
           }
         ]
       };
-      const $root = document.getElementById("root");
-      $root.appendChild(createElement(a));
+      // const $root = document.getElementById("root");
+      // $root.appendChild(createElement(a));
 
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));
