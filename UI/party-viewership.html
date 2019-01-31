@@ -7,43 +7,59 @@
     <link rel="stylesheet" type="text/css" href="./main.css" />
   </head>
   <body>
-    <div>
-      <div>
-        <ol>
-          <li>
-            <span>1.</span>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-              euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam
-              quis justo in augue auctor imperdiet. Curabitur aliquet orci sit
-              amet est posuere consectetur. Fusce nec leo ut massa viverra
-              venenatis. Nam accumsan libero a elit aliquet quis ullamcorper
-              arcu tincidunt. Praesent purus turpis, consectetur quis congue
-              vel, pulvinar at lorem. Vivamus varius condimentum dolor, quis
-              ultricies ipsum porta quis.
-            </p>
-          </li>
-          <li>
-            <span>2.</span>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-              euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam
-              quis justo in augue auctor imperdiet. Curabitur aliquet orci sit
-              amet est posuere consectetur.
-            </p>
-          </li>
-          <li>
-            <span>3.</span>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-              euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam
-              quis justo in augue auctor imperdiet. Curabitur aliquet orci sit
-              amet est posuere consectetur.
-            </p>
-          </li>
-        </ol>
+    <div id="heading-container"></div>
+    <div class="center">
+      <div class="maxwidth500">
+        <h1 class="how_it_works">All registered Parties</h1>
+        <div style="height: 40px"></div>
+        <div id="render-parties"></div>
       </div>
     </div>
+    <div><div></div></div>
     <script src="./Js/render.js"></script>
+    <script src="./Js/validation.js"></script>
+    <script>
+      const partiescontainer = document.getElementById("render-parties");
+      const allparties = [
+        {
+          datecreated: new Date(),
+          name: "House Stark"
+        },
+        {
+          datecreated: new Date(),
+          name: "House Lannister"
+        },
+        {
+          datecreated: new Date(),
+          name: "House Baratheon"
+        }
+      ];
+
+      const partiestoBeRendered = {
+        type: "ol",
+        props: {},
+        children: allparties.map((party, idx) => ({
+          type: "li",
+          props: {},
+          children: [
+            {
+              type: "span",
+              props: {},
+              children: [`${idx}.`]
+            },
+            {
+              type: "p",
+              props: {},
+              children: [
+                ` ${party.name} : Created at: ${formatDate(party.datecreated)} `
+              ]
+            }
+          ]
+        }))
+      };
+      partiescontainer.appendChild(createElement(partiestoBeRendered));
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
+    </script>
   </body>
 </html>
