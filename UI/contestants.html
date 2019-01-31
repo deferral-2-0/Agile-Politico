@@ -1,0 +1,82 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Party Viewership</title>
+    <link rel="stylesheet" type="text/css" href="./main.css" />
+  </head>
+  <body>
+    <div id="heading-container"></div>
+    <div class="center">
+      <div class="maxwidth500">
+        <h1 class="how_it_works">Posts & Contestants</h1>
+        <div style="height: 40px"></div>
+        <div id="render-posts-&-contestants"></div>
+      </div>
+    </div>
+    <div><div></div></div>
+    <script src="./Js/render.js"></script>
+    <script src="./Js/validation.js"></script>
+    <script>
+      const postscontainer = document.getElementById(
+        "render-posts-&-contestants"
+      );
+
+      const positionnparticipants = [
+        {
+          position: "president",
+          contestants: ["Jon Snow", "Khaleesi", "Cercie"]
+        },
+        {
+          position: "Secretary General",
+          contestants: ["Sir Davos", "Sansa Stark"]
+        },
+        {
+          position: "Treasurer",
+          contestants: ["Tyrion Lannister", "Sir Bron of the BlackWater"]
+        }
+      ];
+
+      const posnpartiestoberenderes = {
+        type: "div",
+        props: {},
+        children: positionnparticipants.map(post => ({
+          type: "div",
+          props: {},
+          children: [
+            {
+              type: "div",
+              props: { class: "office-header" },
+              children: [post.position]
+            },
+            {
+              type: "ol",
+              props: {},
+              children: post.contestants.map((person, idx) => ({
+                type: "li",
+                props: { class: "contestants-names" },
+                children: [
+                  {
+                    type: "span",
+                    props: {},
+                    children: [`${idx + 1}.`]
+                  },
+                  {
+                    type: "p",
+                    props: {},
+                    children: [person]
+                  }
+                ]
+              }))
+            }
+          ]
+        }))
+      };
+
+      postscontainer.appendChild(createElement(posnpartiestoberenderes));
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
+    </script>
+  </body>
+</html>

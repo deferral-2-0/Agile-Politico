@@ -211,3 +211,22 @@ li p {
 span {
   position: absolute;
 }
+
+.office-header {
+  font: lighter italic 45px/1.5 Helvetica, Verdana, sans-serif;
+  margin: 0px;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.contestants-names {
+  transition: border 0.5s; /* Animation */
+  transition: padding 0.5s;
+}
+
+.contestants-names:hover {
+  border-color: hsla(14, 100%, 5%, 0.527);
+  /* border-bottom: bisque; */
+  border-style: solid;
+  padding: 30px;
+}
