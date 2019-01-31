@@ -16,7 +16,7 @@
             type="text"
             name="name"
             id="name"
-            placeholder="Party Name"
+            placeholder="Office Name"
           /><br /><br />
 
           <div id="submit-button">
@@ -24,14 +24,14 @@
               type="submit"
               id="submit"
               disabled="true"
-              value="Create Party"
+              value="Create Office"
             />
           </div>
         </form>
         <div style="height: 30px"></div>
-        <h4 class="how_it_works">List of political Parties Present</h4>
+        <h4 class="how_it_works">List of government offices</h4>
         <div style="height: 30px"></div>
-        <div id="list-of-parties"></div>
+        <div id="list-of-offices"></div>
       </div>
     </div>
 
@@ -40,24 +40,19 @@
     <script>
       let partyname;
       let submitbtn = document.getElementById("submit");
-      let partylistcontainer = document.getElementById("list-of-parties");
-      let partylist = document.getElementById("partylist");
+      let positionscontainer = document.getElementById("list-of-offices");
+      let positionslist = document.getElementById("positionslist");
 
       function getValue(event) {
         return event.target.value;
       }
 
-      let parties = [
-        "House Stark",
-        "House Baratheon",
-        "House GreyJoy",
-        "House Lannister"
-      ];
+      let offices = ["Secretary General", "Gvt Spokesman", "Treasurer"];
 
       const renderingList = {
         type: "ul",
-        props: { id: "partylist" },
-        children: parties.map(party => ({
+        props: { id: "positionslist" },
+        children: offices.map(party => ({
           type: "li",
           props: {},
           children: [party]
@@ -66,8 +61,8 @@
 
       function shouldSubmitBeActive() {
         if (doesFieldContainValidValue(partyname)) {
-          if (parties.includes(partyname)) {
-            submitbtn.setAttribute("value", "Party name already exists");
+          if (offices.includes(partyname)) {
+            submitbtn.setAttribute("value", "Government Post already exists");
             submitbtn.setAttribute("disabled", true);
           } else {
             submitbtn.removeAttribute("disabled");
@@ -83,20 +78,20 @@
       // submit name
       document.getElementById("sigin-in-form").onsubmit = function(event) {
         event.preventDefault();
-        parties = [...parties, partyname];
+        offices = [...offices, partyname];
         const p = {
           type: "li",
           props: {},
           children: [partyname]
         };
-        document.getElementById("partylist").appendChild(createElement(p));
+        document.getElementById("positionslist").appendChild(createElement(p));
         document.getElementById("name").value = "";
         submitbtn.setAttribute("disabled", true);
-        submitbtn.setAttribute("value", "Create Party");
+        submitbtn.setAttribute("value", "CREATE OFFICE");
       };
 
-      // RENDER THE LIST OF PARTIES PRESENT
-      partylistcontainer.appendChild(createElement(renderingList));
+      // RENDER THE LIST OF offices PRESENT
+      positionscontainer.appendChild(createElement(renderingList));
 
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));
