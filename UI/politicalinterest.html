@@ -1,0 +1,108 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Political Interest Page</title>
+    <link rel="stylesheet" type="text/css" href="./main.css" />
+  </head>
+  <body>
+    <div id="heading-container"></div>
+
+    <div class="center">
+      <div class="maxwidth500">
+        <form id="sigin-in-form">
+          <h2 id="greeting-message" class="slim-header">
+            Hello there Politician,
+          </h2>
+          <div style="height: 30px"></div>
+          <div id="select-position"></div>
+
+          <div id="submit-button">
+            <input
+              type="submit"
+              id="submit"
+              disabled="true"
+              value="Submit Interest"
+            />
+          </div>
+        </form>
+        <div style="height: 30px"></div>
+      </div>
+    </div>
+
+    <script src="./Js/render.js"></script>
+    <script src="./Js/validation.js"></script>
+    <script>
+      let postchosen;
+      let submitbtn = document.getElementById("submit");
+      let selectContainer = document.getElementById("select-position");
+
+      function getValue(event) {
+        return event.target.value;
+      }
+
+      const positions = [
+        "Secretary General",
+        "Treasurer",
+        "President",
+        "Gvt Spokesman"
+      ];
+
+      const vdomselect = {
+        type: "select",
+        props: { id: "select-element" },
+        children: [
+          {
+            type: "option",
+            props: { value: "", selected: true },
+            children: ["Select Government post you are interested in"]
+          },
+          ...positions.map(position => ({
+            type: "option",
+            props: { value: position },
+            children: [position]
+          }))
+        ]
+      };
+
+      selectContainer.appendChild(createElement(vdomselect));
+
+      document.getElementById("select-element").onchange = function(event) {
+        if (doesFieldContainValidValue(getValue(event))) {
+          document.getElementById("greeting-message").innerHTML =
+            "Hello there politician, " +
+            "are you sure you want to be a " +
+            getValue(event) +
+            " ?";
+          submitbtn.style.display = "block";
+          submitbtn.removeAttribute("disabled");
+        } else {
+          submitbtn.setAttribute("disabled", true);
+        }
+      };
+
+      // submit post
+      document.getElementById("sigin-in-form").onsubmit = function(event) {
+        event.preventDefault();
+        postchosen = document.getElementById("select-element").value;
+        document
+          .getElementById("select-element")
+          .setAttribute("disabled", true);
+
+        submitbtn.setAttribute("disabled", true);
+
+        submitbtn.setAttribute(
+          "value",
+          "You have set " + postchosen + ", all the best"
+        );
+      };
+
+      // render layout
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
+      // set the visibility of the submit button to none
+      submitbtn.style.display = "none";
+    </script>
+  </body>
+</html>
