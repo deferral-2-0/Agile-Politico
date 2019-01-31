@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Party Creation Page</title>
+    <link rel="stylesheet" type="text/css" href="./main.css" />
+  </head>
+  <body>
+    <div id="heading-container"></div>
+
+    <div class="center">
+      <div class="maxwidth500">
+        <form id="sigin-in-form">
+          <input type="text" name="id" id="id" placeholder="id" /><br /><br />
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Party Name"
+          /><br /><br />
+
+          <div id="submit-button">
+            <input
+              type="submit"
+              id="submit"
+              disabled="true"
+              value="Create Party"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="./Js/render.js"></script>
+    <script src="./Js/validation.js"></script>
+    <script>
+      const existingparties = [
+        "House Stark",
+        "House Baratheon",
+        "House GreyJoy",
+        "House Lannister"
+      ];
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
+    </script>
+  </body>
+</html>
