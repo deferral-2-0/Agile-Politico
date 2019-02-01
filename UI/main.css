@@ -202,7 +202,7 @@ ol li {
 }
 
 li p {
-  font: 12px/1.5 Helvetica, sans-serif;
+  font: 14px/1.5 Helvetica, sans-serif;
   padding-left: 60px;
   color: #555;
   padding-top: 20px;
@@ -219,15 +219,14 @@ span {
 }
 
 .contestants-names {
-  transition: border 0.5s; /* Animation */
-  transition: padding 0.5s;
+  transition: box-shadow 0.5s; /* Animation */
+  padding-right: 5px;
 }
 
 .contestants-names:hover {
   border-color: hsla(14, 100%, 5%, 0.527);
-  /* border-bottom: bisque; */
-  border-bottom-style: solid;
-  padding: 30px;
+
+  box-shadow: 1px 5px 12px 2px #515151;
 }
 
 .avatar {

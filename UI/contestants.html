@@ -26,15 +26,46 @@
       const positionnparticipants = [
         {
           position: "president",
-          contestants: ["Jon Snow", "Khaleesi", "Cercie"]
+          contestants: [
+            {
+              name: "Jon Snow",
+              party: "House Stark"
+            },
+            {
+              name: "Khaleesi",
+              party: "House Targaryen"
+            },
+            {
+              name: "Cercie",
+              party: "House Lannister"
+            }
+          ]
         },
         {
           position: "Secretary General",
-          contestants: ["Sir Davos", "Sansa Stark"]
+          contestants: [
+            {
+              name: "Sir Davos",
+              party: "House of Bravos"
+            },
+            {
+              name: "Sansa Stark",
+              party: "House Stark"
+            }
+          ]
         },
         {
           position: "Treasurer",
-          contestants: ["Tyrion Lannister", "Sir Bron of the BlackWater"]
+          contestants: [
+            {
+              name: "Tyrion Lannister",
+              party: "House Lannister"
+            },
+            {
+              name: "Sir Bron of the BlackWater",
+              party: "Unknown"
+            }
+          ]
         }
       ];
 
@@ -65,8 +96,9 @@
                   {
                     type: "p",
                     props: {},
-                    children: [person]
-                  }
+                    children: [`Name: ${person.name}`]
+                  },
+                  { type: "p", props: {}, children: [`Party: ${person.party}`] }
                 ]
               }))
             }
