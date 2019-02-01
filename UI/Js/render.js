@@ -28,6 +28,11 @@ const layout = {
     },
     {
       type: "a",
+      props: { href: "vote.html" },
+      children: ["Vote"]
+    },
+    {
+      type: "a",
       props: { href: "login.html" },
       children: ["Login"]
     },

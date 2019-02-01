@@ -1,0 +1,141 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Voting Page</title>
+    <link rel="stylesheet" type="text/css" href="./main.css" />
+  </head>
+  <body>
+    <div>
+      <div id="heading-container"></div>
+      <div class="center">
+        <div class="maxwidth500">
+          <div id="voting-activity"></div>
+        </div>
+      </div>
+    </div>
+    <script src="./Js/render.js"></script>
+    <script>
+      const votingcontainer = document.getElementById("voting-activity");
+      // this is a list of all posts available in the platform
+      const allposts = ["President", "Secretary General", "Treasurer"];
+      // this is a list of all the people you have voted for
+      const peoplevotedfor = [
+        {
+          name: "Jon Snow",
+          position: "President",
+          party: "House Stark"
+        }
+      ];
+
+      const positionnparticipants = [
+        {
+          position: "President",
+          contestants: [
+            {
+              name: "Jon Snow",
+              party: "House Stark"
+            },
+            {
+              name: "Khaleesi",
+              party: "House Targaryen"
+            },
+            {
+              name: "Cercie",
+              party: "House Lannister"
+            }
+          ]
+        },
+        {
+          position: "Secretary General",
+          contestants: [
+            {
+              name: "Sir Davos",
+              party: "House of Bravos"
+            },
+            {
+              name: "Sansa Stark",
+              party: "House Stark"
+            }
+          ]
+        },
+        {
+          position: "Treasurer",
+          contestants: [
+            {
+              name: "Tyrion Lannister",
+              party: "House Lannister"
+            },
+            {
+              name: "Sir Bron of the BlackWater",
+              party: "Unknown"
+            }
+          ]
+        }
+      ];
+
+      const renderList = {
+        type: "div",
+        props: {},
+        children: positionnparticipants.map((p, i) => ({
+          type: "ol",
+          props: {},
+          children: [
+            {
+              type: "li",
+              props: {},
+              children: [p.position]
+            },
+            peoplevotedfor.map(person => person.position).includes(p.position)
+              ? {
+                  type: "h2",
+                  props: {},
+                  children: [
+                    `You already voted in this SECTION and you voted for ${
+                      peoplevotedfor.find(
+                        person => person.position === p.position
+                      ).name
+                    }`
+                  ]
+                }
+              : {
+                  type: "div",
+                  props: {},
+                  children: [
+                    ...p.contestants.map(person => ({
+                      type: "h3",
+                      props: {},
+                      children: [
+                        {
+                          type: "div",
+                          props: {},
+                          children: [person.name]
+                        },
+                        {
+                          type: "button",
+                          props: {
+                            class: "button button-color",
+                            onclick: `(function(){
+                                    alert('Are you sure you want to vote for ${
+                                      person.name
+                                    } in ${p.position} post');
+                                })()`
+                          },
+                          children: [`Vote for ${person.name}`]
+                        }
+                      ]
+                    }))
+                  ]
+                }
+          ]
+        }))
+      };
+
+      votingcontainer.appendChild(createElement(renderList));
+
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
+    </script>
+  </body>
+</html>
