@@ -6,3 +6,19 @@ A Platform for driving political change and engagement
 
 
 [Pivotal Tracker stories](https://www.pivotaltracker.com/n/projects/2241721)
+
+
+## Features Present
+1. Users can sign up and login
+2. Admin can create political parties
+3. Admin can create gvt offices
+4. Politicians can express post they want to vie in
+5. Users can vote
+6. Admin can edit /  delete political parties.
+
+
+## Author
+Tevin Thuku
+
+## Credits
+Andela
