@@ -9,12 +9,34 @@
   <body>
     <div id="heading-container"></div>
 
-    <div><h1>Admin Dash Page</h1></div>
+    <div>
+      <ol>
+        <li style="text-align: center">
+          Admin Dash Page
+        </li>
+      </ol>
+    </div>
+    <div class="center">
+      <div class="grid-container">
+        <div class="grid-item card" onclick="route('newgvtposition.html')">
+          New Government Position
+        </div>
+        <div class="grid-item card" onclick="route('partycreation.html')">
+          New Political Party
+        </div>
+        <div class="grid-item card" onclick="route('editparties.html')">
+          Edit/Delete Parties
+        </div>
+      </div>
+    </div>
 
     <script src="./Js/render.js"></script>
     <script type="text/javascript">
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));
+      function route(page) {
+        location.replace(page);
+      }
     </script>
   </body>
 </html>
