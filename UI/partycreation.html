@@ -24,7 +24,7 @@
               type="submit"
               id="submit"
               disabled="true"
-              value="Create Party"
+              value="Enter party name to submit"
             />
           </div>
         </form>
@@ -71,6 +71,7 @@
             submitbtn.setAttribute("disabled", true);
           } else {
             submitbtn.removeAttribute("disabled");
+            submitbtn.setAttribute("value", "Create Party");
           }
         }
       }
@@ -92,7 +93,11 @@
         document.getElementById("partylist").appendChild(createElement(p));
         document.getElementById("name").value = "";
         submitbtn.setAttribute("disabled", true);
-        submitbtn.setAttribute("value", "Create Party");
+        submitbtn.setAttribute("value", "Enter party name to submit");
+
+        setTimeout(() => {
+          location.replace("admindash.html");
+        }, 1000);
       };
 
       // RENDER THE LIST OF PARTIES PRESENT

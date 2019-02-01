@@ -21,7 +21,12 @@
           /><br /><br />
 
           <div id="submit-button">
-            <input type="submit" id="submit" disabled="true" value="Submit" />
+            <input
+              type="submit"
+              id="submit"
+              disabled="true"
+              value="Fill in the form to submit"
+            />
           </div>
         </form>
         <a href="passwordreset.html" class="button button-color"
@@ -36,7 +41,11 @@
     <script type="text/javascript">
       let id, password;
       let submitbtn = document.getElementById("submit");
-
+      alert(
+        `To login as a politician, enter 34567 in the ID field and put any password, 
+         to login as an admin, enter 1 as the ID and input any password, 
+         to login as a normal user enter anything else on both fields `
+      );
       function getValue(event) {
         return event.target.value;
       }
@@ -46,6 +55,7 @@
           doesFieldContainValidValue(password)
         ) {
           submitbtn.removeAttribute("disabled");
+          submitbtn.setAttribute("value", "Submit");
         } else {
           submitbtn.setAttribute("disabled", true);
         }
@@ -73,7 +83,7 @@
           window.location.href = "admindash.html";
         } else {
           // redirect to home  page
-          window.location.href = "index.html";
+          window.location.href = "profile.html";
         }
       };
     </script>
