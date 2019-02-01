@@ -24,7 +24,7 @@
               type="submit"
               id="submit"
               disabled="true"
-              value="Create Office"
+              value="Fill in name of position to enter"
             />
           </div>
         </form>
@@ -66,6 +66,7 @@
             submitbtn.setAttribute("disabled", true);
           } else {
             submitbtn.removeAttribute("disabled");
+            submitbtn.setAttribute("value", "Submit");
           }
         }
       }
@@ -87,7 +88,10 @@
         document.getElementById("positionslist").appendChild(createElement(p));
         document.getElementById("name").value = "";
         submitbtn.setAttribute("disabled", true);
-        submitbtn.setAttribute("value", "CREATE OFFICE");
+        submitbtn.setAttribute("value", "Fill in name of position to enter");
+        setTimeout(() => {
+          location.replace("admindash.html");
+        }, 1000);
       };
 
       // RENDER THE LIST OF offices PRESENT

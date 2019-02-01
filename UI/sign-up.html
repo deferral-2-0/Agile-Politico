@@ -48,7 +48,12 @@
           /><br /><br />
 
           <div id="submit-button">
-            <input type="submit" id="submit" disabled="true" value="Submit" />
+            <input
+              type="submit"
+              id="submit"
+              disabled="true"
+              value="Enter all fields to submit"
+            />
           </div>
         </form>
         <div>
@@ -68,6 +73,12 @@
       let submitbtn = document.getElementById("submit");
       let politicianBoolean = document.getElementById("politician");
 
+      alert(
+        `To sign up as a politician, enter your details and check the are you a politician button, 
+         to sign up as an admin, go to the login page, 
+         to sign up as a normal user enter anything else on all fields `
+      );
+
       function getValue(event) {
         return event.target.value;
       }
@@ -83,6 +94,7 @@
           areValuesEqual(password, reenterpassword)
         ) {
           submitbtn.removeAttribute("disabled");
+          submitbtn.setAttribute("value", "Submit");
         } else {
           submitbtn.setAttribute("disabled", true);
         }
@@ -127,7 +139,7 @@
           window.location.href = "login.html";
         } else {
           // redirect to home  page
-          window.location.href = "index.html";
+          window.location.href = "profile.html";
         }
       };
 

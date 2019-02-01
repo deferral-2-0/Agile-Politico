@@ -163,9 +163,20 @@
               ]
             }
           : {
-              type: "h2",
+              type: "div",
               props: {},
-              children: ["You haven't voted for anyone"]
+              children: [
+                {
+                  type: "button",
+                  props: {},
+                  children: ["Vote for politicians"]
+                },
+                {
+                  type: "div",
+                  props: {},
+                  children: ["You haven't voted for anyone"]
+                }
+              ]
             };
 
       const renderVotingActivity = {
