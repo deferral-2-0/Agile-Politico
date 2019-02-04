@@ -1,3 +1,10 @@
+[![Build Status](https://travis-ci.org/Tevinthuku/Politico.svg?branch=develop)](https://travis-ci.org/Tevinthuku/Politico)
+[![Maintainability](https://api.codeclimate.com/v1/badges/65cb6a9e0fc4d16df8ce/maintainability)](https://codeclimate.com/github/Tevinthuku/Politico/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/65cb6a9e0fc4d16df8ce/test_coverage)](https://codeclimate.com/github/Tevinthuku/Politico/test_coverage)
+[![Coverage Status](https://coveralls.io/repos/github/Tevinthuku/Politico/badge.svg?branch=Ch-setup-code-coverage-163674818)](https://coveralls.io/github/Tevinthuku/Politico?branch=Ch-setup-code-coverage-163674818)
+
+![](https://img.shields.io/github/last-commit/Tevinthuku/Politico/develop.svg?style=for-the-badge)
+![](https://img.shields.io/pypi/pyversions/flask.svg?style=for-the-badge)
 # Politico
 
 A Platform for driving political change and engagement
