@@ -15,3 +15,27 @@ def get_all_offices():
     if offices:
         return make_response(jsonify({"status": 200, "data": offices}), 200)
     return make_response(jsonify({"status": 200, "data": []}), 200)
+
+
+@path_1.route("/offices", methods=["POST"])
+def create_office():
+    try:
+        data = request.get_json()
+        id = data['id']
+        type = data['type']
+        name = data['name']
+
+    except:
+        return jsonify({'status': 400,
+                        'error': "Check your json keys. Should be topic and body"})
+
+    office = OfficesModel(id=id,
+                          type=type,
+                          name=name)
+
+    office.save_office()
+
+    return make_response(jsonify({"status": 201,
+                                  "data": [{"id": id,
+                                            "type": type,
+                                            "name": name}]}), 200)
