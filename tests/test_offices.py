@@ -1,5 +1,6 @@
 from app import app
 import unittest
+import json
 
 
 class RoutesBaseTest(unittest.TestCase):
@@ -13,8 +14,11 @@ class RoutesBaseTest(unittest.TestCase):
         self.app.testing = False
 
 
-class TestQuestionsApiEndpoint(RoutesBaseTest):
+class TestOfficesAPI(RoutesBaseTest):
 
-    def test_api_v1_questions_response_status_code(self):
+    def test_call_to_fetch_all_offices(self):
         response = self.client.get("api/v1/offices")
         self.assertEqual(response.status_code, 200)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result["data"], [])
+        self.assertEqual(result["status"], 200)
