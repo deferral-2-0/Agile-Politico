@@ -40,9 +40,11 @@ A Platform for driving political change and engagement
       ```
 ##Politico Endpoints
 
-| Method | Endpoint          | Description                           |
-| ------ | ----------------- | ------------------------------------- |
-| `GET`  | `/api/v1/offices` | View All offices created by the ADMIN |
+| Method | Endpoint                         | Description                           |
+| ------ | -------------------------------- | ------------------------------------- |
+| `GET`  | `/api/v1/offices`                | View All offices created by the ADMIN |
+| `POST` | `/api/v1/offices`                | Post a new office                     |
+| `GET`  | `/api/v1/offices/<int:office_id> | Get a specific office                 |
 
 
 

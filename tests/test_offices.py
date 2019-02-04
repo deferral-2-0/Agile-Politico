@@ -38,10 +38,27 @@ class TestOfficesAPI(RoutesBaseTest):
             "api/v1/offices", data=json.dumps(self.party1), content_type="application/json")
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['status'], 201)
-        self.assertEqual(len(OFFICES), 1)
+        self.assertEqual(len(OFFICES), 2)
 
     def test_wrongly_formatted_office(self):
         res = self.client.post(
             "api/v1/offices", data=json.dumps(self.falseparty), content_type="application/json")
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['status'], 400)
+
+    def test_getting_specific_office(self):
+        self.client.post(
+            "api/v1/offices", data=json.dumps(self.party1), content_type="application/json")
+        res = self.client.get("/api/v1/offices/0")
+        self.assertEqual(res.status_code, 200)
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result["data"], [{
+            "id": 0,
+            "type": "Governor",
+            "name": "Governor Webuye"
+        }])
+        self.assertEqual(result["status"], 200)
+
+    def test_non_existent_office(self):
+        res = self.client.get("/api/v1/offices/10")
+        self.assertEqual(res.status_code, 404)

@@ -24,18 +24,22 @@ def create_office():
         id = data['id']
         type = data['type']
         name = data['name']
-
     except:
         return jsonify({'status': 400,
                         'error': "Check your json keys. Should be topic and body"})
-
     office = OfficesModel(id=id,
                           type=type,
                           name=name)
-
     office.save_office()
-
     return make_response(jsonify({"status": 201,
                                   "data": [{"id": id,
                                             "type": type,
-                                            "name": name}]}), 200)
+                                            "name": name}]}), 201)
+
+
+@path_1.route("/offices/<int:office_id>", methods=['GET'])
+def get_office(office_id):
+    office = OfficesModel.get_office(office_id)
+    if office:
+        return jsonify({"status": 200, "data": office}), 200
+    return jsonify({"status": 404, "error": "We cant find this office"}), 404

@@ -15,3 +15,7 @@ class OfficesModel:
     @staticmethod
     def get_all_offices():
         return [vars(office) for office in OFFICES]
+
+    @staticmethod
+    def get_office(id):
+        return [vars(office) for office in OFFICES if office.id == id]
