@@ -28,8 +28,9 @@ A Platform for driving political change and engagement
     - export FLASK_ENV=development
 
 5. Running tests
-        - python -m pytest --cov=app/api
-
+      ```
+         python -m pytest --cov=app/api
+      ```
 ##Politico Endpoints
 
 | Method | Endpoint          | Description                           |
