@@ -14,6 +14,9 @@ class RoutesBaseTest(unittest.TestCase):
             "name": "Party 1",
             "logoUrl": "https:://img.party1.jpeg"
         }
+        self.invalidparty = {
+            "id": 1
+        }
 
     # tear down tests
 
@@ -36,4 +39,10 @@ class TestPartiesEndpoints(RoutesBaseTest):
             "api/v1/parties", data=json.dumps(self.party1), content_type="application/json")
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['status'], 201)
-        self.assertEqual(len(PARTIES), 2)
+        self.assertEqual(len(PARTIES), 1)
+
+    def test_saving_invalid_party(self):
+        res = self.client.post(
+            "api/v1/parties", data=json.dumps(self.invalidparty), content_type="application/json")
+        result = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(result["status"], 400)

@@ -23,13 +23,13 @@ class OfficesModel:
 
 
 class PartiesModel:
-    # def __init__(self, id, name, logoUrl):
-    #     self.id = id
-    #     self.name = name
-    #     self.logoUrl = logoUrl
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
 
-    # def save_party(self):
-    #     PARTIES.append(self)
+    def save_party(self):
+        PARTIES.append(self)
+
     @staticmethod
     def get_all_parties():
         return [vars(party) for party in PARTIES]
