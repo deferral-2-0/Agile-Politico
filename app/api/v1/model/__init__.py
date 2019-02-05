@@ -23,9 +23,10 @@ class OfficesModel:
 
 
 class PartiesModel:
-    def __init__(self, id, name):
+    def __init__(self, id, name, logoUrl):
         self.id = id
         self.name = name
+        self.logoUrl = logoUrl
 
     def save_party(self):
         PARTIES.append(self)
@@ -33,3 +34,7 @@ class PartiesModel:
     @staticmethod
     def get_all_parties():
         return [vars(party) for party in PARTIES]
+
+    @staticmethod
+    def get_party(id):
+        return [vars(party) for party in PARTIES if party.id == id]
