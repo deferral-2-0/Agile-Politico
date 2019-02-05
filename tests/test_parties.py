@@ -14,6 +14,11 @@ class RoutesBaseTest(unittest.TestCase):
             "name": "Party 1",
             "logoUrl": ""
         }
+        self.partytodelete = {
+            "id": 10,
+            "name": "Party 10",
+            "logoUrl": ""
+        }
         self.invalidparty = {
             "id": 1
         }
@@ -86,3 +91,16 @@ class TestPartiesEndpoints(RoutesBaseTest):
                                     "name": "New Name"
                                 }), content_type="application/json")
         self.assertEqual(res.status_code, 404)
+
+    def test_deleting_party(self):
+        self.client.post(
+            "api/v1/parties", data=json.dumps(self.partytodelete), content_type="application/json")
+        res = self.client.delete(
+            "/api/v1/parties/{}".format(10), content_type="application/json")
+        self.assertEqual(res.status_code, 200)
+
+    def test_deleting_non_existent_party(self):
+        res = self.client.delete(
+            "/api/v1/parties/{}".format(1000), content_type="application/json")
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(len(PARTIES), 0)

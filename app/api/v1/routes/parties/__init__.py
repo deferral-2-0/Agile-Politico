@@ -60,3 +60,11 @@ def update_party(party_id):
         "id": party_id,
         "name": name
     }]}), 200)
+
+
+@path_1.route("/parties/<int:party_id>", methods=['DELETE'])
+def delete_party(party_id):
+    party = PartiesModel.deleteparty(party_id)
+    if party:
+        return make_response(jsonify({'status': 200, 'data': "Deleted successfully"}), 200)
+    return make_response(jsonify({"status": 404, "data": "This party doesn't exist"}), 404)
