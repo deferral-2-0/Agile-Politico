@@ -45,6 +45,7 @@ A Platform for driving political change and engagement
 | `GET`  | `/api/v1/offices`                | View All offices created by the ADMIN |
 | `POST` | `/api/v1/offices`                | Post a new office                     |
 | `GET`  | `/api/v1/offices/<int:office_id> | Get a specific office                 |
+| `GET`  | `/api/v1/parties`                | View all parties created by ADMIN     |
 
 
 
