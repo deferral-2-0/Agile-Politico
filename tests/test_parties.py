@@ -9,6 +9,11 @@ class RoutesBaseTest(unittest.TestCase):
     def setUp(self):
         self.app = app("testing")
         self.client = self.app.test_client()
+        self.party1 = {
+            "id": 0,
+            "name": "Party 1",
+            "logoUrl": "https:://img.party1.jpeg"
+        }
 
     # tear down tests
 
@@ -25,3 +30,10 @@ class TestPartiesEndpoints(RoutesBaseTest):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result["data"], [])
         self.assertEqual(result["status"], 200)
+
+    def test_saving_party(self):
+        res = self.client.post(
+            "api/v1/parties", data=json.dumps(self.party1), content_type="application/json")
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result['status'], 201)
+        self.assertEqual(len(PARTIES), 2)
