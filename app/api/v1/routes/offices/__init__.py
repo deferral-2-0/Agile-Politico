@@ -24,7 +24,7 @@ def create_office():
         name = data['name']
     except:
         return jsonify({'status': 400,
-                        'error': "Check your json keys. Should be topic and body"})
+                        'error': "Check your json keys. Should be type, name and id"})
     office = OfficesModel(id=id,
                           type=type,
                           name=name)

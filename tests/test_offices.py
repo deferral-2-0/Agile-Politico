@@ -9,12 +9,12 @@ class RoutesBaseTest(unittest.TestCase):
     def setUp(self):
         self.app = app("testing")
         self.client = self.app.test_client()
-        self.party1 = {
+        self.office1 = {
             "id": 0,
             "type": "Governor",
             "name": "Governor Webuye"
         }
-        self.falseparty = {
+        self.erroroffice = {
             "id": 1
         }
     # tear down tests
@@ -24,7 +24,7 @@ class RoutesBaseTest(unittest.TestCase):
         self.app.testing = False
 
 
-class TestOfficesAPI(RoutesBaseTest):
+class TestOfficesEndPoint(RoutesBaseTest):
 
     def test_call_to_fetch_all_offices(self):
         response = self.client.get("api/v1/offices")
@@ -35,20 +35,20 @@ class TestOfficesAPI(RoutesBaseTest):
 
     def test_saving_office(self):
         res = self.client.post(
-            "api/v1/offices", data=json.dumps(self.party1), content_type="application/json")
+            "api/v1/offices", data=json.dumps(self.office1), content_type="application/json")
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['status'], 201)
         self.assertEqual(len(OFFICES), 2)
 
     def test_wrongly_formatted_office(self):
         res = self.client.post(
-            "api/v1/offices", data=json.dumps(self.falseparty), content_type="application/json")
+            "api/v1/offices", data=json.dumps(self.erroroffice), content_type="application/json")
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['status'], 400)
 
     def test_getting_specific_office(self):
         self.client.post(
-            "api/v1/offices", data=json.dumps(self.party1), content_type="application/json")
+            "api/v1/offices", data=json.dumps(self.office1), content_type="application/json")
         res = self.client.get("/api/v1/offices/0")
         self.assertEqual(res.status_code, 200)
         result = json.loads(res.data.decode('utf-8'))
