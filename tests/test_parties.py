@@ -12,7 +12,7 @@ class RoutesBaseTest(unittest.TestCase):
         self.party1 = {
             "id": 0,
             "name": "Party 1",
-            "logoUrl": "https:://img.party1.jpeg"
+            "logoUrl": ""
         }
         self.invalidparty = {
             "id": 1
@@ -39,10 +39,29 @@ class TestPartiesEndpoints(RoutesBaseTest):
             "api/v1/parties", data=json.dumps(self.party1), content_type="application/json")
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['status'], 201)
-        self.assertEqual(len(PARTIES), 1)
+        self.assertEqual(len(PARTIES), 2)
 
     def test_saving_invalid_party(self):
         res = self.client.post(
             "api/v1/parties", data=json.dumps(self.invalidparty), content_type="application/json")
         result = json.loads(res.data.decode("utf-8"))
         self.assertEqual(result["status"], 400)
+
+    def test_get_specific_party(self):
+        createparty = self.client.post(
+            "api/v1/parties", data=json.dumps(self.party1), content_type="application/json")
+        json.loads(createparty.data.decode("utf-8"))
+        res = self.client.get("/api/v1/parties/0")
+        self.assertEqual(res.status_code, 200)
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result["data"], [{
+            "id": 0,
+            "name": "Party 1",
+            "logoUrl": ""
+        }])
+        self.assertEqual(result["status"], 200)
+
+    def test_non_exiistent_party(self):
+        res = self.client.get("/api/v1/parties/1000")
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result["status"], 404)

@@ -21,12 +21,21 @@ def create_party():
         data = request.get_json()
         id = data['id']
         name = data['name']
+        logoUrl = data['logoUrl']
     except:
         return jsonify({'status': 400,
-                        'error': "Check your json keys. Should be name and id"})
+                        'error': "Check your json keys. Should be name, id and logoUrl"})
     party = PartiesModel(id=id,
-                         name=name)
+                         name=name, logoUrl=logoUrl)
     party.save_party()
     return make_response(jsonify({"status": 201,
                                   "data": [{"id": id,
-                                            "name": name}]}), 201)
+                                            "name": name, "logoUrl": logoUrl}]}), 201)
+
+
+@path_1.route("/parties/<int:party_id>", methods=["GET"])
+def get_party(party_id):
+    party = PartiesModel.get_party(party_id)
+    if party:
+        return jsonify({"status": 200, "data": party})
+    return jsonify({"status": 404, "error": "This party cannot be found"})

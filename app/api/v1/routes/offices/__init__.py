@@ -39,5 +39,5 @@ def create_office():
 def get_office(office_id):
     office = OfficesModel.get_office(office_id)
     if office:
-        return jsonify({"status": 200, "data": office}), 200
-    return jsonify({"status": 404, "error": "We cant find this office"}), 404
+        return make_response(jsonify({"status": 200, "data": office}), 200)
+    return make_response(jsonify({"status": 404, "error": "We cant find this office"}), 404)
