@@ -1,4 +1,5 @@
 OFFICES = []
+PARTIES = []
 
 
 class OfficesModel:
@@ -19,3 +20,16 @@ class OfficesModel:
     @staticmethod
     def get_office(id):
         return [vars(office) for office in OFFICES if office.id == id]
+
+
+class PartiesModel:
+    # def __init__(self, id, name, logoUrl):
+    #     self.id = id
+    #     self.name = name
+    #     self.logoUrl = logoUrl
+
+    # def save_party(self):
+    #     PARTIES.append(self)
+    @staticmethod
+    def get_all_parties():
+        return [vars(party) for party in PARTIES]

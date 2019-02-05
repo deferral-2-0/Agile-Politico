@@ -12,9 +12,7 @@ def get_all_offices():
     fetch_all_offices
     """
     offices = OfficesModel.get_all_offices()
-    if offices:
-        return make_response(jsonify({"status": 200, "data": offices}), 200)
-    return make_response(jsonify({"status": 200, "data": []}), 200)
+    return make_response(jsonify({"status": 200, "data": offices}), 200)
 
 
 @path_1.route("/offices", methods=["POST"])
