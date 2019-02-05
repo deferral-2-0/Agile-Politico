@@ -23,8 +23,8 @@ def create_party():
         name = data['name']
         logoUrl = data['logoUrl']
     except:
-        return jsonify({'status': 400,
-                        'error': "Check your json keys. Should be name, id and logoUrl"})
+        return make_response(jsonify({'status': 400,
+                                      'error': "Check your json keys. Should be name, id and logoUrl"}), 400)
     party = PartiesModel(id=id,
                          name=name, logoUrl=logoUrl)
     party.save_party()
@@ -38,4 +38,25 @@ def get_party(party_id):
     party = PartiesModel.get_party(party_id)
     if party:
         return jsonify({"status": 200, "data": party})
-    return jsonify({"status": 404, "error": "This party cannot be found"})
+    return make_response(jsonify({"status": 404, "error": "This party cannot be found"}), 404)
+
+
+@path_1.route("/parties/<int:party_id>/name", methods=["PATCH"])
+def update_party(party_id):
+    try:
+        data = request.get_json()
+        name = data["name"]
+    except:
+        return make_response(jsonify({
+            "status": 400,
+            "error": "name not found"
+        }), 400)
+    try:
+        party = PartiesModel.get_party_object(party_id)[0]
+    except IndexError:
+        return make_response(jsonify({"status": 404, "data": "This party doesn't exist"}), 404)
+    party.setname(name)
+    return make_response(jsonify({"status": 200, "data": [{
+        "id": party_id,
+        "name": name
+    }]}), 200)

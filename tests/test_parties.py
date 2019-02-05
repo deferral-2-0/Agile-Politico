@@ -65,3 +65,24 @@ class TestPartiesEndpoints(RoutesBaseTest):
         res = self.client.get("/api/v1/parties/1000")
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result["status"], 404)
+
+    def test_updating_party(self):
+        res = self.client.patch("/api/v1/parties/{}/name".format(0),
+                                data=json.dumps({
+                                    "name": "New Name"
+                                }), content_type="application/json")
+        self.assertEqual(res.status_code, 200)
+
+    def test_updating_party_with_wrong_params(self):
+        res = self.client.patch("/api/v1/parties/{}/name".format(0),
+                                data=json.dumps({
+                                    "namehehre": "New Name"
+                                }), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
+    def test_updating_non_exisitent_party(self):
+        res = self.client.patch("/api/v1/parties/{}/name".format(1000),
+                                data=json.dumps({
+                                    "name": "New Name"
+                                }), content_type="application/json")
+        self.assertEqual(res.status_code, 404)
