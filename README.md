@@ -38,6 +38,10 @@ A Platform for driving political change and engagement
       ```
          python -m pytest --cov=app/api
       ```
+6. Start the server
+      ```
+         flask run
+      ```
 ##Politico Endpoints
 
 | Method | Endpoint                         | Description                           |
