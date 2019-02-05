@@ -57,3 +57,12 @@ class PartiesModel:
             returns the object with only the attributes. 
         """
         return [vars(party) for party in PARTIES if party.id == id]
+
+    @staticmethod
+    def deleteparty(id):
+        found = False
+        for party in PARTIES:
+            if party.id == id:
+                PARTIES.remove(party)
+                found = True
+        return found
