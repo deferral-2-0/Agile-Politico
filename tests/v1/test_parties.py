@@ -32,7 +32,7 @@ class RoutesBaseTest(unittest.TestCase):
 
 class TestPartiesEndpoints(RoutesBaseTest):
 
-    def test_call_to_fetch_all_endpoints(self):
+    def test_fetch_all_parties(self):
         response = self.client.get("api/v1/parties")
         self.assertEqual(response.status_code, 200)
         result = json.loads(response.data.decode('utf-8'))
@@ -46,7 +46,7 @@ class TestPartiesEndpoints(RoutesBaseTest):
         self.assertEqual(result['status'], 201)
         self.assertEqual(len(PARTIES), 2)
 
-    def test_saving_invalid_party(self):
+    def test_saving_missing_fields_party(self):
         res = self.client.post(
             "api/v1/parties", data=json.dumps(self.invalidparty), content_type="application/json")
         result = json.loads(res.data.decode("utf-8"))
@@ -66,7 +66,7 @@ class TestPartiesEndpoints(RoutesBaseTest):
         }])
         self.assertEqual(result["status"], 200)
 
-    def test_non_exiistent_party(self):
+    def test_getting_non_exiistent_party(self):
         res = self.client.get("/api/v1/parties/1000")
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result["status"], 404)
@@ -78,7 +78,7 @@ class TestPartiesEndpoints(RoutesBaseTest):
                                 }), content_type="application/json")
         self.assertEqual(res.status_code, 200)
 
-    def test_updating_party_with_wrong_params(self):
+    def test_updating_party_with_invalid_params(self):
         res = self.client.patch("/api/v1/parties/{}/name".format(0),
                                 data=json.dumps({
                                     "namehehre": "New Name"
