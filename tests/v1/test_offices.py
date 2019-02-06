@@ -26,21 +26,21 @@ class RoutesBaseTest(unittest.TestCase):
 
 class TestOfficesEndPoint(RoutesBaseTest):
 
-    def test_call_to_fetch_all_offices(self):
+    def test_fetch_all_offices(self):
         response = self.client.get("api/v1/offices")
         self.assertEqual(response.status_code, 200)
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result["data"], [])
         self.assertEqual(result["status"], 200)
 
-    def test_saving_office(self):
+    def test_save_office(self):
         res = self.client.post(
             "api/v1/offices", data=json.dumps(self.office1), content_type="application/json")
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['status'], 201)
         self.assertEqual(len(OFFICES), 2)
 
-    def test_wrongly_formatted_office(self):
+    def test_save_missing_fields_office(self):
         res = self.client.post(
             "api/v1/offices", data=json.dumps(self.erroroffice), content_type="application/json")
         result = json.loads(res.data.decode('utf-8'))
@@ -59,6 +59,6 @@ class TestOfficesEndPoint(RoutesBaseTest):
         }])
         self.assertEqual(result["status"], 200)
 
-    def test_non_existent_office(self):
+    def test_getting_non_existent_office(self):
         res = self.client.get("/api/v1/offices/10")
         self.assertEqual(res.status_code, 404)
