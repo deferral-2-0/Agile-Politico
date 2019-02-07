@@ -4,8 +4,8 @@ PARTIES = []
 
 class OfficesModel:
 
-    def __init__(self, id, type, name):
-        self.id = id
+    def __init__(self, type, name):
+        self.id = len(OFFICES)
         self.type = type
         self.name = name
 
@@ -23,8 +23,8 @@ class OfficesModel:
 
 
 class PartiesModel:
-    def __init__(self, id, name, logoUrl):
-        self.id = id
+    def __init__(self, name, logoUrl):
+        self.id = len(PARTIES)
         self.name = name
         self.logoUrl = logoUrl
 

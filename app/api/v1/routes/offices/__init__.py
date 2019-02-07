@@ -19,18 +19,17 @@ def get_all_offices():
 def create_office():
     try:
         data = request.get_json()
-        id = data['id']
         type = data['type']
         name = data['name']
     except:
         return jsonify({'status': 400,
-                        'error': "Check your json keys. Should be type, name and id"})
-    office = OfficesModel(id=id,
-                          type=type,
-                          name=name)
+                        'error': "Check your json keys. Should be type and name"})
+    office = OfficesModel(
+        type=type,
+        name=name)
     office.save_office()
     return make_response(jsonify({"status": 201,
-                                  "data": [{"id": id,
+                                  "data": [{"id": len(OFFICES) - 1,
                                             "type": type,
                                             "name": name}]}), 201)
 

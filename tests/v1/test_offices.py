@@ -10,12 +10,10 @@ class RoutesBaseTest(unittest.TestCase):
         self.app = app("testing")
         self.client = self.app.test_client()
         self.office1 = {
-            "id": 0,
             "type": "Governor",
             "name": "Governor Webuye"
         }
         self.erroroffice = {
-            "id": 1
         }
     # tear down tests
 
