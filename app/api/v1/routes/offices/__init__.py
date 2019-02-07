@@ -28,8 +28,8 @@ def create_office():
         return jsonify({'status': 400,
                         'error': "Check your json keys. Should be type and name"})
     if(is_valid_string(type) == False or is_valid_string(name) == False):
-        return jsonify({'status': 400,
-                        'error': "The name and type fields are not valid but they are not present"})
+        return make_response(jsonify({'status': 400,
+                                      'error': "The name and type fields are not valid but they are not present"}), 400)
 
     office = OfficesModel(
         type=type,
