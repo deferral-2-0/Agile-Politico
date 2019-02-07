@@ -19,17 +19,16 @@ def get_all_parties():
 def create_party():
     try:
         data = request.get_json()
-        id = data['id']
         name = data['name']
         logoUrl = data['logoUrl']
     except:
         return make_response(jsonify({'status': 400,
                                       'error': "Check your json keys. Should be name, id and logoUrl"}), 400)
-    party = PartiesModel(id=id,
-                         name=name, logoUrl=logoUrl)
+    party = PartiesModel(
+        name=name, logoUrl=logoUrl)
     party.save_party()
     return make_response(jsonify({"status": 201,
-                                  "data": [{"id": id,
+                                  "data": [{"id": len(PARTIES) - 1,
                                             "name": name, "logoUrl": logoUrl}]}), 201)
 
 

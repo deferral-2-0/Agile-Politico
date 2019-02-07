@@ -10,17 +10,15 @@ class RoutesBaseTest(unittest.TestCase):
         self.app = app("testing")
         self.client = self.app.test_client()
         self.party1 = {
-            "id": 0,
             "name": "Party 1",
             "logoUrl": ""
         }
         self.partytodelete = {
-            "id": 10,
             "name": "Party 10",
             "logoUrl": ""
         }
         self.invalidparty = {
-            "id": 1
+            "_id": 1
         }
 
     # tear down tests
@@ -96,7 +94,7 @@ class TestPartiesEndpoints(RoutesBaseTest):
         self.client.post(
             "api/v1/parties", data=json.dumps(self.partytodelete), content_type="application/json")
         res = self.client.delete(
-            "/api/v1/parties/{}".format(10), content_type="application/json")
+            "/api/v1/parties/{}".format(0), content_type="application/json")
         self.assertEqual(res.status_code, 200)
 
     def test_deleting_non_existent_party(self):
