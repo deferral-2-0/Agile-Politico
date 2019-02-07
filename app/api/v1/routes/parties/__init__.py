@@ -23,7 +23,7 @@ def create_party():
         logoUrl = data['logoUrl']
     except:
         return make_response(jsonify({'status': 400,
-                                      'error': "Check your json keys. Should be name, id and logoUrl"}), 400)
+                                      'error': "Check your json keys. Should be name and logoUrl"}), 400)
     party = PartiesModel(
         name=name, logoUrl=logoUrl)
     party.save_party()
