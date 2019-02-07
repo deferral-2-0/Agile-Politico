@@ -9,8 +9,8 @@ app = app(config_name)
 
 
 @app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def hello_root():
+    return "Welcome to politico V1, built by @Tevinthuku, credits to Andela"
 
 
 if __name__ == '__main__':
