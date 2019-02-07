@@ -5,6 +5,8 @@ from flask import jsonify, request, make_response, abort
 from app.api.v1 import path_1
 from app.api.v1.model import PartiesModel, PARTIES
 
+from app.api.utils import is_valid_string
+
 
 @path_1.route("/parties", methods=['GET'])
 def get_all_parties():
@@ -24,6 +26,10 @@ def create_party():
     except:
         return make_response(jsonify({'status': 400,
                                       'error': "Check your json keys. Should be name and logoUrl"}), 400)
+
+    if(is_valid_string(name) == False):
+        return make_response(jsonify({'status': 400,
+                                      'error': "The logoUrl and namefields are present, but they are not valid"}), 400)
     party = PartiesModel(
         name=name, logoUrl=logoUrl)
     party.save_party()
@@ -49,6 +55,11 @@ def update_party(party_id):
         return make_response(jsonify({
             "status": 400,
             "error": "name not found"
+        }), 400)
+    if(is_valid_string(name) == False):
+        return make_response(jsonify({
+            "status": 400,
+            "error": "name is present, but its not valid"
         }), 400)
     try:
         party = PartiesModel.get_party_object(party_id)[0]

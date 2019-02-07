@@ -31,12 +31,28 @@ class TestOfficesEndPoint(RoutesBaseTest):
         self.assertEqual(result["data"], [])
         self.assertEqual(result["status"], 200)
 
-    def test_save_office(self):
+    def test_save_validated_office(self):
         res = self.client.post(
             "api/v1/offices", data=json.dumps(self.office1), content_type="application/json")
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['status'], 201)
         self.assertEqual(len(OFFICES), 2)
+
+    def test_save_invalid_office_type(self):
+        res = self.client.post("api/v1/offices", data=json.dumps({
+            "type": "",
+            "name": "ppp"
+        }), content_type="application/json")
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result["status"], 400)
+
+    def test_save_invalid_office_name(self):
+        res = self.client.post("api/v1/offices", data=json.dumps({
+            "type": "typehere",
+            "name": ""
+        }), content_type="application/json")
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result["status"], 400)
 
     def test_save_missing_fields_office(self):
         res = self.client.post(

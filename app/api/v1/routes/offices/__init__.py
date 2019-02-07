@@ -5,6 +5,9 @@ from flask import jsonify, request, make_response, abort
 from app.api.v1 import path_1
 from app.api.v1.model import OfficesModel, OFFICES
 
+# validate function
+from app.api.utils import is_valid_string
+
 
 @path_1.route("/offices", methods=['GET'])
 def get_all_offices():
@@ -24,6 +27,10 @@ def create_office():
     except:
         return jsonify({'status': 400,
                         'error': "Check your json keys. Should be type and name"})
+    if(is_valid_string(type) == False or is_valid_string(name) == False):
+        return make_response(jsonify({'status': 400,
+                                      'error': "The name and type fields are not valid but they are not present"}), 400)
+
     office = OfficesModel(
         type=type,
         name=name)
