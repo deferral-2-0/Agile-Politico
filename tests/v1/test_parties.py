@@ -50,6 +50,15 @@ class TestPartiesEndpoints(RoutesBaseTest):
         result = json.loads(res.data.decode("utf-8"))
         self.assertEqual(result["status"], 400)
 
+    def test_saving_party_with_invalid_name_fields(self):
+        res = self.client.post(
+            "api/v1/parties", data=json.dumps({
+                "name": "",
+                "logoUrl": "http"
+            }), content_type="application/json")
+        result = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(result["status"], 400)
+
     def test_get_specific_party(self):
         createparty = self.client.post(
             "api/v1/parties", data=json.dumps(self.party1), content_type="application/json")
@@ -76,10 +85,17 @@ class TestPartiesEndpoints(RoutesBaseTest):
                                 }), content_type="application/json")
         self.assertEqual(res.status_code, 200)
 
-    def test_updating_party_with_invalid_params(self):
+    def test_updating_party_with_missing_required_params(self):
         res = self.client.patch("/api/v1/parties/{}/name".format(0),
                                 data=json.dumps({
                                     "namehehre": "New Name"
+                                }), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
+    def test_updating_party_with_invalid_params(self):
+        res = self.client.patch("/api/v1/parties/{}/name".format(0),
+                                data=json.dumps({
+                                    "name": ""
                                 }), content_type="application/json")
         self.assertEqual(res.status_code, 400)
 
