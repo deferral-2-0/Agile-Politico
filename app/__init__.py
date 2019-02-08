@@ -12,6 +12,7 @@ def handle_all_404(e):
     }), 404)
 
 
+
 def app(config_name):
     app = Flask(__name__)
     app.config.from_object(app_config[config_name])
