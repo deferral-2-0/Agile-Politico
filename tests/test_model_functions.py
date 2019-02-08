@@ -1,32 +1,11 @@
 
-# from app import app
-# import unittest
-# import json
-# from flask import make_response, jsonify
-# from app.api.utils import response_fn
+
+from app.api.utils import get_all_items, get_specific_item
 
 
-# class RoutesBaseTest(unittest.TestCase):
-#     def setUp(self):
-#         self.app = app("testing")
-#         self.client = self.app.test_client()
-#     # tear down tests
-
-#     def tearDown(self):
-#         """Tperform final cleanup after tests run"""
-#         self.app.testing = False
+def test_invalid_model_type_on_getting_all_items():
+    assert(get_all_items(None, "notpresent")) == []
 
 
-# class TestOfficesEndPoint(RoutesBaseTest):
-
-#     def test_200_response(self):
-#         assert(response_fn(200, "data", "Testing 202")) == make_response(jsonify({
-#             "status": 200,
-#             "data": "Testing 202"
-#         }), 200)
-
-#     def test_404_response(self):
-#         assert(response_fn(404, "error", "An error occured")) == make_response(jsonify({
-#             "status": 404,
-#             "error": "An error occured"
-#         }), 404)
+def test_invalid_model_type_on_getting_specific_item():
+    assert(get_specific_item(None, "dsd", "notpresent")) == []
