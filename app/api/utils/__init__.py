@@ -43,3 +43,17 @@ def get_all_items(model, type):
     elif(type == "party"):
         return model.get_all_parties()
     return []
+
+
+def get_specific_item(model, type, id):
+    """
+        This function takes a model, type (office | party) and 
+        id of the item and returns the specific item from the 
+        specified model, if a model does not have an item with the provided ID, 
+        an empty list is returned.
+    """
+    if(type == "office"):
+        return model.get_office(id)
+    elif(type == "party"):
+        return model.get_party(id)
+    return []

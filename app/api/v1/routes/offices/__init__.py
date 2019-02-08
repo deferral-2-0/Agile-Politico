@@ -6,16 +6,11 @@ from app.api.v1 import path_1
 from app.api.v1.model import OfficesModel, OFFICES
 
 # validate function
-from app.api.utils import is_valid_string, response_fn, get_all_items
+from app.api.utils import is_valid_string, response_fn, get_all_items, get_specific_item
 
 
 @path_1.route("/offices", methods=['GET'])
 def get_all_offices():
-    """
-    fetch_all_offices
-    """
-    # offices = OfficesModel.get_all_offices()
-    # return response_fn(200, "data", offices)
     return response_fn(200, "data", get_all_items(OfficesModel, "office"))
 
 
@@ -42,7 +37,7 @@ def create_office():
 
 @path_1.route("/offices/<int:office_id>", methods=['GET'])
 def get_office(office_id):
-    office = OfficesModel.get_office(office_id)
+    office = get_specific_item(OfficesModel, "office", office_id)
     if office:
         return response_fn(200, "data", office)
     return response_fn(404, "error", "We cant find this office")
