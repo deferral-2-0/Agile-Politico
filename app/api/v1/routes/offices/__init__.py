@@ -6,7 +6,7 @@ from app.api.v1 import path_1
 from app.api.v1.model import OfficesModel, OFFICES
 
 # validate function
-from app.api.utils import is_valid_string, response_fn
+from app.api.utils import is_valid_string, response_fn, get_all_items
 
 
 @path_1.route("/offices", methods=['GET'])
@@ -14,8 +14,9 @@ def get_all_offices():
     """
     fetch_all_offices
     """
-    offices = OfficesModel.get_all_offices()
-    return response_fn(200, "data", offices)
+    # offices = OfficesModel.get_all_offices()
+    # return response_fn(200, "data", offices)
+    return response_fn(200, "data", get_all_items(OfficesModel, "office"))
 
 
 @path_1.route("/offices", methods=["POST"])
