@@ -30,9 +30,9 @@ A Platform for driving political change and engagement
    ```
 
 4. Setup env variables
-    - export FLASK_APP=run.py
-    - export FLASK_DEBUG=1
-    - export FLASK_ENV=development
+    - $ export FLASK_APP=run.py
+    - $ export FLASK_DEBUG=1
+    - $ export FLASK_ENV=development
 
 5. Running tests
       ```
@@ -42,7 +42,7 @@ A Platform for driving political change and engagement
       ```
          flask run
       ```
-##Politico Endpoints
+## Politico Endpoints
 
 | Method   | Endpoint                             | Description                           |
 | -------- | ------------------------------------ | ------------------------------------- |
