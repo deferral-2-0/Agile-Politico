@@ -3,7 +3,7 @@
 from flask import jsonify, request, make_response, abort
 
 from app.api.v1 import path_1
-from app.api.v1.model import PartiesModel, PARTIES
+from app.api.v1.models.parties import PartiesModel, PARTIES
 
 from app.api.utils import is_valid_string, response_fn, get_all_items, get_specific_item
 
