@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, Blueprint, make_response
 
 from config import app_config
-from app.api.v1.views.offices import path_1 as offices
-from app.api.v1.views.parties import path_1 as parties
+from app.api.v1.routes.offices import path_1 as offices
+from app.api.v1.routes.parties import path_1 as parties
 
 
 def handle_all_404(e):
@@ -10,6 +10,7 @@ def handle_all_404(e):
         "status": 404,
         "error": "url not found"
     }), 404)
+
 
 
 def app(config_name):
