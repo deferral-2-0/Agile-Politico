@@ -2,7 +2,7 @@ from app import app
 import unittest
 import json
 
-from app.api.v1.model import OFFICES
+from app.api.v1.models.office import OFFICES
 
 
 class RoutesBaseTest(unittest.TestCase):
