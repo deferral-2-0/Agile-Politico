@@ -15,4 +15,7 @@ def hello_root():
 
 
 if __name__ == '__main__':
+    """
+        the app runs here
+    """
     app.run()
