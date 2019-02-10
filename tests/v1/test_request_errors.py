@@ -22,3 +22,9 @@ class TestOfficesEndPoint(RoutesBaseTest):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result["error"], "url not found")
         self.assertEqual(result["status"], 404)
+
+    def test_method_not_allowed(self):
+        response = self.client.post("api/v1/offices/0")
+        self.assertEqual(response.status_code, 405)
+        result = json.loads(response.data.decode("utf-8"))
+        self.assertEqual(result["status"], 405)
