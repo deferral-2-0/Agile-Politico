@@ -8,6 +8,10 @@ class PartiesModel:
         self.logoUrl = logoUrl
 
     def save_party(self):
+        """
+            This method saves the instance object to the
+            list of parties
+        """
         PARTIES.append(self)
 
     def setname(self, newname):
@@ -24,24 +28,29 @@ class PartiesModel:
         return [vars(party) for party in PARTIES]
 
     @staticmethod
-    def get_party_object(id):
+    def get_party_object(party_id):
         """
             returns the object with all attributes and functions as well
         """
-        return [party for party in PARTIES if party.id == id]
+        return [party for party in PARTIES if party.id == party_id]
 
     @staticmethod
-    def get_party(id):
+    def get_party(party_id):
         """
-            returns the object with only the attributes. 
+            returns the object with only the attributes.
         """
-        return [vars(party) for party in PARTIES if party.id == id]
+        return [vars(party) for party in PARTIES if party.id == party_id]
 
     @staticmethod
-    def deleteparty(id):
+    def deleteparty(party_id):
+        """
+        This function deletes an object which
+        has an id that matches the one provided in the
+        argument
+        """
         found = False
         for party in PARTIES:
-            if party.id == id:
+            if party.id == party_id:
                 PARTIES.remove(party)
                 found = True
         return found

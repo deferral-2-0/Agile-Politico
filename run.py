@@ -8,6 +8,9 @@ app = app(config_name)
 
 @app.route('/')
 def hello_root():
+    """
+        Return a simple hello message on the root of the app.
+    """
     return "Welcome to politico V1, built by @Tevinthuku, credits to Andela"
 
 
