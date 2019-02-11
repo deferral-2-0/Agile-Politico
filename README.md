@@ -9,6 +9,8 @@
 
 A Platform for driving political change and engagement
 
+[Hosted on Heroku](https://tevpolitico.herokuapp.com/)
+
 ## Setup and installation
 
 1. Set up virtualenv
