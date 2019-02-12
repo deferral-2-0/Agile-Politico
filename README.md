@@ -35,6 +35,14 @@ A Platform for driving political change and engagement
     - $ export FLASK_APP=run.py
     - $ export FLASK_DEBUG=1
     - $ export FLASK_ENV=development
+    - $ export SECRET_KEY=`<SECRET KEY>`
+    - $ export DATABASE_URL=`<URI>`
+    - $ export DATABASE_TEST_URL=`<URI>`
+
+   ```
+      export DATABASE_URL="postgres://username:password@localhost/flasky"
+      export DATABASE_TEST_URL="postgres://username:password@localhost/flasky_test"
+   ```
 
 5. Running tests
       ```
@@ -44,7 +52,7 @@ A Platform for driving political change and engagement
       ```
          flask run
       ```
-## Politico Endpoints
+## V1 Politico Endpoints
 
 | Method   | Endpoint                             | Description                           |
 | -------- | ------------------------------------ | ------------------------------------- |

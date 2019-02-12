@@ -14,3 +14,6 @@ htmlcov/
 .vscode
 env/
 venv/
+
+#local files
+LOCALENVS.txt
