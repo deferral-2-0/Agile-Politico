@@ -1,4 +1,4 @@
-"""Tests for books records"""
+"""Tests for users records"""
 import json
 import unittest
 

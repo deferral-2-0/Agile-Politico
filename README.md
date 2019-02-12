@@ -68,10 +68,11 @@ A Platform for driving political change and engagement
 
 <summary>V2 Politico Endpoints</summary>
 
-| Method | Endpoint              | Description       |
-| ------ | --------------------- | ----------------- |
-| `POST` | `/api/v2/auth/signup` | Create a new user |
-| `POST` | `/api/v2/auth/signin` | User can login    |
+| Method | Endpoint              | Description             |
+| ------ | --------------------- | ----------------------- |
+| `POST` | `/api/v2/auth/signup` | Create a new user       |
+| `POST` | `/api/v2/auth/signin` | User can login          |
+| `POST` | `/api/v2/auth/reset`  | User can reset password |
 
 </details>
 
