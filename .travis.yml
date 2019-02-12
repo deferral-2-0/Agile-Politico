@@ -11,7 +11,6 @@ before_script:
   - psql -c "CREATE USER tev WITH PASSWORD '8279';" -U postgres
 env:
   - DATABASE_URL="postgres://tev:8279@localhost/politico_db"
-  - DATABASE_TEST_URL="postgres://tev:8279@localhost/test_db"
 script:
   - python -m pytest --cov=app/api
 after_success:
