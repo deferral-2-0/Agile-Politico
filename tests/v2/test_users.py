@@ -63,6 +63,19 @@ class BaseTestClass(unittest.TestCase):
             "isPolitician": True
         }
 
+        self.new_wrong_number_format = {
+            "username": "Tevyn",
+            "firstname": "Tevin",
+            "lastname": "Gach",
+            "email": "tevinku@gmail.com",
+            "phone": "hellonumber",
+            "othername": "Thuku",
+            "password": "Tevin1995",
+            "retypedpassword": "Tevin1995",
+            "passportUrl": "http",
+            "isPolitician": False
+        }
+
     # tear down tests
 
     def tearDown(self):
@@ -82,7 +95,6 @@ class TestUserEndpoints(BaseTestClass):
         self.assertEqual(response.status_code, 201)
         print(response.data)
         result = json.loads(response.data.decode("utf-8"))
-
         self.assertEqual(result["status"], 201)
 
     def test_user_sign_up_with_missing_info(self):
@@ -92,23 +104,30 @@ class TestUserEndpoints(BaseTestClass):
         result = json.loads(response.data.decode("utf-8"))
         self.assertEqual(result["status"], 400)
 
-    def test_for_mismatch_in_passwords(self):
+    def test_user_sign_up_with_mismatch_in_passwords(self):
         response = self.client.post(
             "api/v2/auth/signup", data=json.dumps(self.miss_match_user), content_type="application/json")
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode("utf-8"))
         self.assertEqual(result["status"], 400)
 
-    def test_for_duplicate_user(self):
+    def test_user_sign_up_with_duplicate_user(self):
         self.post_user()
         response = self.post_user()
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode("utf-8"))
         self.assertEqual(result["status"], 400)
 
-    def test_for_wrong_email_format(self):
+    def test_user_sign_up_with_wrong_email_format(self):
         response = self.client.post(
             "api/v2/auth/signup", data=json.dumps(self.wrongmail_format), content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+        result = json.loads(response.data.decode("utf-8"))
+        self.assertEqual(result["status"], 400)
+
+    def test_user_sign_up_with_wrong_number_format(self):
+        response = self.client.post("api/v2/auth/signup",
+                                    data=json.dumps(self.new_wrong_number_format), content_type="application/json")
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode("utf-8"))
         self.assertEqual(result["status"], 400)

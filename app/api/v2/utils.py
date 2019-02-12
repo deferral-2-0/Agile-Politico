@@ -20,6 +20,14 @@ def doPasswordsMatch(pass1, pass2):
     return True
 
 
+def is_phone_number_valid(phone):
+    """
+        This checks if a number phone number is valid
+    """
+    if not re.match('^[0-9]*$', phone):
+        abort(response_fn(400, "Error", "Phone number should be integers only"))
+
+
 def isEmailValid(email):
     """
         this function checks if the email is valid

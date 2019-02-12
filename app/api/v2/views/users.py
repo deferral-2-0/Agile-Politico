@@ -34,6 +34,8 @@ def signup():
     v2utils.doPasswordsMatch(password, retypedpassword)
     # check the email provided
     v2utils.isEmailValid(email)
+    # Check if phone number is valid
+    v2utils.is_phone_number_valid(phone)
 
     v2utils.check_matching_items_in_db_table({"username": username}, "users")
     v2utils.check_matching_items_in_db_table({"email": email}, "users")
