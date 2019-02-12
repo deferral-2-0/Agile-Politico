@@ -9,10 +9,26 @@ the errors are handled
 from flask import Flask, jsonify, make_response
 
 from config import app_config
+
+"""
+
+Will still support v1 to minimize breaking changes for my API consumers.
+Will be removing V1 in the next 6 months.
+
+"""
 from app.api.v1.views.offices import path_1 as offices
 from app.api.v1.views.parties import path_1 as parties
 
 from app.api.utils import response_fn
+
+
+"""
+
+v2 configuration objects and functions.
+
+"""
+
+from app.api.v2.models.db import init_db
 
 
 def handle_all_404(*_):
@@ -44,6 +60,13 @@ def app(config_name):
     flaskapp.url_map.strict_slashes = False
     flaskapp.register_error_handler(404, handle_all_404)
     flaskapp.register_error_handler(405, handle_method_not_allowed)
+    """
+    v1 blueprints
+    """
     flaskapp.register_blueprint(offices)
     flaskapp.register_blueprint(parties)
+    """
+    v2 blueprints & configuration
+    """
+    init_db(app_config["DB_URL"])
     return flaskapp

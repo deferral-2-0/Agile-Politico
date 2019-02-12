@@ -35,6 +35,10 @@ A Platform for driving political change and engagement
     - $ export FLASK_APP=run.py
     - $ export FLASK_DEBUG=1
     - $ export FLASK_ENV=development
+    - $ export SECRET_KEY=`<SECRET KEY>`
+    - $ export DATABASE_URL=`<URI>`
+    - $ export DATABASE_TEST_URL=`<URI>`
+
 
 5. Running tests
       ```
@@ -44,7 +48,10 @@ A Platform for driving political change and engagement
       ```
          flask run
       ```
-## Politico Endpoints
+
+<details>
+<summary>V1 Politico Endpoints</summary>
+
 
 | Method   | Endpoint                             | Description                           |
 | -------- | ------------------------------------ | ------------------------------------- |
@@ -56,7 +63,15 @@ A Platform for driving political change and engagement
 | `GET`    | `api/v1/parties/<int:party_id>`      | Get specific party Id                 |
 | `PATCH`  | `api/v1/parties/<int:party_id>/name` | Update a party by name                |
 | `DELETE` | `api/v1/parties/<int:party_id>`      | Delete a party by Id                  |
+</details>
 
+<details open>
+
+<summary>V2 Politico Endpoints</summary>
+
+| Method   | Endpoint                             | Description                           |
+| -------- | ------------------------------------ | ------------------------------------- |
+</details>
 
 
 ### Author: TevinThuku
