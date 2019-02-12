@@ -8,6 +8,7 @@ from app.api.v2.models.users import UserModel
 import psycopg2
 
 import os
+import jwt
 
 KEY = os.getenv('SECRET_KEY')
 
@@ -86,7 +87,14 @@ def user_login():
             hashed_password, password)
         if not password:
             abort(utils.response_fn(400, "error", "The paswsord is wrong"))
-
-        return utils.response_fn(200, "message", "Logged in successfully")
+        token = jwt.encode({"email": email}, KEY, algorithm='HS256')
+        return utils.response_fn(200, "data", {
+            "message": "Logged in successfully",
+            "token": token.decode('UTF-8'),
+            "user": {
+                "id": id,
+                "username": username
+            }
+        })
     except psycopg2.DatabaseError as _error:
         abort(utils.response_fn(500, "error", "Server error"))
