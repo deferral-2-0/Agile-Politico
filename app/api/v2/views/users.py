@@ -1,10 +1,15 @@
-from flask import request
+from flask import request, abort
 from app.api.v2 import path_2
 
 from app.api import utils
 from app.api.v2 import utils as v2utils
 
 from app.api.v2.models.users import UserModel
+import psycopg2
+
+import os
+
+KEY = os.getenv('SECRET_KEY')
 
 
 @path_2.route("/auth/signup", methods=["POST"])
@@ -27,8 +32,8 @@ def signup():
         isPolitician = data.get("isPolitician", False)
 
     except:
-        return utils.response_fn(400, "error", 'Check your json keys. '
-                                 'username, firstname, lastname, othername ,phone, email, password, passportUrl')
+        return abort(utils.response_fn(400, "error", 'Check your json keys. '
+                                       'username, firstname, lastname, othername ,phone, email, password, passportUrl'))
 
     # check the passwords.
     v2utils.doPasswordsMatch(password, retypedpassword)
@@ -51,3 +56,37 @@ def signup():
         },
         "token": newuser.password
     }])
+
+
+# login route
+@path_2.route("/auth/signin", methods=['POST'])
+def user_login():
+    try:
+        data = request.get_json()
+        email = data['email']
+        password = data['password']
+
+    except KeyError:
+        abort(abort(utils.response_fn(400, "error", "Should be username & password")))
+
+    # check for the validity of the email
+    v2utils.isEmailValid(email)
+
+    # try to get the record of the user by email.
+    try:
+        user = UserModel.get_user_by_mail(email)
+        if not user:
+            abort(utils.response_fn(404, "error", "User does not exist"))
+
+        id = user[0][0]
+        username = user[0][1]
+        hashed_password = user[0][2]
+
+        password = UserModel.check_if_password_n_hash_match(
+            hashed_password, password)
+        if not password:
+            abort(utils.response_fn(400, "error", "The paswsord is wrong"))
+
+        return utils.response_fn(200, "message", "Logged in successfully")
+    except psycopg2.DatabaseError as _error:
+        abort(utils.response_fn(500, "error", "Server error"))

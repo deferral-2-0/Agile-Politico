@@ -76,6 +76,34 @@ class BaseTestClass(unittest.TestCase):
             "isPolitician": False
         }
 
+        self.login_new_user = {
+            "email": "tevinku@gmail.com",
+            "password": "Tevin1995"
+        }
+
+        self.login_new_user_with_wrong_password = {
+            "email": "tevinku@gmail.com",
+            "password": "Tevin1996"
+        }
+
+        self.adminlogin = {
+            "email": "tevinthuku@gmail.com",
+            "password": "BootcampWeek1"
+        }
+
+        self.poor_email_login = {
+            "email": "tevinf",
+            "password": "boomm"
+        }
+
+        self.missing_password_login = {
+            "email": "youtube@gmail.com"
+        }
+        self.unknown_account = {
+            "email": "trevork@gmail.com",
+            "password": "Auth1234"
+        }
+
     # tear down tests
 
     def tearDown(self):
@@ -130,4 +158,50 @@ class TestUserEndpoints(BaseTestClass):
                                     data=json.dumps(self.new_wrong_number_format), content_type="application/json")
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode("utf-8"))
+        self.assertEqual(result["status"], 400)
+
+    # login functionality
+
+    def test_successfull_admin_login(self):
+        res = self.client.post(
+            "api/v2/auth/signin", data=json.dumps(self.adminlogin), content_type="application/json")
+        self.assertEqual(res.status_code, 200)
+        result = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(result["status"], 200)
+
+    def test_successfull_user_login(self):
+        self.post_user()
+        res = self.client.post(
+            "api/v2/auth/signin", data=json.dumps(self.login_new_user), content_type="application/json")
+        self.assertEqual(res.status_code, 200)
+        result = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(result["status"], 200)
+
+    def test_login_with_bad_mail_format(self):
+        res = self.client.post("api/v2/auth/signin", data=json.dumps(
+            self.poor_email_login), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+        result = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(result["status"], 400)
+
+    def test_login_with_missing_password_field(self):
+        res = self.client.post("api/v2/auth/signin", data=json.dumps(
+            self.missing_password_login), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+        result = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(result["status"], 400)
+
+    def test_login_with_unknown_account(self):  # account not found
+        res = self.client.post("api/v2/auth/signin", data=json.dumps(
+            self.unknown_account), content_type="application/json")
+        self.assertEqual(res.status_code, 404)
+        result = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(result["status"], 404)
+
+    def test_with_wrong_password(self):
+        self.post_user()
+        res = self.client.post(
+            "api/v2/auth/signin", data=json.dumps(self.login_new_user_with_wrong_password), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+        result = json.loads(res.data.decode("utf-8"))
         self.assertEqual(result["status"], 400)

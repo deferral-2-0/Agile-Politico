@@ -43,3 +43,15 @@ class UserModel:
         """
         hashed_password = generate_password_hash(str(password))
         return hashed_password
+
+    @staticmethod
+    def get_user_by_mail(email):
+        select_user_by_email = """
+        SELECT id, username, password FROM users
+        WHERE users.email = '{}'""".format(email)
+
+        return db.select_data_from_db(select_user_by_email)
+
+    @staticmethod
+    def check_if_password_n_hash_match(password_hash, password):
+        return check_password_hash(password_hash, str(password))

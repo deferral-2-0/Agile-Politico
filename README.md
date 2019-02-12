@@ -71,6 +71,7 @@ A Platform for driving political change and engagement
 | Method | Endpoint              | Description       |
 | ------ | --------------------- | ----------------- |
 | `POST` | `/api/v2/auth/signup` | Create a new user |
+| `POST` | `/api/v2/auth/signin` | User can login    |
 
 </details>
 
