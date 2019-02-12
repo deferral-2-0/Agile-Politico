@@ -39,10 +39,6 @@ A Platform for driving political change and engagement
     - $ export DATABASE_URL=`<URI>`
     - $ export DATABASE_TEST_URL=`<URI>`
 
-   ```
-      export DATABASE_URL="postgres://username:password@localhost/flasky"
-      export DATABASE_TEST_URL="postgres://username:password@localhost/flasky_test"
-   ```
 
 5. Running tests
       ```
@@ -52,7 +48,10 @@ A Platform for driving political change and engagement
       ```
          flask run
       ```
-## V1 Politico Endpoints
+
+<details>
+<summary>V1 Politico Endpoints</summary>
+
 
 | Method   | Endpoint                             | Description                           |
 | -------- | ------------------------------------ | ------------------------------------- |
@@ -64,7 +63,15 @@ A Platform for driving political change and engagement
 | `GET`    | `api/v1/parties/<int:party_id>`      | Get specific party Id                 |
 | `PATCH`  | `api/v1/parties/<int:party_id>/name` | Update a party by name                |
 | `DELETE` | `api/v1/parties/<int:party_id>`      | Delete a party by Id                  |
+</details>
 
+<details open>
+
+<summary>V2 Politico Endpoints</summary>
+
+| Method   | Endpoint                             | Description                           |
+| -------- | ------------------------------------ | ------------------------------------- |
+</details>
 
 
 ### Author: TevinThuku

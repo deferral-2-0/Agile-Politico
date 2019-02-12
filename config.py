@@ -1,3 +1,5 @@
+import os
+
 """
 This contains our application configurations
 """
@@ -33,5 +35,7 @@ for development and testing
 """
 app_config = {
     "development": DevelopmentConfig,
-    "testing": TestingConfig
+    "testing": TestingConfig,
+    "DB_URL": os.getenv('DATABASE_URL'),
+    "TEST_DB_URL": os.getenv('DATABASE_TEST_URL')
 }
