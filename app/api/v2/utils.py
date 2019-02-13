@@ -1,8 +1,11 @@
 import re
-from flask import abort
+from flask import abort, request
+from functools import wraps
 from app.api.utils import response_fn
 from app.api.v2.models.db import select_data_from_db
-
+import jwt
+import os
+KEY = os.getenv('SECRET_KEY')
 
 """
 This file includes all the necessary functions
@@ -52,3 +55,30 @@ def check_matching_items_in_db_table(params, table_name):
         if duplicated:
             abort(response_fn(409, "error",
                               "Error. '{}' '{}' is already in use".format(key, value)))
+
+
+def token_required(f):
+    """
+        This higher order function checks for token in the request
+        Headers
+    """
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+        if not token:
+            return response_fn(401, "error", "Token is missing")
+        try:
+            data = jwt.decode(token, KEY, algorithms='HS256')
+            query = """
+            SELECT email FROM users
+            WHERE users.email = '{}'""".format(data['email'])
+
+            user = select_data_from_db(query)
+
+        except:
+            return response_fn(401, "error", "Token is expired or invalid")
+
+        return f(user, *args, **kwargs)
+    return decorated

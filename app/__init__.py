@@ -1,8 +1,13 @@
-from app.api.v2.views.users import path_2 as users
-from app.api.v2.models.db import init_db
 from app.api.utils import response_fn
+
 from app.api.v1.views.parties import path_1 as parties
 from app.api.v1.views.offices import path_1 as offices
+
+
+from app.api.v2.views.users import path_2 as users
+from app.api.v2.views.parties import path_2 as parties
+from app.api.v2.models.db import init_db
+
 """
 
 This is where we initialize the app
@@ -12,7 +17,6 @@ the errors are handled
 """
 
 from flask import Flask, jsonify, make_response
-
 from config import app_config
 
 """
@@ -68,5 +72,6 @@ def app(config_name):
     v2 blueprints & configuration
     """
     flaskapp.register_blueprint(users)
+    flaskapp.register_blueprint(parties)
     init_db(app_config["DB_URL"])
     return flaskapp

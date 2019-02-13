@@ -47,6 +47,11 @@ class BaseTestClass(unittest.TestCase):
             "email": "notregistered@gmail.com"
         }
 
+    def tearDown(self):
+        """Clear the db after tests finish running"""
+        self.app.testing = False
+        init_db(self.DB_URL)
+
 
 class TestResetFunctionality(BaseTestClass):
 
