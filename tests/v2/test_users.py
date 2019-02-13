@@ -113,13 +113,13 @@ class BaseTestClass(unittest.TestCase):
 
 
 class TestUserEndpoints(BaseTestClass):
-    def post_user(self):
+    def PostUser(self):
         return self.client.post("api/v2/auth/signup",
                                 data=json.dumps(self.new_user),
                                 content_type="application/json")
 
     def test_user_creating_account_successfully(self):
-        response = self.post_user()
+        response = self.PostUser()
         self.assertEqual(response.status_code, 201)
         print(response.data)
         result = json.loads(response.data.decode("utf-8"))
@@ -140,8 +140,8 @@ class TestUserEndpoints(BaseTestClass):
         self.assertEqual(result["status"], 400)
 
     def test_user_sign_up_with_duplicate_user(self):
-        self.post_user()
-        response = self.post_user()
+        self.PostUser()
+        response = self.PostUser()
         self.assertEqual(response.status_code, 409)
         result = json.loads(response.data.decode("utf-8"))
         self.assertEqual(result["status"], 409)
@@ -170,7 +170,7 @@ class TestUserEndpoints(BaseTestClass):
         self.assertEqual(result["status"], 200)
 
     def test_successfull_user_login(self):
-        self.post_user()
+        self.PostUser()
         res = self.client.post(
             "api/v2/auth/signin", data=json.dumps(self.login_new_user), content_type="application/json")
         self.assertEqual(res.status_code, 200)
@@ -199,7 +199,7 @@ class TestUserEndpoints(BaseTestClass):
         self.assertEqual(result["status"], 404)
 
     def test_with_wrong_password(self):
-        self.post_user()
+        self.PostUser()
         res = self.client.post(
             "api/v2/auth/signin", data=json.dumps(self.login_new_user_with_wrong_password), content_type="application/json")
         self.assertEqual(res.status_code, 400)
