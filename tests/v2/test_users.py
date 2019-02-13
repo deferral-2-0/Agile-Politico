@@ -142,9 +142,9 @@ class TestUserEndpoints(BaseTestClass):
     def test_user_sign_up_with_duplicate_user(self):
         self.post_user()
         response = self.post_user()
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 409)
         result = json.loads(response.data.decode("utf-8"))
-        self.assertEqual(result["status"], 400)
+        self.assertEqual(result["status"], 409)
 
     def test_user_sign_up_with_wrong_email_format(self):
         response = self.client.post(

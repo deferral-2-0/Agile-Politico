@@ -49,7 +49,6 @@ def check_matching_items_in_db_table(params, table_name):
         SELECT {} from {} WHERE {}.{} = '{}'
         """.format(key, table_name, table_name, key, value)
         duplicated = select_data_from_db(query)
-        print(duplicated)
         if duplicated:
-            abort(response_fn(400, "error",
+            abort(response_fn(409, "error",
                               "Error. '{}' '{}' is already in use".format(key, value)))
