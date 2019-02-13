@@ -47,16 +47,23 @@ def set_up_tables():
         isAdmin BOOLEAN
     )"""
 
-
+    parties_table = """ 
+    CREATE TABLE parties (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR (40) NOT NULL UNIQUE
+        hqAddress VARCHAR (30),
+        logoUrl VARCHAR (60)
+    )
+     """
 
     # I'm the admin of this system.
     password = generate_password_hash('BootcampWeek1')
     create_admin_query = """
     INSERT INTO users(username, firstname, lastname, othername ,phone, email, password, passportUrl , isPolitician ,isAdmin) VALUES(
         '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
-    )""".format('admin', 'Tevin', 'Gachagua', 'Thuku' ,'0742546892', 'tevinthuku@gmail.com', password, "", False ,True)
+    )""".format('admin', 'Tevin', 'Gachagua', 'Thuku', '0742546892', 'tevinthuku@gmail.com', password, "", False, True)
 
-    return [table_users,create_admin_query]
+    return [table_users, create_admin_query, parties_table]
 
 
 def drop_table_if_exists():
@@ -65,8 +72,9 @@ def drop_table_if_exists():
     """
     drop_users_table = """
     DROP TABLE IF EXISTS users CASCADE"""
-
-    return [drop_users_table]
+    drop_parties_table = """
+    DROP TABLE IF EXISTS parties CASCADE"""
+    return [drop_users_table, drop_parties_table]
 
 
 def connect_to_db(query=None, DB_URL=None):
@@ -76,7 +84,7 @@ def connect_to_db(query=None, DB_URL=None):
     conn = None
     cursor = None
     if DB_URL is None:
-        DB_URL = os.getenv('DATABASE_URL') #get the DATABASE_URL
+        DB_URL = os.getenv('DATABASE_URL')  # get the DATABASE_URL
         print(DB_URL)
 
     try:
@@ -123,6 +131,7 @@ def select_data_from_db(query):
         conn.close()
 
     return rows
+
 
 # initialize the db operations
 if __name__ == '__main__':
