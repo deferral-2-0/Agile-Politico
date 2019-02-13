@@ -50,3 +50,11 @@ def create_office(user):
 
     except psycopg2.DatabaseError as _error:
         abort(utils.response_fn(500, "error", "Server error"))
+
+
+@path_2.route("/offices", methods=['GET'])
+def get_all_offices():
+    offices = OfficesModel.get_all_offices()
+    if offices:
+        return utils.response_fn(200, "data", offices)
+    return utils.response_fn(200, "data", [])

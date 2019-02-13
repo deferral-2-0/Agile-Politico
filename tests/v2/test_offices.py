@@ -24,7 +24,7 @@ class BaseTestClass(unittest.TestCase):
 
         self.admintoken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRldmludGh1a3VAZ21haWwuY29tIn0.Nehevl-RbT5FFF484k1fuW9DV7u5ZqrgiPqAe7igpwA"
         self.newoffice = {
-            "type": "Governer",
+            "type": "Governor",
             "name": "Governor Narok County"
         }
 
@@ -74,3 +74,18 @@ class TestOfficesFunctionality(BaseTestClass):
             headers={'x-access-token': usertoken},
             content_type="application/json")
         self.assertEqual(response.status_code, 401)
+
+    def test_view_all_offices(self):
+        res = self.client.get("api/v2/offices")
+        self.assertEqual(res.status_code, 200)
+
+    def test_view_offices_after_insert(self):
+        self.AdminPostOffice()
+        res = self.client.get("api/v2/offices")
+        self.assertEqual(res.status_code, 200)
+        dataresponse = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"], [{
+            "id": 1,
+            "name": "Governor Narok County",
+            "type": "Governor"
+        }])
