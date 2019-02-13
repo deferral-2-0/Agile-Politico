@@ -5,7 +5,8 @@ from app.api.v1.views.offices import path_1 as offices
 
 
 from app.api.v2.views.users import path_2 as users
-from app.api.v2.views.parties import path_2 as parties
+from app.api.v2.views.parties import path_2 as v2parties
+from app.api.v2.views.offices import path_2 as v2offices
 from app.api.v2.models.db import init_db
 
 """
@@ -46,7 +47,6 @@ def handle_method_not_allowed(*_):
         Handle all 405 errors of method not allowed in the app
         This occur when a method is used on a route that does
         not allow the method to be used
-
     """
     return response_fn(405, "error", "method not allowed")
 
@@ -73,7 +73,8 @@ def app(config_name):
     v2 blueprints & configuration
     """
     flaskapp.register_blueprint(users)
-    flaskapp.register_blueprint(parties)
+    flaskapp.register_blueprint(v2parties)
+    flaskapp.register_blueprint(v2offices)
     if config_name != "testing":
         init_db()
     return flaskapp

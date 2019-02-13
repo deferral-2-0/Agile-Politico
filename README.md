@@ -53,16 +53,16 @@ A Platform for driving political change and engagement
 <details>
 <summary>V1 Politico Endpoints</summary>
 
-| Method   | Endpoint                             | Description                           |
-| -------- | ------------------------------------ | ------------------------------------- |
-| `GET`    | `/api/v1/offices`                    | View All offices created by the ADMIN |
-| `POST`   | `/api/v1/offices`                    | Post a new office                     |
-| `GET`    | `/api/v1/offices/<int:office_id>`    | Get a specific office                 |
-| `GET`    | `/api/v1/parties`                    | View all parties created by ADMIN     |
-| `POST`   | `/api/v1/parties`                    | Post a new party                      |
-| `GET`    | `api/v1/parties/<int:party_id>`      | Get specific party Id                 |
-| `PATCH`  | `api/v1/parties/<int:party_id>/name` | Update a party by name                |
-| `DELETE` | `api/v1/parties/<int:party_id>`      | Delete a party by Id                  |
+| Method   | Endpoint                              | Description                           |
+| -------- | ------------------------------------- | ------------------------------------- |
+| `GET`    | `/api/v1/offices`                     | View All offices created by the ADMIN |
+| `POST`   | `/api/v1/offices`                     | Post a new office                     |
+| `GET`    | `/api/v1/offices/<int:office_id>`     | Get a specific office                 |
+| `GET`    | `/api/v1/parties`                     | View all parties created by ADMIN     |
+| `POST`   | `/api/v1/parties`                     | Post a new party                      |
+| `GET`    | `/api/v1/parties/<int:party_id>`      | Get specific party Id                 |
+| `PATCH`  | `/api/v1/parties/<int:party_id>/name` | Update a party by name                |
+| `DELETE` | `/api/v1/parties/<int:party_id>`      | Delete a party by Id                  |
 
 </details>
 
@@ -80,6 +80,7 @@ A Platform for driving political change and engagement
 | `GET`    | `/api/v2/parties/<int:party_id>`      | Get specific party details           |
 | `PATCH`  | `/api/v2/parties/<int:party_id>/name` | Admin can Update a party by its name |
 | `DELETE` | `/api/v2/parties/<int:party_id>`      | An Admin can delete a party          |
+| `POST`   | `/api/v2/offices`                     | An Admin can create an office        |
 
 </details>
 
