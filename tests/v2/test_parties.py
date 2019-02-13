@@ -204,3 +204,32 @@ class TestPartiesFunctionality(BaseTestClass):
                                 headers={'x-access-token': ordinaryuser},
                                 content_type="application/json")
         self.assertEqual(res.status_code, 401)
+
+    def test_admin_deleting_party(self):
+        self.AdminPostParty()
+        res = self.client.delete(
+            "/api/v2/parties/{}".format(1),
+            content_type="application/json",
+            headers={'x-access-token': self.admintoken}
+        )
+        self.assertEqual(res.status_code, 200)
+
+    def test_admin_deleting_non_existing_party(self):
+        self.AdminPostParty()
+        res = self.client.delete(
+            "/api/v2/parties/{}".format(100),
+            content_type="application/json",
+            headers={"x-access-token": self.admintoken}
+        )
+        self.assertEqual(res.status_code, 404)
+
+    def test_ordinary_user_deleting_party(self):
+        self.AdminPostParty()
+        ordinaryuser = jwt.encode(
+            {"email": "johndoe@gmail.com"}, KEY, algorithm='HS256')
+        res = self.client.delete(
+            "/api/v2/parties/{}".format(1),
+            content_type="application/json",
+            headers={"x-access-token": ordinaryuser}
+        )
+        self.assertEqual(res.status_code, 401)
