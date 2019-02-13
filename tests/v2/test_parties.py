@@ -127,3 +127,20 @@ class TestPartiesFunctionality(BaseTestClass):
         self.assertEqual(response.status_code, 401)
         result = json.loads(response.data.decode("utf-8"))
         self.assertEqual(result["status"], 401)
+
+    def test_view_list_after_insert(self):
+        self.client.post(
+            "api/v2/parties",
+            data=json.dumps(self.newparty),
+            headers={'x-access-token': self.admintoken},
+            content_type="application/json")
+        response = self.client.get("api/v2/parties",
+                                   content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        result = json.loads(response.data.decode("utf-8"))
+        self.assertEqual(result["data"], [{
+            "id": 1,
+            "name": "Party1",
+            "hqAddress": "Nairobi",
+            "logoUrl": ""
+        }])

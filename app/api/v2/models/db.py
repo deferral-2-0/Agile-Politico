@@ -8,6 +8,9 @@ import psycopg2.extras
 from werkzeug.security import generate_password_hash
 
 
+isTesting = os.getenv("TESTING")
+
+
 def init_db(DB_URL=None):
     """
         Initialize db connection
@@ -50,11 +53,10 @@ def set_up_tables():
     parties_table = """ 
     CREATE TABLE parties (
         id SERIAL PRIMARY KEY,
-        name VARCHAR NOT NULL UNIQUE,
+        name VARCHAR (35) NOT NULL UNIQUE,
         hqAddress VARCHAR (30),
         logoUrl VARCHAR
-    )
-     """
+    )"""
 
     # I'm the admin of this system.
     password = generate_password_hash('BootcampWeek1')
@@ -83,9 +85,12 @@ def connect_to_db(query=None, DB_URL=None):
     """
     conn = None
     cursor = None
-    if DB_URL is None:
-        DB_URL = os.getenv('DATABASE_URL')  # get the DATABASE_URL
+    if isTesting:
+        print(isTesting)
+        DB_URL = os.getenv('DATABASE_TEST_URL')  # get the DATABASE_URL
         print(DB_URL)
+    else:
+        DB_URL = os.getenv('DATABASE_URL')
 
     try:
         # connect to db
@@ -103,7 +108,8 @@ def connect_to_db(query=None, DB_URL=None):
            psycopg2.DatabaseError,
            psycopg2.ProgrammingError) as error:
         print("DB ERROR: {}".format(error))
-
+    print(conn)
+    print(cursor)
     return conn, cursor
 
 

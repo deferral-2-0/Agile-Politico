@@ -23,7 +23,6 @@ class PartiesModel:
         INSERT INTO parties(name, hqAddress, logoUrl) VALUES(
             '{}', '{}', '{}'
         )""".format(self.name, self.hqAddress, self.logoUrl)
-
         db.query_data_from_db(save_party_query)
 
     @staticmethod
@@ -34,4 +33,12 @@ class PartiesModel:
         get_all_parties_query = """
         SELECT id, name, hqAddress, logoUrl FROM parties
         """
-        return db.query_data_from_db(get_all_parties_query)
+        # parties = db.select_data_from_db(get_all_parties_query)
+        data = []
+        for party in db.select_data_from_db(get_all_parties_query):
+            formattedparty = {'id': party[0],
+                              'name': party[1],
+                              'hqAddress': party[2],
+                              'logoUrl': party[3]}
+            data.append(formattedparty)
+        return data

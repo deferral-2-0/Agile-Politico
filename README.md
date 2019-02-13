@@ -41,6 +41,10 @@ A Platform for driving political change and engagement
 
 5) Running tests
    ```
+     $ export TESTING=1
+   ```
+   then
+   ```
       python -m pytest --cov=app/api
    ```
 6) Start the server

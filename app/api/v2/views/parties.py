@@ -16,7 +16,6 @@ def get_all_parties():
         This method gets all parties
     """
     parties = PartiesModel.get_all_parties()
-    print(parties)
     if parties:
         return utils.response_fn(200, "data", parties)
     return utils.response_fn(200, "data", [])
