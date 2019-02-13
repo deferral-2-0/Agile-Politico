@@ -72,3 +72,15 @@ class PartiesModel:
         """.format(name, party_id)
 
         db.query_data_from_db(update_party)
+
+    @staticmethod
+    def delete_specific_party(party_id):
+        """
+        This method deletes a party by its Id
+        from the db parties table.
+        """
+        delete_query = """
+        DELETE FROM parties
+        WHERE parties.id = '{}'""".format(party_id)
+
+        db.query_data_from_db(delete_query)

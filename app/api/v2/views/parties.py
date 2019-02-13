@@ -83,12 +83,20 @@ def update_party(user, party_id):
     """
 
     try:
+        """
+            is the name attr in the payload of the request?
+            if not throw an error
+        """
         data = request.get_json()
         name = data['name']
     except KeyError:
         abort(utils.response_fn(400, "error", "Provide a name to update"))
 
     try:
+        """
+            is the email present or empty
+            if its empty then the user does not have an account.
+        """
         email = user[0][0]
     except:
         return utils.response_fn(401, "error", "You don't have an account")
@@ -103,3 +111,27 @@ def update_party(user, party_id):
             }])
         return utils.response_fn(404, "error", "Party not found")
     return utils.response_fn(401, "error", "You are not authorized.")
+
+
+@path_2.route("/parties/<int:party_id>", methods=["DELETE"])
+@token_required
+def delete_party(user, party_id):
+    try:
+        """
+            does the request agent have an account @
+            politico.
+        """
+        email = user[0][0]
+    except:
+        return utils.response_fn(401, "error", "You don't have an account")
+
+    if email == "tevinthuku@gmail.com":
+        party = PartiesModel.get_specific_party(party_id)
+        if party:
+            # delete party here
+            PartiesModel.delete_specific_party(party_id)
+            return utils.response_fn(200, "data", [{
+                "id": party_id
+            }])
+        return utils.response_fn(404, "error", "the party does not exist")
+    return utils.response_fn(401, "error", "You don't have permission to delete the party")
