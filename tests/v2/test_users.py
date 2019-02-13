@@ -15,8 +15,7 @@ class BaseTestClass(unittest.TestCase):
     def setUp(self):
         self.app = app("testing")
         self.client = self.app.test_client()
-        self.DB_URL = app_config['TEST_DB_URL']
-        init_db(self.DB_URL)
+        init_db()
 
         self.new_user = {
             "username": "Tevyn",
@@ -109,7 +108,7 @@ class BaseTestClass(unittest.TestCase):
     def tearDown(self):
         """Clear the db after tests finish running"""
         self.app.testing = False
-        init_db(self.DB_URL)
+        init_db()
 
 
 class TestUserEndpoints(BaseTestClass):

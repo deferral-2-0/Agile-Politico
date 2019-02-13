@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash
 isTesting = os.getenv("TESTING")
 
 
-def init_db(DB_URL=None):
+def init_db():
     """
         Initialize db connection
     """
@@ -86,9 +86,7 @@ def connect_to_db(query=None, DB_URL=None):
     conn = None
     cursor = None
     if isTesting:
-        print(isTesting)
-        DB_URL = os.getenv('DATABASE_TEST_URL')  # get the DATABASE_URL
-        print(DB_URL)
+        DB_URL = os.getenv('DATABASE_TEST_URL')  # get the TEST DATABASE_URL
     else:
         DB_URL = os.getenv('DATABASE_URL')
 
@@ -108,8 +106,6 @@ def connect_to_db(query=None, DB_URL=None):
            psycopg2.DatabaseError,
            psycopg2.ProgrammingError) as error:
         print("DB ERROR: {}".format(error))
-    print(conn)
-    print(cursor)
     return conn, cursor
 
 

@@ -73,5 +73,5 @@ def app(config_name):
     """
     flaskapp.register_blueprint(users)
     flaskapp.register_blueprint(parties)
-    init_db(app_config["DB_URL"])
+    init_db()
     return flaskapp
