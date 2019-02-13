@@ -6,6 +6,10 @@ from app import app
 from config import app_config
 from app.api.v2.models.db import init_db
 
+import jwt
+import os
+KEY = os.getenv('SECRET_KEY')
+
 
 class BaseTestClass(unittest.TestCase):
     """
@@ -111,3 +115,15 @@ class TestPartiesFunctionality(BaseTestClass):
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode("utf-8"))
         self.assertEqual(result["status"], 400)
+
+    def test_unidentified_user_creating_party(self):
+        mocktoken = jwt.encode(
+            {"email": "ninja@gmail.com"}, KEY, algorithm='HS256')
+        response = self.client.post(
+            "api/v2/parties",
+            data=json.dumps(self.newparty),
+            headers={'x-access-token': mocktoken},
+            content_type="application/json")
+        self.assertEqual(response.status_code, 401)
+        result = json.loads(response.data.decode("utf-8"))
+        self.assertEqual(result["status"], 401)

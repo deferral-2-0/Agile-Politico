@@ -12,7 +12,7 @@ class PartiesModel:
 
     def __init__(self, name, hqAddress, logoUrl):
         self.name = name
-        self.hqAddress = hqAddress,
+        self.hqAddress = hqAddress
         self.logoUrl = logoUrl
 
     def save_party(self):

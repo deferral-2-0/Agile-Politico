@@ -50,9 +50,9 @@ def set_up_tables():
     parties_table = """ 
     CREATE TABLE parties (
         id SERIAL PRIMARY KEY,
-        name VARCHAR (40) NOT NULL UNIQUE,
+        name VARCHAR NOT NULL UNIQUE,
         hqAddress VARCHAR (30),
-        logoUrl VARCHAR (60)
+        logoUrl VARCHAR
     )
      """
 
