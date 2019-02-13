@@ -144,3 +144,25 @@ class TestPartiesFunctionality(BaseTestClass):
             "hqAddress": "Nairobi",
             "logoUrl": ""
         }])
+
+    def test_getting_specific_party(self):
+        self.client.post(
+            "api/v2/parties",
+            data=json.dumps(self.newparty),
+            headers={'x-access-token': self.admintoken},
+            content_type="application/json")
+        res = self.client.get("api/v2/parties/1")
+        self.assertEqual(res.status_code, 200)
+        dataresponse = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"], [{
+            "id": 1,
+            "name": "Party1",
+            "hqAddress": "Nairobi",
+            "logoUrl": ""
+        }])
+
+    def test_getting_missing_party(self):
+        res = self.client.get("api/v2/parties/3")
+        self.assertEqual(res.status_code, 404)
+        dataresponse = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(dataresponse["status"], 404)

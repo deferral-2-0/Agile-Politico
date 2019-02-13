@@ -63,12 +63,13 @@ def create_party(user):
     except psycopg2.DatabaseError as _error:
         abort(utils.response_fn(500, "error", "Server error"))
 
-    # try:
-    #     """
-    #     check if email is admins' email
-    #     """
-    #     if email == "tevinthuku@gmail.com":
-    #         # create party
-    #         newparty = PartiesModel()
 
-    #     return utils.response_fn(401, "error", "You are not authorized to create a party")
+@path_2.route("/parties/<int:party_id>", methods=["GET"])
+def get_specific_party(party_id):
+    """
+        This method gets a specific party from the db
+    """
+    party = PartiesModel.get_specific_party(party_id)
+    if party:
+        return utils.response_fn(200, "data", party)
+    return utils.response_fn(404, "error", "Party not found")

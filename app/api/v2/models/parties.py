@@ -26,19 +26,38 @@ class PartiesModel:
         db.query_data_from_db(save_party_query)
 
     @staticmethod
-    def get_all_parties():
+    def formatParties(iterable):
         """
-            Get all parties
+            This function will help in formatting the parties data 
+            in a record format
         """
-        get_all_parties_query = """
-        SELECT id, name, hqAddress, logoUrl FROM parties
-        """
-        # parties = db.select_data_from_db(get_all_parties_query)
         data = []
-        for party in db.select_data_from_db(get_all_parties_query):
+        for party in iterable:
             formattedparty = {'id': party[0],
                               'name': party[1],
                               'hqAddress': party[2],
                               'logoUrl': party[3]}
             data.append(formattedparty)
         return data
+
+    @staticmethod
+    def get_all_parties():
+        """
+            Get all parties from the database.
+        """
+        get_all_parties_query = """
+        SELECT id, name, hqAddress, logoUrl FROM parties
+        """
+        return PartiesModel.formatParties(db.select_data_from_db(get_all_parties_query))
+
+    @staticmethod
+    def get_specific_party(party_id):
+        """
+            This method gets to select a specific PARTY
+            which matches the id provided in the function args
+        """
+        select_single_party = """
+        SELECT id, name, hqAddress, logoUrl FROM parties
+        WHERE parties.id = '{}'""".format(party_id)
+
+        return PartiesModel.formatParties(db.select_data_from_db(select_single_party))
