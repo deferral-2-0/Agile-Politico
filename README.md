@@ -2,9 +2,9 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/65cb6a9e0fc4d16df8ce/maintainability)](https://codeclimate.com/github/Tevinthuku/Politico/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/Tevinthuku/Politico/badge.svg?branch=develop)](https://coveralls.io/github/Tevinthuku/Politico?branch=develop)
 
-
 ![](https://img.shields.io/github/last-commit/Tevinthuku/Politico/develop.svg?style=for-the-badge)
 ![](https://img.shields.io/pypi/pyversions/flask.svg?style=for-the-badge)
+
 # Politico
 
 A Platform for driving political change and engagement
@@ -32,26 +32,24 @@ A Platform for driving political change and engagement
    ```
 
 4. Setup env variables
-    - $ export FLASK_APP=run.py
-    - $ export FLASK_DEBUG=1
-    - $ export FLASK_ENV=development
-    - $ export SECRET_KEY=`<SECRET KEY>`
-    - $ export DATABASE_URL=`<URI>`
-    - $ export DATABASE_TEST_URL=`<URI>`
+   - \$ export FLASK_APP=run.py
+   - \$ export FLASK_DEBUG=1
+   - \$ export FLASK_ENV=development
+   - \$ export SECRET_KEY=`<SECRET KEY>`
+   - \$ export DATABASE_URL=`<URI>`
+   - \$ export DATABASE_TEST_URL=`<URI>`
 
-
-5. Running tests
-      ```
-         python -m pytest --cov=app/api
-      ```
-6. Start the server
-      ```
-         flask run
-      ```
+5) Running tests
+   ```
+      python -m pytest --cov=app/api
+   ```
+6) Start the server
+   ```
+      flask run
+   ```
 
 <details>
 <summary>V1 Politico Endpoints</summary>
-
 
 | Method   | Endpoint                             | Description                           |
 | -------- | ------------------------------------ | ------------------------------------- |
@@ -63,16 +61,20 @@ A Platform for driving political change and engagement
 | `GET`    | `api/v1/parties/<int:party_id>`      | Get specific party Id                 |
 | `PATCH`  | `api/v1/parties/<int:party_id>/name` | Update a party by name                |
 | `DELETE` | `api/v1/parties/<int:party_id>`      | Delete a party by Id                  |
+
 </details>
 
 <details open>
 
 <summary>V2 Politico Endpoints</summary>
 
-| Method   | Endpoint                             | Description                           |
-| -------- | ------------------------------------ | ------------------------------------- |
-</details>
+| Method | Endpoint              | Description             |
+| ------ | --------------------- | ----------------------- |
+| `POST` | `/api/v2/auth/signup` | Create a new user       |
+| `POST` | `/api/v2/auth/signin` | User can login          |
+| `POST` | `/api/v2/auth/reset`  | User can reset password |
 
+</details>
 
 ### Author: TevinThuku
 

@@ -1,3 +1,8 @@
+from app.api.v2.views.users import path_2 as users
+from app.api.v2.models.db import init_db
+from app.api.utils import response_fn
+from app.api.v1.views.parties import path_1 as parties
+from app.api.v1.views.offices import path_1 as offices
 """
 
 This is where we initialize the app
@@ -16,10 +21,6 @@ Will still support v1 to minimize breaking changes for my API consumers.
 Will be removing V1 in the next 6 months.
 
 """
-from app.api.v1.views.offices import path_1 as offices
-from app.api.v1.views.parties import path_1 as parties
-
-from app.api.utils import response_fn
 
 
 """
@@ -27,8 +28,6 @@ from app.api.utils import response_fn
 v2 configuration objects and functions.
 
 """
-
-from app.api.v2.models.db import init_db
 
 
 def handle_all_404(*_):
@@ -68,5 +67,6 @@ def app(config_name):
     """
     v2 blueprints & configuration
     """
+    flaskapp.register_blueprint(users)
     init_db(app_config["DB_URL"])
     return flaskapp

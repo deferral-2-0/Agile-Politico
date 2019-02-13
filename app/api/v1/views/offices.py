@@ -6,8 +6,8 @@ from app.api.v1 import path_1
 from app.api.v1.models.offices import OfficesModel, OFFICES
 
 # validate function
-from app.api.utils import is_valid_string, response_fn, get_all_items
-from app.api.utils import get_specific_item
+from app.api.utils import is_valid_string, response_fn
+from app.api.v1.utils import get_specific_item, get_all_items
 
 
 @path_1.route("/offices", methods=['GET'])
