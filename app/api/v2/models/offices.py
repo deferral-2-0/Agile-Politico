@@ -52,3 +52,16 @@ class OfficesModel:
         SELECT id, name, type FROM offices
         """
         return OfficesModel.formatOffices(db.select_data_from_db(get_all_offices))
+
+    @staticmethod
+    def get_specific_office(office_id):
+        """
+            This method gets to select a specific OFFICE
+            from the list of offices that matches the id provided
+            in the arguments
+        """
+        select_single_office = """
+        SELECT id, name, type FROM offices
+        WHERE offices.id = '{}'""".format(office_id)
+
+        return OfficesModel.formatOffices(db.select_data_from_db(select_single_office))

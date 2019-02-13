@@ -89,3 +89,12 @@ class TestOfficesFunctionality(BaseTestClass):
             "name": "Governor Narok County",
             "type": "Governor"
         }])
+
+    def test_getting_specific_party(self):
+        self.AdminPostOffice()
+        res = self.client.get("api/v2/offices/1")
+        self.assertEqual(res.status_code, 200)
+
+    def test_getting_undefined_office(self):
+        res = self.client.get("api/v2/offices/100")
+        self.assertEqual(res.status_code, 404)

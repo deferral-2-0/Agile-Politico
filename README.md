@@ -81,6 +81,8 @@ A Platform for driving political change and engagement
 | `PATCH`  | `/api/v2/parties/<int:party_id>/name` | Admin can Update a party by its name |
 | `DELETE` | `/api/v2/parties/<int:party_id>`      | An Admin can delete a party          |
 | `POST`   | `/api/v2/offices`                     | An Admin can create an office        |
+| `GET`    | `/api/v2/offices`                     | Get all offices created in the DB    |
+| `GET`    | `/api/v2/offices/<int:office_id>`     | Get a specific office from the DB    |
 
 </details>
 

@@ -54,7 +54,24 @@ def create_office(user):
 
 @path_2.route("/offices", methods=['GET'])
 def get_all_offices():
+    """
+        Get all offices from the
+        database. No authentication is required here.
+    """
     offices = OfficesModel.get_all_offices()
     if offices:
         return utils.response_fn(200, "data", offices)
     return utils.response_fn(200, "data", [])
+
+
+@path_2.route("/offices/<int:office_id>", methods=["GET"])
+def get_specific_office(office_id):
+    """
+        This method gets a specific office from
+        the list of offices created by the ADMIN.
+        No auth is required here.
+    """
+    office = OfficesModel.get_specific_office(office_id)
+    if office:
+        return utils.response_fn(200, "data", office)
+    return utils.response_fn(404, "error", "Office is not not found")
