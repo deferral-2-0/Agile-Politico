@@ -74,5 +74,6 @@ def app(config_name):
     """
     flaskapp.register_blueprint(users)
     flaskapp.register_blueprint(parties)
-    init_db()
+    if config_name != "testing":
+        init_db()
     return flaskapp
