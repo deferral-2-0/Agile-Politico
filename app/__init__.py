@@ -60,6 +60,7 @@ def app(config_name):
     """
     flaskapp = Flask(__name__)
     flaskapp.config.from_object(app_config[config_name])
+    flaskapp.app_context().push()
     flaskapp.url_map.strict_slashes = False
     flaskapp.register_error_handler(404, handle_all_404)
     flaskapp.register_error_handler(405, handle_method_not_allowed)

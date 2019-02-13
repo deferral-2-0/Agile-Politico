@@ -15,6 +15,7 @@ class BaseTestClass(unittest.TestCase):
     def setUp(self):
         self.app = app("testing")
         self.client = self.app.test_client()
+        self.app.config['TESTING'] = True
         init_db()
 
         self.new_user = {

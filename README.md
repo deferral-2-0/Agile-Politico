@@ -40,13 +40,11 @@ A Platform for driving political change and engagement
    - \$ export DATABASE_TEST_URL=`<URI>`
 
 5) Running tests
-   ```
-     $ export TESTING=1
-   ```
-   then
+
    ```
       python -m pytest --cov=app/api
    ```
+
 6) Start the server
    ```
       flask run
@@ -77,6 +75,8 @@ A Platform for driving political change and engagement
 | `POST` | `/api/v2/auth/signup` | Create a new user       |
 | `POST` | `/api/v2/auth/signin` | User can login          |
 | `POST` | `/api/v2/auth/reset`  | User can reset password |
+| `GET`  | `/api/v2/parties`     | Fetch all parties       |
+| `POST` | `/api/v2/parties`     | Admin can post a party  |
 
 </details>
 

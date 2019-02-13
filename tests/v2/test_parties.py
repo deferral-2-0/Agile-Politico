@@ -20,6 +20,7 @@ class BaseTestClass(unittest.TestCase):
         self.app = app("testing")
         self.client = self.app.test_client()
         init_db()
+        self.app.config['TESTING'] = True
 
         self.new_user = {
             "username": "Tevyn",

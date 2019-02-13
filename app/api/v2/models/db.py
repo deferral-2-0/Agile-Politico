@@ -7,8 +7,8 @@ import psycopg2
 import psycopg2.extras
 from werkzeug.security import generate_password_hash
 
-
-isTesting = os.getenv("TESTING")
+# import a current_app context so that we can get access to the apps config.
+from flask import current_app as app
 
 
 def init_db():
@@ -85,7 +85,7 @@ def connect_to_db(query=None, DB_URL=None):
     """
     conn = None
     cursor = None
-    if isTesting:
+    if app.config['TESTING']:
         DB_URL = os.getenv('DATABASE_TEST_URL')  # get the TEST DATABASE_URL
     else:
         DB_URL = os.getenv('DATABASE_URL')
