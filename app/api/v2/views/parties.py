@@ -73,3 +73,33 @@ def get_specific_party(party_id):
     if party:
         return utils.response_fn(200, "data", party)
     return utils.response_fn(404, "error", "Party not found")
+
+
+@path_2.route("/parties/<int:party_id>/name", methods=["PATCH"])
+@token_required
+def update_party(user, party_id):
+    """
+        This method updates a party if it exists
+    """
+
+    try:
+        data = request.get_json()
+        name = data['name']
+    except KeyError:
+        abort(utils.response_fn(400, "error", "Provide a name to update"))
+
+    try:
+        email = user[0][0]
+    except:
+        return utils.response_fn(401, "error", "You don't have an account")
+    if email == "tevinthuku@gmail.com":
+        party = PartiesModel.get_specific_party(party_id)
+        if party:
+            # update party here
+            PartiesModel.update_specific_party(name=name, party_id=party_id)
+            return utils.response_fn(200, "data", [{
+                "name": name,
+                "id": party_id
+            }])
+        return utils.response_fn(404, "error", "Party not found")
+    return utils.response_fn(401, "error", "You are not authorized.")

@@ -61,3 +61,14 @@ class PartiesModel:
         WHERE parties.id = '{}'""".format(party_id)
 
         return PartiesModel.formatParties(db.select_data_from_db(select_single_party))
+
+    @staticmethod
+    def update_specific_party(name, party_id):
+        """
+            This method gets a party by Id and updates it.
+        """
+        update_party = """
+        UPDATE parties SET name = '{}' WHERE parties.name = '{}'
+        """.format(name, party_id)
+
+        db.query_data_from_db(update_party)

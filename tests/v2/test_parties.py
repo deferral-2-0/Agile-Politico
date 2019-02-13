@@ -65,6 +65,13 @@ class TestPartiesFunctionality(BaseTestClass):
                                 data=json.dumps(self.new_user),
                                 content_type="application/json")
 
+    def AdminPostParty(self):
+        return self.client.post(
+            "api/v2/parties",
+            data=json.dumps(self.newparty),
+            headers={'x-access-token': self.admintoken},
+            content_type="application/json")
+
     def test_fetching_all_parties(self):
         response = self.client.get("api/v2/parties",
                                    content_type="application/json")
@@ -73,11 +80,7 @@ class TestPartiesFunctionality(BaseTestClass):
         self.assertEqual(result["status"], 200)
 
     def test_posting_party_as_admin(self):
-        response = self.client.post(
-            "api/v2/parties",
-            data=json.dumps(self.newparty),
-            headers={'x-access-token': self.admintoken},
-            content_type="application/json")
+        response = self.AdminPostParty()
         self.assertEqual(response.status_code, 201)
         result = json.loads(response.data.decode("utf-8"))
         self.assertEqual(result["status"], 201)
@@ -129,11 +132,7 @@ class TestPartiesFunctionality(BaseTestClass):
         self.assertEqual(result["status"], 401)
 
     def test_view_list_after_insert(self):
-        self.client.post(
-            "api/v2/parties",
-            data=json.dumps(self.newparty),
-            headers={'x-access-token': self.admintoken},
-            content_type="application/json")
+        self.AdminPostParty()
         response = self.client.get("api/v2/parties",
                                    content_type="application/json")
         self.assertEqual(response.status_code, 200)
@@ -146,11 +145,7 @@ class TestPartiesFunctionality(BaseTestClass):
         }])
 
     def test_getting_specific_party(self):
-        self.client.post(
-            "api/v2/parties",
-            data=json.dumps(self.newparty),
-            headers={'x-access-token': self.admintoken},
-            content_type="application/json")
+        self.AdminPostParty()
         res = self.client.get("api/v2/parties/1")
         self.assertEqual(res.status_code, 200)
         dataresponse = json.loads(res.data.decode("utf-8"))
@@ -166,3 +161,46 @@ class TestPartiesFunctionality(BaseTestClass):
         self.assertEqual(res.status_code, 404)
         dataresponse = json.loads(res.data.decode("utf-8"))
         self.assertEqual(dataresponse["status"], 404)
+
+    def test_admin_updating_existing_party(self):
+        self.AdminPostParty()
+        res = self.client.patch("api/v2/parties/1/name",
+                                data=json.dumps({"name": "Party A"}),
+                                headers={'x-access-token': self.admintoken},
+                                content_type="application/json")
+        self.assertEqual(res.status_code, 200)
+        dataresponse = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"], [{
+            "id": 1,
+            "name": "Party A"
+        }])
+
+    def test_admin_updating_non_existent_party(self):
+        res = self.client.patch("api/v2/parties/20/name",
+                                data=json.dumps({"name": "Party 20 num"}),
+                                headers={'x-access-token': self.admintoken},
+                                content_type="application/json")
+        self.assertEqual(res.status_code, 404)
+        dataresponse = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(dataresponse["status"], 404)
+
+    def test_admin_updating_with_no_params_provided(self):
+        self.AdminPostParty()
+        res = self.client.patch("api/v2/parties/1/name",
+                                data=json.dumps(
+                                    {"newname": "Missing new name"}),
+                                headers={'x-access-token': self.admintoken},
+                                content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+        dataresponse = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(dataresponse["status"], 400)
+
+    def test_ordinary_user_updating_party(self):
+        self.AdminPostParty()
+        ordinaryuser = jwt.encode(
+            {"email": "johndoe@gmail.com"}, KEY, algorithm='HS256')
+        res = self.client.patch("api/v2/parties/1/name",
+                                data=json.dumps({"name": "Party 20 num"}),
+                                headers={'x-access-token': ordinaryuser},
+                                content_type="application/json")
+        self.assertEqual(res.status_code, 401)
