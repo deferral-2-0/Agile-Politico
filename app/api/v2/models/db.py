@@ -67,10 +67,10 @@ def set_up_tables():
 
     canditates_table = """
         CREATE TABLE candidates (
-            id SERIAL PRIMARY KEY,
+            id SERIAL,
             candidate INTEGER,
             office INTEGER,
-            
+            PRIMARY KEY (office, candidate)
         )"""
 
     # I'm the admin of this system.
