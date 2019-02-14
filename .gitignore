@@ -13,7 +13,7 @@ htmlcov/
 # Environments
 .vscode
 env/
-/.env
+.env
 venv/
 
 #local files
