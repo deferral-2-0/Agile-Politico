@@ -10,6 +10,8 @@ import jwt
 import os
 KEY = os.getenv('SECRET_KEY')
 
+# base class
+
 
 class BaseTestClass(unittest.TestCase):
     """
