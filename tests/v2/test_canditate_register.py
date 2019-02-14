@@ -104,7 +104,6 @@ class TestUserEndpoints(BaseTestClass):
         self.AdminCreateOffice()  # 1
         res = self.client.post("api/v2/offices/1/register",
                                data=json.dumps({
-                                   "office": 1,
                                }),
                                headers={'x-access-token': self.admintoken},
                                content_type="application/json")
@@ -114,9 +113,8 @@ class TestUserEndpoints(BaseTestClass):
         self.CreatePoliticianUser()  # 2
         self.AdminCreateParty()  # 1
         self.AdminCreateOffice()  # 1
-        res = self.client.post("api/v2/offices/1/register",
+        res = self.client.post("api/v2/offices/12/register",
                                data=json.dumps({
-                                   "office": 12,
                                    "user": 2
                                }),
                                headers={'x-access-token': self.admintoken},
@@ -127,9 +125,8 @@ class TestUserEndpoints(BaseTestClass):
         self.CreatePoliticianUser()  # 2
         self.AdminCreateParty()  # 1
         self.AdminCreateOffice()  # 1
-        res = self.client.post("api/v2/offices/1/register",
+        res = self.client.post("api/v2/offices/12/register",
                                data=json.dumps({
-                                   "office": 12,
                                    "user": 20
                                }),
                                headers={'x-access-token': self.admintoken},
@@ -144,7 +141,6 @@ class TestUserEndpoints(BaseTestClass):
             {"email": "tevinku@gmail.com"}, KEY, algorithm='HS256')
         res = self.client.post("api/v2/offices/1/register",
                                data=json.dumps({
-                                   "office": 12,
                                    "user": 20
                                }),
                                headers={'x-access-token': usertoken},

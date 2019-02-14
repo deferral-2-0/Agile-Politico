@@ -93,7 +93,6 @@ def register_candidate_to_office(userobj, office_id):
 
     try:
         data = request.get_json()
-        office = data['office']
         user = data["user"]
 
     except KeyError:
@@ -103,9 +102,7 @@ def register_candidate_to_office(userobj, office_id):
     if email == "tevinthuku@gmail.com":
         # does the candidate & office exist in the db.
         candidate = UserModel.get_user_by_id(user)
-        office = OfficesModel.get_specific_office(office)
-        print(candidate)
-        print(office)
+        office = OfficesModel.get_specific_office(office_id)
         if candidate and office:
             is_candidate_registered = CandidateModel.check_if_candidate_is_already_registered(
                 candidate[0][0], office[0]["id"])
