@@ -40,9 +40,11 @@ A Platform for driving political change and engagement
    - \$ export DATABASE_TEST_URL=`<URI>`
 
 5) Running tests
+
    ```
       python -m pytest --cov=app/api
    ```
+
 6) Start the server
    ```
       flask run
@@ -51,16 +53,16 @@ A Platform for driving political change and engagement
 <details>
 <summary>V1 Politico Endpoints</summary>
 
-| Method   | Endpoint                             | Description                           |
-| -------- | ------------------------------------ | ------------------------------------- |
-| `GET`    | `/api/v1/offices`                    | View All offices created by the ADMIN |
-| `POST`   | `/api/v1/offices`                    | Post a new office                     |
-| `GET`    | `/api/v1/offices/<int:office_id>`    | Get a specific office                 |
-| `GET`    | `/api/v1/parties`                    | View all parties created by ADMIN     |
-| `POST`   | `/api/v1/parties`                    | Post a new party                      |
-| `GET`    | `api/v1/parties/<int:party_id>`      | Get specific party Id                 |
-| `PATCH`  | `api/v1/parties/<int:party_id>/name` | Update a party by name                |
-| `DELETE` | `api/v1/parties/<int:party_id>`      | Delete a party by Id                  |
+| Method   | Endpoint                              | Description                           |
+| -------- | ------------------------------------- | ------------------------------------- |
+| `GET`    | `/api/v1/offices`                     | View All offices created by the ADMIN |
+| `POST`   | `/api/v1/offices`                     | Post a new office                     |
+| `GET`    | `/api/v1/offices/<int:office_id>`     | Get a specific office                 |
+| `GET`    | `/api/v1/parties`                     | View all parties created by ADMIN     |
+| `POST`   | `/api/v1/parties`                     | Post a new party                      |
+| `GET`    | `/api/v1/parties/<int:party_id>`      | Get specific party Id                 |
+| `PATCH`  | `/api/v1/parties/<int:party_id>/name` | Update a party by name                |
+| `DELETE` | `/api/v1/parties/<int:party_id>`      | Delete a party by Id                  |
 
 </details>
 
@@ -68,11 +70,19 @@ A Platform for driving political change and engagement
 
 <summary>V2 Politico Endpoints</summary>
 
-| Method | Endpoint              | Description             |
-| ------ | --------------------- | ----------------------- |
-| `POST` | `/api/v2/auth/signup` | Create a new user       |
-| `POST` | `/api/v2/auth/signin` | User can login          |
-| `POST` | `/api/v2/auth/reset`  | User can reset password |
+| Method   | Endpoint                              | Description                          |
+| -------- | ------------------------------------- | ------------------------------------ |
+| `POST`   | `/api/v2/auth/signup`                 | Create a new user                    |
+| `POST`   | `/api/v2/auth/signin`                 | User can login                       |
+| `POST`   | `/api/v2/auth/reset`                  | User can reset password              |
+| `GET`    | `/api/v2/parties`                     | Fetch all parties                    |
+| `POST`   | `/api/v2/parties`                     | Admin can post a party               |
+| `GET`    | `/api/v2/parties/<int:party_id>`      | Get specific party details           |
+| `PATCH`  | `/api/v2/parties/<int:party_id>/name` | Admin can Update a party by its name |
+| `DELETE` | `/api/v2/parties/<int:party_id>`      | An Admin can delete a party          |
+| `POST`   | `/api/v2/offices`                     | An Admin can create an office        |
+| `GET`    | `/api/v2/offices`                     | Get all offices created in the DB    |
+| `GET`    | `/api/v2/offices/<int:office_id>`     | Get a specific office from the DB    |
 
 </details>
 

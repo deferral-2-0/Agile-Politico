@@ -7,8 +7,11 @@ import psycopg2
 import psycopg2.extras
 from werkzeug.security import generate_password_hash
 
+# import a current_app context so that we can get access to the apps config.
+from flask import current_app as app
 
-def init_db(DB_URL=None):
+
+def init_db():
     """
         Initialize db connection
     """
@@ -50,11 +53,17 @@ def set_up_tables():
     parties_table = """ 
     CREATE TABLE parties (
         id SERIAL PRIMARY KEY,
-        name VARCHAR NOT NULL UNIQUE,
+        name VARCHAR (35) NOT NULL UNIQUE,
         hqAddress VARCHAR (30),
         logoUrl VARCHAR
-    )
-     """
+    )"""
+
+    offices_table = """
+        CREATE TABLE offices (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR (35) NOT NULL UNIQUE,
+            type VARCHAR (35)
+        )"""
 
     # I'm the admin of this system.
     password = generate_password_hash('BootcampWeek1')
@@ -63,7 +72,7 @@ def set_up_tables():
         '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
     )""".format('admin', 'Tevin', 'Gachagua', 'Thuku', '0742546892', 'tevinthuku@gmail.com', password, "", False, True)
 
-    return [table_users, create_admin_query, parties_table]
+    return [table_users, create_admin_query, parties_table, offices_table]
 
 
 def drop_table_if_exists():
@@ -74,7 +83,9 @@ def drop_table_if_exists():
     DROP TABLE IF EXISTS users CASCADE"""
     drop_parties_table = """
     DROP TABLE IF EXISTS parties CASCADE"""
-    return [drop_users_table, drop_parties_table]
+    drop_offices_table = """
+    DROP TABLE IF EXISTS offices CASCADE"""
+    return [drop_users_table, drop_parties_table, drop_offices_table]
 
 
 def connect_to_db(query=None, DB_URL=None):
@@ -83,9 +94,10 @@ def connect_to_db(query=None, DB_URL=None):
     """
     conn = None
     cursor = None
-    if DB_URL is None:
-        DB_URL = os.getenv('DATABASE_URL')  # get the DATABASE_URL
-        print(DB_URL)
+    if app.config['TESTING']:
+        DB_URL = os.getenv('DATABASE_TEST_URL')  # get the TEST DATABASE_URL
+    else:
+        DB_URL = os.getenv('DATABASE_URL')
 
     try:
         # connect to db
@@ -103,7 +115,6 @@ def connect_to_db(query=None, DB_URL=None):
            psycopg2.DatabaseError,
            psycopg2.ProgrammingError) as error:
         print("DB ERROR: {}".format(error))
-
     return conn, cursor
 
 
