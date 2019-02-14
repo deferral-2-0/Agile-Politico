@@ -65,6 +65,14 @@ def set_up_tables():
             type VARCHAR (35)
         )"""
 
+    canditates_table = """
+        CREATE TABLE candidates (
+            id SERIAL PRIMARY KEY,
+            candidate INTEGER,
+            office INTEGER,
+            
+        )"""
+
     # I'm the admin of this system.
     password = generate_password_hash('BootcampWeek1')
     create_admin_query = """
@@ -72,7 +80,7 @@ def set_up_tables():
         '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
     )""".format('admin', 'Tevin', 'Gachagua', 'Thuku', '0742546892', 'tevinthuku@gmail.com', password, "", False, True)
 
-    return [table_users, create_admin_query, parties_table, offices_table]
+    return [table_users, create_admin_query, parties_table, offices_table, canditates_table]
 
 
 def drop_table_if_exists():
@@ -85,7 +93,9 @@ def drop_table_if_exists():
     DROP TABLE IF EXISTS parties CASCADE"""
     drop_offices_table = """
     DROP TABLE IF EXISTS offices CASCADE"""
-    return [drop_users_table, drop_parties_table, drop_offices_table]
+    drop_candidates_table = """
+    DROP TABLE IF EXISTS candidates CASCADE"""
+    return [drop_users_table, drop_parties_table, drop_offices_table, drop_candidates_table]
 
 
 def connect_to_db(query=None, DB_URL=None):
