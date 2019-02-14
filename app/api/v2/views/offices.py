@@ -9,6 +9,8 @@ from app.api.v2.models.offices import OfficesModel
 from app.api.v2.models.users import UserModel
 from app.api.v2.models.candidates import CandidateModel
 
+from ..utils import isUserAdmin
+
 import psycopg2
 
 
@@ -36,19 +38,18 @@ def create_office(user):
         """
             if email matches, admin's then create the party
         """
-        if email == "tevinthuku@gmail.com":
-            newoffice = OfficesModel(
-                name=name, type=type)
+        # check if details are for an admin.
+        isUserAdmin(email)
+        newoffice = OfficesModel(
+            name=name, type=type)
 
-            check_matching_items_in_db_table({"name": name}, "offices")
+        check_matching_items_in_db_table({"name": name}, "offices")
 
-            newoffice.save_office()
+        newoffice.save_office()
 
-            return utils.response_fn(201, "data", [{
-                "name": name
-            }])
-
-        return utils.response_fn(401, "error", "You are not an admin")
+        return utils.response_fn(201, "data", [{
+            "name": name
+        }])
 
     except psycopg2.DatabaseError as _error:
         abort(utils.response_fn(500, "error", "Server error"))
@@ -89,7 +90,7 @@ def register_candidate_to_office(userobj, office_id):
     try:
         email = userobj[0][0]
     except:
-        return utils.response_fn(401, "error", "You don't have an account")
+        abort(utils.response_fn(401, "error", "You don't have an account"))
 
     try:
         data = request.get_json()
@@ -99,19 +100,21 @@ def register_candidate_to_office(userobj, office_id):
         abort(utils.response_fn(400, "error", "Keys Should be office & user"))
 
     # check if details are for an admin.
-    if email == "tevinthuku@gmail.com":
-        # does the candidate & office exist in the db.
-        candidate = UserModel.get_user_by_id(user)
-        office = OfficesModel.get_specific_office(office_id)
-        if candidate and office:
-            is_candidate_registered = CandidateModel.check_if_candidate_is_already_registered(
-                candidate[0][0], office[0]["id"])
-            if is_candidate_registered:
-                return utils.response_fn(400, "error", "Candidate is already registerd in this office")
-            CandidateModel.register_politician_user_to_office(
-                office[0]["id"], candidate[0][0])
-            return utils.response_fn(201, "message", "registered candidate")
-        else:
-            return utils.response_fn(404, "error", "Either candidate or office is missing in db")
+    isUserAdmin(email)
 
-    return utils.response_fn(401, "error", "You are not authorized.")
+    # does the candidate & office exist in the db.
+    candidate = UserModel.get_user_by_id(user)
+    office = OfficesModel.get_specific_office(office_id)
+    if candidate and office:
+        is_candidate_registered = CandidateModel.check_if_candidate_is_already_registered(
+            candidate[0][0], office[0]["id"])
+        if is_candidate_registered:
+            abort(utils.response_fn(400, "error",
+                                    "Candidate is already registerd in this office"))
+
+        # register the politician user.to a certain office.
+        CandidateModel.register_politician_user_to_office(
+            office[0]["id"], candidate[0][0])
+        return utils.response_fn(201, "message", "registered candidate")
+    else:
+        return utils.response_fn(404, "error", "Either candidate or office is missing in db")
