@@ -7,6 +7,7 @@ from app.api.v1.views.offices import path_1 as offices
 from app.api.v2.views.users import path_2 as users
 from app.api.v2.views.parties import path_2 as v2parties
 from app.api.v2.views.offices import path_2 as v2offices
+from app.api.v2.views.votes import path_2 as V2voters
 from app.api.v2.models.db import init_db
 
 """
@@ -75,6 +76,7 @@ def app(config_name):
     flaskapp.register_blueprint(users)
     flaskapp.register_blueprint(v2parties)
     flaskapp.register_blueprint(v2offices)
+    flaskapp.register_blueprint(V2voters)
     if config_name != "testing":
         """
         dont initialize the db twice while testing.

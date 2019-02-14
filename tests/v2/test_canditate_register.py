@@ -87,7 +87,6 @@ class TestUserEndpoints(BaseTestClass):
         self.AdminCreateParty()  # 1
         self.AdminCreateOffice()  # 1
         res = self.AdminRegisterCandidate()
-        print(res)
         self.assertEqual(res.status_code, 201)
 
     def test_admin_register_politician_candidate_twice(self):

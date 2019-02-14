@@ -121,7 +121,6 @@ class TestUserEndpoints(BaseTestClass):
     def test_user_creating_account_successfully(self):
         response = self.PostUser()
         self.assertEqual(response.status_code, 201)
-        print(response.data)
         result = json.loads(response.data.decode("utf-8"))
         self.assertEqual(result["status"], 201)
 
