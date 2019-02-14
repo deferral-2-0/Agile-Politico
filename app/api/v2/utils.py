@@ -82,3 +82,11 @@ def token_required(f):
 
         return f(user, *args, **kwargs)
     return decorated
+
+
+def isUserAdmin(email):
+    """
+        This function checks if the user is an admin.
+    """
+    if email != "tevinthuku@gmail.com":
+        abort(response_fn(401, "error", "You are not an admin"))

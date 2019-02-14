@@ -9,6 +9,7 @@ from app.api.v2.models.db import init_db
 import jwt
 import os
 KEY = os.getenv('SECRET_KEY')
+ADMIN_TOKEN = os.getenv("ADMIN_TOKEN")
 
 
 class BaseTestClass(unittest.TestCase):
@@ -51,7 +52,7 @@ class BaseTestClass(unittest.TestCase):
             "logoUrl": ""
         }
 
-        self.admintoken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRldmludGh1a3VAZ21haWwuY29tIn0.Nehevl-RbT5FFF484k1fuW9DV7u5ZqrgiPqAe7igpwA"
+        self.admintoken = ADMIN_TOKEN
 
     def tearDown(self):
         """Clear the db after tests finish running"""

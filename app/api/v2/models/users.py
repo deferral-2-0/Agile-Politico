@@ -37,6 +37,18 @@ class UserModel:
 
         db.query_data_from_db(save_user_query)
 
+    @staticmethod
+    def get_user(mechanism="email", value=""):
+        """
+            this method helps in reusing whether we want
+            to check the user by ID or by email or username.
+        """
+        select_user_by_email = """
+        SELECT id, username, password FROM users
+        WHERE users.{} = '{}'""".format(mechanism, value)
+
+        return db.select_data_from_db(select_user_by_email)
+
     def encrypt_password_on_signup(self, password):
         """
             hash password on sign up
@@ -46,11 +58,21 @@ class UserModel:
 
     @staticmethod
     def get_user_by_mail(email):
-        select_user_by_email = """
-        SELECT id, username, password FROM users
-        WHERE users.email = '{}'""".format(email)
+        # select_user_by_email = """
+        # SELECT id, username, password FROM users
+        # WHERE users.email = '{}'""".format(email)
 
-        return db.select_data_from_db(select_user_by_email)
+        # return db.select_data_from_db(select_user_by_email)
+        return UserModel.get_user(mechanism="email", value=email)
+
+    @staticmethod
+    def get_user_by_id(id):
+        """
+            retrieve a user based on the ID.
+            provided in the arguments.
+        """
+        return UserModel.get_user(mechanism="id", value=id)
+
 
     @staticmethod
     def check_if_password_n_hash_match(password_hash, password):
