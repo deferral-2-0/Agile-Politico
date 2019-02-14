@@ -58,11 +58,6 @@ class UserModel:
 
     @staticmethod
     def get_user_by_mail(email):
-        # select_user_by_email = """
-        # SELECT id, username, password FROM users
-        # WHERE users.email = '{}'""".format(email)
-
-        # return db.select_data_from_db(select_user_by_email)
         return UserModel.get_user(mechanism="email", value=email)
 
     @staticmethod
@@ -72,7 +67,6 @@ class UserModel:
             provided in the arguments.
         """
         return UserModel.get_user(mechanism="id", value=id)
-
 
     @staticmethod
     def check_if_password_n_hash_match(password_hash, password):

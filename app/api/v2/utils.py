@@ -72,7 +72,7 @@ def token_required(f):
         try:
             data = jwt.decode(token, KEY, algorithms='HS256')
             query = """
-            SELECT email FROM users
+            SELECT email, id FROM users
             WHERE users.email = '{}'""".format(data['email'])
 
             user = select_data_from_db(query)

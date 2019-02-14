@@ -73,6 +73,15 @@ def set_up_tables():
             PRIMARY KEY (office, candidate)
         )"""
 
+    voters_table = """
+        CREATE TABLE votes (
+            id SERIAL,
+            office INTEGER,
+            candidate INTEGER,
+            voter INTEGER,
+            PRIMARY KEY (office, voter)
+        )"""
+
     # I'm the admin of this system.
     password = generate_password_hash('BootcampWeek1')
     create_admin_query = """
@@ -83,8 +92,12 @@ def set_up_tables():
     )""".format('admin', 'Tevin', 'Gachagua', 'Thuku', '0742546892',
                 'tevinthuku@gmail.com', password, "", False, True)
 
+<<<<<<< HEAD
     return [table_users, create_admin_query, parties_table,
             offices_table, canditates_table]
+=======
+    return [table_users, create_admin_query, parties_table, offices_table, canditates_table, voters_table]
+>>>>>>> [Feature #163907218] A user can vote
 
 
 def drop_table_if_exists():
@@ -99,8 +112,14 @@ def drop_table_if_exists():
     DROP TABLE IF EXISTS offices CASCADE"""
     drop_candidates_table = """
     DROP TABLE IF EXISTS candidates CASCADE"""
+<<<<<<< HEAD
     return [drop_users_table, drop_parties_table,
             drop_offices_table, drop_candidates_table]
+=======
+    drop_voters_table = """
+    DROP TABLE IF EXISTS votes CASCADE"""
+    return [drop_users_table, drop_parties_table, drop_offices_table, drop_candidates_table, drop_voters_table]
+>>>>>>> [Feature #163907218] A user can vote
 
 
 def connect_to_db(query=None, DB_URL=None):
