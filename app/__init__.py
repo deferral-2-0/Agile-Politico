@@ -76,5 +76,10 @@ def app(config_name):
     flaskapp.register_blueprint(v2parties)
     flaskapp.register_blueprint(v2offices)
     if config_name != "testing":
+        """
+        dont initialize the db twice while testing.
+        It has already been initialized before the
+        tests run.
+        """
         init_db()
     return flaskapp
