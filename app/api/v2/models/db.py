@@ -76,11 +76,15 @@ def set_up_tables():
     # I'm the admin of this system.
     password = generate_password_hash('BootcampWeek1')
     create_admin_query = """
-    INSERT INTO users(username, firstname, lastname, othername ,phone, email, password, passportUrl , isPolitician ,isAdmin) VALUES(
+    INSERT INTO users(username, firstname, lastname, othername ,
+    phone, email, password, passportUrl , isPolitician ,isAdmin) 
+    VALUES(
         '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
-    )""".format('admin', 'Tevin', 'Gachagua', 'Thuku', '0742546892', 'tevinthuku@gmail.com', password, "", False, True)
+    )""".format('admin', 'Tevin', 'Gachagua', 'Thuku', '0742546892',
+                'tevinthuku@gmail.com', password, "", False, True)
 
-    return [table_users, create_admin_query, parties_table, offices_table, canditates_table]
+    return [table_users, create_admin_query, parties_table,
+            offices_table, canditates_table]
 
 
 def drop_table_if_exists():
@@ -95,7 +99,8 @@ def drop_table_if_exists():
     DROP TABLE IF EXISTS offices CASCADE"""
     drop_candidates_table = """
     DROP TABLE IF EXISTS candidates CASCADE"""
-    return [drop_users_table, drop_parties_table, drop_offices_table, drop_candidates_table]
+    return [drop_users_table, drop_parties_table,
+            drop_offices_table, drop_candidates_table]
 
 
 def connect_to_db(query=None, DB_URL=None):

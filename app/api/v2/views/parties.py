@@ -4,7 +4,7 @@ from app.api.v2 import path_2
 from app.api import utils
 
 from app.api.v2.utils import token_required, check_matching_items_in_db_table
-
+from app.api.v2.utils import isUserAdmin
 from app.api.v2.models.parties import PartiesModel
 
 import psycopg2
@@ -100,17 +100,17 @@ def update_party(user, party_id):
         email = user[0][0]
     except:
         return utils.response_fn(401, "error", "You don't have an account")
-    if email == "tevinthuku@gmail.com":
-        party = PartiesModel.get_specific_party(party_id)
-        if party:
-            # update party here
-            PartiesModel.update_specific_party(name=name, party_id=party_id)
-            return utils.response_fn(200, "data", [{
-                "name": name,
-                "id": party_id
-            }])
-        return utils.response_fn(404, "error", "Party not found")
-    return utils.response_fn(401, "error", "You are not authorized.")
+    # check if the user is an admin
+    isUserAdmin(email)
+    party = PartiesModel.get_specific_party(party_id)
+    if party:
+        # update party here
+        PartiesModel.update_specific_party(name=name, party_id=party_id)
+        return utils.response_fn(200, "data", [{
+            "name": name,
+            "id": party_id
+        }])
+    return utils.response_fn(404, "error", "Party not found")
 
 
 @path_2.route("/parties/<int:party_id>", methods=["DELETE"])
@@ -124,14 +124,13 @@ def delete_party(user, party_id):
         email = user[0][0]
     except:
         return utils.response_fn(401, "error", "You don't have an account")
-
-    if email == "tevinthuku@gmail.com":
-        party = PartiesModel.get_specific_party(party_id)
-        if party:
-            # delete party here
-            PartiesModel.delete_specific_party(party_id)
-            return utils.response_fn(200, "data", [{
-                "id": party_id
-            }])
-        return utils.response_fn(404, "error", "the party does not exist")
-    return utils.response_fn(401, "error", "You don't have permission to delete the party")
+    # check if the user is an admin user.
+    isUserAdmin(email)
+    party = PartiesModel.get_specific_party(party_id)
+    if party:
+        # delete party here
+        PartiesModel.delete_specific_party(party_id)
+        return utils.response_fn(200, "data", [{
+            "id": party_id
+        }])
+    return utils.response_fn(404, "error", "the party does not exist")
