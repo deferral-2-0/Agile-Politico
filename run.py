@@ -11,7 +11,8 @@ def hello_root():
     """
         Return a simple hello message on the root of the app.
     """
-    return "Welcome to politico V1, built by @Tevinthuku, credits to Andela"
+    return "Welcome to politico access Version1 via /api/v1 and " \
+        "Version2 via /api/v2 built by @Tevinthuku, credits to Andela"
 
 
 if __name__ == '__main__':
