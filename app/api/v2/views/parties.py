@@ -25,12 +25,14 @@ def get_all_parties():
 @token_required
 def create_party(user):
     """
-        This method allows the admin to creates a specific party to the database
+        This method allows the admin to creates a
+        specific party to the database
     """
     try:
         email = user[0][0]
     except:
-        return utils.response_fn(401, "error", "You don't have an account")
+        return utils.response_fn(401, "error",
+                                 "You don't have an account. Create One")
 
     try:
         data = request.get_json()
@@ -72,7 +74,7 @@ def get_specific_party(party_id):
     party = PartiesModel.get_specific_party(party_id)
     if party:
         return utils.response_fn(200, "data", party)
-    return utils.response_fn(404, "error", "Party not found")
+    return utils.response_fn(404, "error", "Party is not found")
 
 
 @path_2.route("/parties/<int:party_id>/name", methods=["PATCH"])
@@ -110,7 +112,7 @@ def update_party(user, party_id):
             "name": name,
             "id": party_id
         }])
-    return utils.response_fn(404, "error", "Party not found")
+    return utils.response_fn(404, "error", "Party is not found")
 
 
 @path_2.route("/parties/<int:party_id>", methods=["DELETE"])
@@ -133,4 +135,4 @@ def delete_party(user, party_id):
         return utils.response_fn(200, "data", [{
             "id": party_id
         }])
-    return utils.response_fn(404, "error", "the party does not exist")
+    return utils.response_fn(404, "error", "The party does not exist")

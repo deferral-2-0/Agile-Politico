@@ -27,16 +27,17 @@ def create_vote(user):
         candidate = data["candidate"]
 
     except KeyError:
-        abort(utils.response_fn(400, "error", "Should be name & address"))
+        abort(utils.response_fn(400, "error",
+                                "Should be office & candidate, enter all fields"))
 
     try:
- 
+
         iscandidatePresent = UserModel.get_user_by_id(candidate)
         isOfficePresent = OfficesModel.get_specific_office(office)
         if iscandidatePresent and isOfficePresent:
             voted = VotesModel.check_if_user_already_voted(user_id, office)
             if voted:
-                return utils.response_fn(401, "error", "ALready voted")
+                return utils.response_fn(401, "error", "You have already voted")
             newvote = VotesModel(office, candidate, user_id)
             newvote.save_vote()
             return utils.response_fn(201, "data", "Voted succeffully")
