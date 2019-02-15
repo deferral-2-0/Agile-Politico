@@ -1,0 +1,311 @@
+FORMAT: 1A
+HOST: https://tevpolitico.herokuapp.com/
+
+# Politico
+
+Politico is a platform for driving political change and engagement.
+
+
+## Parties Collection [/api/v2/parties]
+
+### List All Parties [GET]
+
+Any user should be able to access the list of all
+parties created and stored in the database.
+
++ Response 200 (application/json)
+
+        
+        {
+                "status": 200,
+                "data": [
+                    {
+                    "id": 1,
+                     "name": "First Party", 
+                     "hqAddress": "HQ1"
+                    },
+                    {
+                      "id": 2,
+                      "name": "Second Party",
+                      "hqAddress": "HQ2"
+                    }
+                ]
+        }
+        
+        
+### Create a party [POST]
+An admin user should be able to create a party
+if it does not exist
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "First Party",
+                "hqAddress": "HQ1"
+            }
+
+
+    + Headers
+
+            x-access-token: ""
+            
+
++ Response 201 (application/json)
+
+        {
+            "status": 200,
+            "data": [{
+                "id": 1,
+                "name": "First Party",
+                "hqAddress": "HQ1"
+            }]
+        }
+        
+
+## Specific Party [/api/v2/parties/{party_id}]
+
++ Parameters
+    + party_id (number) - ID of the Party in the form of an integer
+
+### View a Party Details [GET]
+You can view a specific parties details via its ID
+
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [{
+                    "id": 1,
+                     "name": "First Party", 
+                     "hqAddress": "HQ1"
+            }]
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": 404,
+            "error": "Party not found"
+        }
+      
+### Delete a Party Details [DELETE]
+An Admin can delete a specific parties details via its ID
+
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [{
+                    "id": 1,
+                     "name": "First Party", 
+                     "hqAddress": "HQ1"
+            }]
+        }
+
+        
+## Edit Specific Party [/api/v2/parties/{party_id}/name]
+
++ Parameters
+    + party_id (number) - ID of the Party in the form of an integer
+
+### Edit a Party's name [PATCH]
+An admin user can edit a specific party's name with a new name
+
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "First Party Name Changed"
+            }
+
+
+    + Headers
+
+            x-access-token: ""
+
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [{
+                    "id": 1,
+                     "name": "First Party Name Changed", 
+            }]
+        }
+        
+
+
+## Offices Collection [/api/v2/offices]
+### List All Offices [GET]
+
+Any user should be able to access the list of all
+offices created by the admin and stored in the database.
+
++ Response 200 (application/json)
+
+        
+        {
+                "status": 200,
+                "data": [
+                    {
+                    "id": 1,
+                     "type": "Governor", 
+                     "name": "Governor Kajiado"
+                    }
+                ]
+        }
+        
+        
+### Create an office [POST]
+An admin user should be able to create an office
+if it does not exist
+
++ Request (application/json)
+
+    + Body
+
+            {
+                    "type": "Governor", 
+                    "name": "Governor Kajiado"
+            }
+
+
+    + Headers
+
+            x-access-token: ""
+            
+
++ Response 201 (application/json)
+
+        {
+            "status": 200,
+            "data": [{
+                "id": 1,
+                "type": "Governor", 
+                "name": "Governor Kajiado"
+            }]
+        }
+
+## Specific Office [/api/v2/parties/{office_id}]
+
++ Parameters
+    + office_id (number) - ID of the Office in the form of an integer
+
+### View an Office's Details [GET]
+You can view a specific office details via its ID
+
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [{
+                    "id": 1,
+                    "type": "Governor", 
+                    "name": "Governor Kajiado"
+            }]
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": 404,
+            "error": "Office not found"
+        }
+ 
+
+## VOTE [/api/v2/votes]
+
+### Vote for Politician [POST]
+A registered user can vote for a politician in a particular office.
++ Request (application/json)
+
+    + Body
+
+            {
+                    "office": 1, 
+                    "candidate": 2
+            }
+
+
++ Response 201 (application/json)
+
+        {
+            "status": 201,
+            "data": [{
+                "office": 1,
+                "candidate": 2, 
+                "voter": 3
+            }]
+        }
+        
+
+## Signup [/api/v2/auth/signup]
+
+### Signup new User [POST]
+
+A new user can create an account in Politico. They can only vote after having
+an account.
++ Request (application/json)
+
+    + Body
+
+            {
+                "username": "Tevyn",
+                "firstname": "Tevin",
+                "lastname": "Gach",
+                "email": "tevinku@gmail.com",
+                "phone": "0735464438",
+                "othername": "Thuku",
+                "password": "Tevin1995",
+                "retypedpassword": "Tevin1995",
+                "passportUrl": "http",
+                "isPolitician": false
+            }
+        
++ Response 201 (application/json)
+
+        {
+            "status": 201,
+            "data": [{
+                    "token": "kjdkewjriw32435324dwes",
+                    "user": {
+                        "username": "Tevyn",
+                        "email": "tevinku@gmail.com",
+                        "id": 1
+                }
+            }]
+        }
+
+
+
+## Signin [/api/v2/auth/signin]
+
+### Login a user [POST]
+A user who already signed up can login  with their credentials.
+
++ Request (application/json)
+
+    + Body
+    
+            {
+                "email": "tevinku@gmail.com",
+                "password": "Tevin1995"
+            }
+        
++ Response 200 (application/json)
+
+            {
+                "status": 200,
+                "data": [{
+                    "token": "fdewr33454342edwr.fr32424",
+                    "user": [{
+                        "id": 1,
+                        "email": "tevinku@gmail.com",
+                        "username": "Tevyn"
+                    }]
+                }]
+            }
