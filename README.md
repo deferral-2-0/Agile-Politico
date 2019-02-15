@@ -70,19 +70,22 @@ A Platform for driving political change and engagement
 
 <summary>V2 Politico Endpoints</summary>
 
-| Method   | Endpoint                              | Description                          |
-| -------- | ------------------------------------- | ------------------------------------ |
-| `POST`   | `/api/v2/auth/signup`                 | Create a new user                    |
-| `POST`   | `/api/v2/auth/signin`                 | User can login                       |
-| `POST`   | `/api/v2/auth/reset`                  | User can reset password              |
-| `GET`    | `/api/v2/parties`                     | Fetch all parties                    |
-| `POST`   | `/api/v2/parties`                     | Admin can post a party               |
-| `GET`    | `/api/v2/parties/<int:party_id>`      | Get specific party details           |
-| `PATCH`  | `/api/v2/parties/<int:party_id>/name` | Admin can Update a party by its name |
-| `DELETE` | `/api/v2/parties/<int:party_id>`      | An Admin can delete a party          |
-| `POST`   | `/api/v2/offices`                     | An Admin can create an office        |
-| `GET`    | `/api/v2/offices`                     | Get all offices created in the DB    |
-| `GET`    | `/api/v2/offices/<int:office_id>`     | Get a specific office from the DB    |
+| Method   | Endpoint                                   | Description                                   |
+| -------- | ------------------------------------------ | --------------------------------------------- |
+| `POST`   | `/api/v2/auth/signup`                      | Create a new user                             |
+| `POST`   | `/api/v2/auth/signin`                      | User can login                                |
+| `POST`   | `/api/v2/auth/reset`                       | User can reset password                       |
+| `GET`    | `/api/v2/parties`                          | Fetch all parties                             |
+| `POST`   | `/api/v2/parties`                          | Admin can post a party                        |
+| `GET`    | `/api/v2/parties/<int:party_id>`           | Get specific party details                    |
+| `PATCH`  | `/api/v2/parties/<int:party_id>/name`      | Admin can Update a party by its name          |
+| `DELETE` | `/api/v2/parties/<int:party_id>`           | An Admin can delete a party                   |
+| `POST`   | `/api/v2/offices`                          | An Admin can create an office                 |
+| `GET`    | `/api/v2/offices`                          | Get all offices created in the DB             |
+| `GET`    | `/api/v2/offices/<int:office_id>`          | Get a specific office from the DB             |
+| `POST`   | `/api/v2/offices/<int:office_id>/register` | A admin can register a candidate to an office |
+| `POST`   | `/api/v2/votes`                            | A registered user can vote                    |
+
 
 </details>
 
