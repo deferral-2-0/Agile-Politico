@@ -46,6 +46,8 @@ def signup():
 
     v2utils.check_matching_items_in_db_table({"username": username}, "users")
     v2utils.check_matching_items_in_db_table({"email": email}, "users")
+    utils.check_for_whitespace(
+        data, ["firstname", "lastname", "username", "email", "phone"])
 
     newuser = UserModel(username, email, password, firstname,
                         lastname, phone, passportUrl, isPolitician, othername)
@@ -73,6 +75,8 @@ def user_login():
 
     # check for the validity of the email
     v2utils.isEmailValid(email)
+    # check for whitespaces.
+    utils.check_for_whitespace(data, ["email", "password"])
 
     # try to get the record of the user by email.
     try:

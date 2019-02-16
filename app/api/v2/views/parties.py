@@ -43,6 +43,7 @@ def create_party(user):
     except KeyError:
         abort(utils.response_fn(400, "error", "Should be name, hqAddress & logoUrl"))
 
+    utils.check_for_whitespace(data, ["name", "hqAddress"])
     try:
 
         """
@@ -104,6 +105,8 @@ def update_party(user, party_id):
         return utils.response_fn(401, "error", "You don't have an account")
     # check if the user is an admin
     isUserAdmin(email)
+    # check if data is present ans is not just an empty string..
+    utils.check_for_whitespace(data, ["name"])
     party = PartiesModel.get_specific_party(party_id)
     if party:
         # update party here

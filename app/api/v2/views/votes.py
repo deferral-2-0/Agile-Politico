@@ -30,6 +30,7 @@ def create_vote(user):
         abort(utils.response_fn(400, "error",
                                 "Should be office & candidate, enter all fields"))
 
+    utils.check_for_ints(data, ["office", "candidate"])
     try:
 
         iscandidatePresent = UserModel.get_user_by_id(candidate)

@@ -86,6 +86,19 @@ class TestPartiesFunctionality(BaseTestClass):
         result = json.loads(response.data.decode("utf-8"))
         self.assertEqual(result["status"], 201)
 
+    def test_posting_party_as_admin_with_missingfields(self):
+        res = self.client.post(
+            "api/v2/parties",
+            data=json.dumps({
+                            "name": "Party1",
+                            "hqAddress": "",
+                            "logoUrl": ""
+                            }),
+            headers={'x-access-token': self.admintoken},
+            content_type="application/json")
+
+        self.assertEqual(res.status_code, 400)
+
     def test_posting_party_anonymously(self):
         response = self.client.post(
             "api/v2/parties",
@@ -175,6 +188,14 @@ class TestPartiesFunctionality(BaseTestClass):
             "id": 1,
             "name": "Party A"
         }])
+
+    def test_admin_updating_existing_party_with_blank_name(self):
+        self.AdminPostParty()
+        res = self.client.patch("api/v2/parties/1/name",
+                                data=json.dumps({"name": ""}),
+                                headers={'x-access-token': self.admintoken},
+                                content_type="application/json")
+        self.assertEqual(res.status_code, 400)
 
     def test_getting_all_parties_after_deletion(self):
         self.AdminPostParty()

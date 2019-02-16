@@ -42,6 +42,8 @@ def create_office(user):
         """
         # check if details are for an admin.
         isUserAdmin(email)
+        # check if fields are blank
+        utils.check_for_whitespace(data, ["name", "type"])
         newoffice = OfficesModel(
             name=name, type=type)
 
@@ -104,7 +106,8 @@ def register_candidate_to_office(userobj, office_id):
 
     # check if details are for an admin.
     isUserAdmin(email)
-
+    # check if fields are integers.
+    utils.check_for_ints(data, ["user"])
     # does the candidate & office exist in the db.
     candidate = UserModel.get_user_by_id(user)
     office = OfficesModel.get_specific_office(office_id)

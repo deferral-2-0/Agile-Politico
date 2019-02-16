@@ -100,3 +100,14 @@ class TestOfficesFunctionality(BaseTestClass):
     def test_getting_undefined_office(self):
         res = self.client.get("api/v2/offices/100")
         self.assertEqual(res.status_code, 404)
+
+    def test_whitespaces_in_office_creation(self):
+        res = self.client.post(
+            "api/v2/offices",
+            data=json.dumps({
+                "name": "Senator Office",
+                "type": ""
+            }),
+            headers={'x-access-token': self.admintoken},
+            content_type="application/json")
+        self.assertEqual(res.status_code, 400)
