@@ -23,7 +23,8 @@ def create_office(user):
     try:
         email = user[0][0]
     except:
-        return utils.response_fn(401, "error", "You don't have an account")
+        return utils.response_fn(401, "error",
+                                 "You don't have an account, Create one first")
 
     try:
         data = request.get_json()
@@ -31,7 +32,8 @@ def create_office(user):
         type = data["type"]
 
     except KeyError:
-        abort(utils.response_fn(400, "error", "Should be name & address"))
+        abort(utils.response_fn(400, "error",
+                                "Should be name & type, enter both fields"))
 
     try:
 
@@ -77,7 +79,7 @@ def get_specific_office(office_id):
     office = OfficesModel.get_specific_office(office_id)
     if office:
         return utils.response_fn(200, "data", office)
-    return utils.response_fn(404, "error", "Office is not not found")
+    return utils.response_fn(404, "error", "Office is not found")
 
 
 @path_2.route("/offices/<int:office_id>/register", methods=["POST"])
@@ -90,14 +92,15 @@ def register_candidate_to_office(userobj, office_id):
     try:
         email = userobj[0][0]
     except:
-        abort(utils.response_fn(401, "error", "You don't have an account"))
+        abort(utils.response_fn(401, "error",
+                                "You don't have an account Create one"))
 
     try:
         data = request.get_json()
         user = data["user"]
 
     except KeyError:
-        abort(utils.response_fn(400, "error", "Keys Should be office & user"))
+        abort(utils.response_fn(400, "error", "User key should be present"))
 
     # check if details are for an admin.
     isUserAdmin(email)
@@ -110,11 +113,12 @@ def register_candidate_to_office(userobj, office_id):
             candidate[0][0], office[0]["id"])
         if is_candidate_registered:
             abort(utils.response_fn(400, "error",
-                                    "Candidate is already registerd in this office"))
+                                    "Candidate is already registered in this office"))
 
         # register the politician user.to a certain office.
         CandidateModel.register_politician_user_to_office(
             office[0]["id"], candidate[0][0])
         return utils.response_fn(201, "message", "registered candidate")
     else:
-        return utils.response_fn(404, "error", "Either candidate or office is missing in db")
+        return utils.response_fn(404, "error",
+                                 "Either candidate or office is missing in the database")

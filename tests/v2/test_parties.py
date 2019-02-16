@@ -176,6 +176,23 @@ class TestPartiesFunctionality(BaseTestClass):
             "name": "Party A"
         }])
 
+    def test_getting_all_parties_after_deletion(self):
+        self.AdminPostParty()
+        self.client.patch("api/v2/parties/1/name",
+                          data=json.dumps({"name": "Party A"}),
+                          headers={'x-access-token': self.admintoken},
+                          content_type="application/json")
+        response = self.client.get("api/v2/parties",
+                                   content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        result = json.loads(response.data.decode("utf-8"))
+        self.assertEqual(result["data"], [{
+            "id": 1,
+            "name": "Party A",
+            "hqAddress": "Nairobi",
+            "logoUrl": ""
+        }])
+
     def test_admin_updating_non_existent_party(self):
         res = self.client.patch("api/v2/parties/20/name",
                                 data=json.dumps({"name": "Party 20 num"}),

@@ -34,7 +34,8 @@ def signup():
 
     except:
         return abort(utils.response_fn(400, "error", 'Check your json keys. '
-                                       'username, firstname, lastname, othername ,phone, email, password, passportUrl'))
+                                       'username, firstname, lastname, othername,'
+                                       'phone, email, password, passportUrl'))
 
     # check the passwords.
     v2utils.doPasswordsMatch(password, retypedpassword)
@@ -68,7 +69,7 @@ def user_login():
         password = data['password']
 
     except KeyError:
-        abort(utils.response_fn(400, "error", "Should be username & password"))
+        abort(utils.response_fn(400, "error", "Should be email & password"))
 
     # check for the validity of the email
     v2utils.isEmailValid(email)
@@ -86,7 +87,8 @@ def user_login():
         password = UserModel.check_if_password_n_hash_match(
             hashed_password, password)
         if not password:
-            abort(utils.response_fn(400, "error", "The paswsord is wrong"))
+            abort(utils.response_fn(400, "error",
+                                    "The paswwsord is wrong, try again"))
         token = jwt.encode({"email": email}, KEY, algorithm='HS256')
         return utils.response_fn(200, "data", {
             "message": "Logged in successfully",

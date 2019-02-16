@@ -68,7 +68,7 @@ class PartiesModel:
             This method gets a party by Id and updates it.
         """
         update_party = """
-        UPDATE parties SET name = '{}' WHERE parties.name = '{}'
+        UPDATE parties SET name = '{}' WHERE parties.id = '{}'
         """.format(name, party_id)
 
         db.query_data_from_db(update_party)
