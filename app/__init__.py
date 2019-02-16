@@ -18,7 +18,7 @@ the errors are handled
 
 """
 
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, request, abort, json
 from config import app_config
 
 """
@@ -52,6 +52,26 @@ def handle_method_not_allowed(*_):
     return response_fn(405, "error", "method not allowed")
 
 
+def handle_requests(*_):
+    """
+        This function will be called before all
+        requests will be made. It will check things like the
+        content_type of post requests.
+        Will also check if the json object is syntactically
+        valid
+    """
+    methods = ["POST", "PATCH"]
+    if(request.method in methods):
+        if(not request.is_json):
+            abort(response_fn(400, "error",
+                              "content_type should be application/json"))
+        try:
+            data = request.data
+            json.loads(data)
+        except ValueError:
+            abort(response_fn(400, "error", "Data should be valid json"))
+
+
 def app(config_name):
     """
         Factory function where
@@ -65,6 +85,7 @@ def app(config_name):
     flaskapp.url_map.strict_slashes = False
     flaskapp.register_error_handler(404, handle_all_404)
     flaskapp.register_error_handler(405, handle_method_not_allowed)
+    flaskapp.before_request(handle_requests)  # run before each request
     """
     v1 blueprints
     """
