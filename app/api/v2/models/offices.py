@@ -44,6 +44,21 @@ class OfficesModel:
         return data
 
     @staticmethod
+    def formatResults(iterable):
+        """
+            This function formats the results in a record format
+        """
+        data = []
+        for result in iterable:
+            formattedResult = {
+                "candidate": result[0],
+                "result": result[1],
+                "office": result[2]
+            }
+            data.append(formattedResult)
+        return data
+
+    @staticmethod
     def get_all_offices():
         """
             Fetch all the offices from the database.
@@ -65,3 +80,15 @@ class OfficesModel:
         WHERE offices.id = '{}'""".format(office_id)
 
         return OfficesModel.formatOffices(db.select_data_from_db(select_single_office))
+
+    @staticmethod
+    def get_office_results(office_id):
+        """
+        This method gets the results of a particular
+        office.
+        """
+        get_all_office_results = """
+            SELECT candidate, COUNT(candidate) AS result, office FROM votes WHERE votes.office = {} GROUP BY candidate, office;
+        """.format(office_id)
+
+        return OfficesModel.formatResults(db.select_data_from_db(get_all_office_results))

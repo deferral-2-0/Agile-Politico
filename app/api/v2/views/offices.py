@@ -128,3 +128,11 @@ def register_candidate_to_office(userobj, office_id):
     else:
         return utils.response_fn(404, "error",
                                  "Either candidate or office is missing in the database")
+
+
+@path_2.route("/offices/<int:office_id>/result", methods=["GET"])
+def get_office_results(office_id):
+    results = OfficesModel.get_office_results(office_id)
+    if results:
+        return utils.response_fn(200, "data", results)
+    return utils.response_fn(200, "data", [])
