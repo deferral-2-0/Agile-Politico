@@ -146,3 +146,16 @@ class TestUserEndpoints(BaseTestClass):
                                headers={'x-access-token': usertoken},
                                content_type="application/json")
         self.assertEqual(res.status_code, 401)
+
+    def test_register_candidate_with_non_int_params(self):
+        self.CreatePoliticianUser()  # 2
+        self.AdminCreateParty()  # 1
+        self.AdminCreateOffice()  # 1
+        res = self.client.post("api/v2/offices/1/register",
+                               data=json.dumps({
+                                   "office": 1,
+                                   "user": ""
+                               }),
+                               headers={'x-access-token': self.admintoken},
+                               content_type="application/json")
+        self.assertEqual(res.status_code, 400)

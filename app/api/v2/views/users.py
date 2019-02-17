@@ -37,6 +37,11 @@ def signup():
                                        'username, firstname, lastname, othername,'
                                        'phone, email, password, passportUrl'))
 
+    utils.check_for_strings(
+        data, ["firstname", "lastname", "username", "username", "email", "phone"])
+
+    utils.check_for_whitespace(
+        data, ["firstname", "lastname", "username", "email", "phone"])
     # check the passwords.
     v2utils.doPasswordsMatch(password, retypedpassword)
     # check the email provided
@@ -73,6 +78,8 @@ def user_login():
 
     # check for the validity of the email
     v2utils.isEmailValid(email)
+    # check for whitespaces.
+    utils.check_for_whitespace(data, ["email", "password"])
 
     # try to get the record of the user by email.
     try:

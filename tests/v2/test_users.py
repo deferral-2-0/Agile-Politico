@@ -104,6 +104,24 @@ class BaseTestClass(unittest.TestCase):
             "password": "Auth1234"
         }
 
+        self.createaccountEmptyField = {
+            "username": "",
+            "firstname": "Tevin",
+            "lastname": "Gach",
+            "email": "tevinku@gmail.com",
+            "phone": "0735464438",
+            "othername": "Thuku",
+            "password": "Tevin1995",
+            "retypedpassword": "Tevin1995",
+            "passportUrl": "http",
+            "isPolitician": False
+        }
+
+        self.login_new_user_blankpassword = {
+            "email": "tevinku@gmail.com",
+            "password": ""
+        }
+
     # tear down tests
 
     def tearDown(self):
@@ -123,6 +141,13 @@ class TestUserEndpoints(BaseTestClass):
         self.assertEqual(response.status_code, 201)
         result = json.loads(response.data.decode("utf-8"))
         self.assertEqual(result["status"], 201)
+
+    def test_user_creating_account_with_blank_field(self):
+        response = self.client.post("api/v2/auth/signup",
+                                    data=json.dumps(
+                                        self.createaccountEmptyField),
+                                    content_type="application/json")
+        self.assertEqual(response.status_code, 400)
 
     def test_user_sign_up_with_missing_info(self):
         response = self.client.post("api/v2/auth/signup",
@@ -183,6 +208,12 @@ class TestUserEndpoints(BaseTestClass):
         result = json.loads(res.data.decode("utf-8"))
         self.assertEqual(result["status"], 400)
 
+    def test_user_login_with_present_but_blank_field(self):
+        self.PostUser()
+        res = self.client.post(
+            "api/v2/auth/signin", data=json.dumps(self.login_new_user_blankpassword), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
     def test_login_with_missing_password_field(self):
         res = self.client.post("api/v2/auth/signin", data=json.dumps(
             self.missing_password_login), content_type="application/json")
@@ -204,3 +235,20 @@ class TestUserEndpoints(BaseTestClass):
         self.assertEqual(res.status_code, 400)
         result = json.loads(res.data.decode("utf-8"))
         self.assertEqual(result["status"], 400)
+
+    def test_create_account_with_int_params(self):
+        res = self.client.post("api/v2/auth/signup",
+                               data=json.dumps({
+                                   "username": 12,
+                                   "firstname": "Tevin",
+                                   "lastname": "Gach",
+                                   "email": "tevinku@gmail.com",
+                                   "phone": "0735464438",
+                                   "othername": "Thuku",
+                                   "password": "Tevin1995",
+                                   "retypedpassword": "Tevin1995",
+                                   "passportUrl": "http",
+                                   "isPolitician": False
+                               }),
+                               content_type="application/json")
+        self.assertEqual(res.status_code, 400)
