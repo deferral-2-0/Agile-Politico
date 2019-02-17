@@ -43,10 +43,9 @@ def check_for_whitespace(data, items_to_check):
     items_to_check list
     """
     for key, value in data.items():
-        if key in items_to_check:
-            if not value.strip():
-                abort(response_fn(400, "error",
-                                  '{} field cannot be left blank'.format(key)))
+        if key in items_to_check and not value.strip():
+            abort(response_fn(400, "error",
+                              '{} field cannot be left blank'.format(key)))
 
     return True
 
@@ -65,16 +64,17 @@ def check_for_ints(data, checklist):
     return True
 
 
-# def check_for_strings(data, checklist):
-#     """
-#     This function will check if values are strings right before
-#     calling the white space fn, this is because,
-#     we cannot call .strip on an int.
-#     """
-#     for key, value in data.items():
-#         if key in checklist:
-#             if not is_valid_string(value):
-#                 abort(response_fn(400, "error",
-#                                   '{} field cannot be a non string.'.format(key)))
+def check_for_strings(data, checklist):
+    """
+    This function will check if values are strings right before
+    calling the white space fn, this is because,
+    we cannot call .strip on an int.
+    type error issues
+    """
+    for key, value in data.items():
+        if key in checklist:
+            if not is_valid_string(value):
+                abort(response_fn(400, "error",
+                                  '{} field cannot be a non string.'.format(key)))
 
-#     return True
+    return True

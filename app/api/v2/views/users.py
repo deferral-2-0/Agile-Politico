@@ -37,6 +37,11 @@ def signup():
                                        'username, firstname, lastname, othername,'
                                        'phone, email, password, passportUrl'))
 
+    utils.check_for_strings(
+        data, ["firstname", "lastname", "username", "username", "email", "phone"])
+
+    utils.check_for_whitespace(
+        data, ["firstname", "lastname", "username", "email", "phone"])
     # check the passwords.
     v2utils.doPasswordsMatch(password, retypedpassword)
     # check the email provided
@@ -46,8 +51,6 @@ def signup():
 
     v2utils.check_matching_items_in_db_table({"username": username}, "users")
     v2utils.check_matching_items_in_db_table({"email": email}, "users")
-    utils.check_for_whitespace(
-        data, ["firstname", "lastname", "username", "email", "phone"])
 
     newuser = UserModel(username, email, password, firstname,
                         lastname, phone, passportUrl, isPolitician, othername)

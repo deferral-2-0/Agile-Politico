@@ -235,3 +235,20 @@ class TestUserEndpoints(BaseTestClass):
         self.assertEqual(res.status_code, 400)
         result = json.loads(res.data.decode("utf-8"))
         self.assertEqual(result["status"], 400)
+
+    def test_create_account_with_int_params(self):
+        res = self.client.post("api/v2/auth/signup",
+                               data=json.dumps({
+                                   "username": 12,
+                                   "firstname": "Tevin",
+                                   "lastname": "Gach",
+                                   "email": "tevinku@gmail.com",
+                                   "phone": "0735464438",
+                                   "othername": "Thuku",
+                                   "password": "Tevin1995",
+                                   "retypedpassword": "Tevin1995",
+                                   "passportUrl": "http",
+                                   "isPolitician": False
+                               }),
+                               content_type="application/json")
+        self.assertEqual(res.status_code, 400)

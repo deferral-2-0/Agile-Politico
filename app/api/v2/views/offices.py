@@ -44,10 +44,9 @@ def create_office(user):
         isUserAdmin(email)
         # check if fields are blank
         utils.check_for_whitespace(data, ["name", "type"])
+        check_matching_items_in_db_table({"name": name}, "offices")
         newoffice = OfficesModel(
             name=name, type=type)
-
-        check_matching_items_in_db_table({"name": name}, "offices")
 
         newoffice.save_office()
 
