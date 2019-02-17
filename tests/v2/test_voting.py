@@ -196,3 +196,25 @@ class TestUserEndpoints(BaseTestClass):
                 "office": 1,
             }), headers={'x-access-token': usertoken}, content_type="application/json")
         self.assertEqual(response.status_code, 400)
+
+    def test_getting_voting_results_of_an_office(self):
+        self.RepeatProcedureBeforeVoting()
+        usertoken = jwt.encode(
+            {"email": "tevinku@gmail.com"}, KEY, algorithm='HS256')
+        self.client.post(
+            "api/v2/votes", data=json.dumps(self.properoffice), headers={'x-access-token': usertoken}, content_type="application/json")
+        res = self.client.get("api/v2/offices/1/result")
+        self.assertEqual(res.status_code, 200)
+        dataresponse = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"], [{
+            "office": 1,
+            "candidate": 1,
+            "result": 1
+        }])
+
+    def test_getting_voting_results_before_any_vote(self):
+        self.RepeatProcedureBeforeVoting()
+        res = self.client.get("api/v2/offices/1/result")
+        self.assertEqual(res.status_code, 200)
+        dataresponse = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"], [])

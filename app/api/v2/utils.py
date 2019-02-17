@@ -90,3 +90,6 @@ def isUserAdmin(email):
     """
     if email != "tevinthuku@gmail.com":
         abort(response_fn(401, "error", "You are not an admin"))
+
+# SELECT candidate, COUNT(candidate) AS result, office FROM votes WHERE votes.office = 1 GROUP BY candidate, office;
+# SELECT candidate, COUNT(candidate) AS result, office FROM votes GROUP BY candidate, office;
