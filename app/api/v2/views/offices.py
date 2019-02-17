@@ -48,10 +48,11 @@ def create_office(user):
         newoffice = OfficesModel(
             name=name, type=type)
 
-        newoffice.save_office()
-
+        id = newoffice.save_office()
         return utils.response_fn(201, "data", [{
-            "name": name
+            "name": name,
+            "id": id,
+            "type": type
         }])
 
     except psycopg2.DatabaseError as _error:
@@ -120,7 +121,10 @@ def register_candidate_to_office(userobj, office_id):
         # register the politician user.to a certain office.
         CandidateModel.register_politician_user_to_office(
             office[0]["id"], candidate[0][0])
-        return utils.response_fn(201, "message", "registered candidate")
+        return utils.response_fn(201, "data", [{
+            "office": office[0]["id"],
+            "user": candidate[0][0]
+        }])
     else:
         return utils.response_fn(404, "error",
                                  "Either candidate or office is missing in the database")

@@ -55,13 +55,13 @@ def signup():
     newuser = UserModel(username, email, password, firstname,
                         lastname, phone, passportUrl, isPolitician, othername)
     newuser.save_user()
-
+    token = jwt.encode({"email": email}, KEY, algorithm='HS256')
     return utils.response_fn(201, "data", [{
         "user": {
             "email": newuser.email,
             "username": newuser.username
         },
-        "token": newuser.password
+        "token": token.decode('UTF-8')
     }])
 
 

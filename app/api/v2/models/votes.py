@@ -23,7 +23,7 @@ class VotesModel:
         INSERT INTO votes(office, candidate, voter) VALUES(
             '{}', '{}', '{}'
         )""".format(self.office, self.candidate, self.voter)
-        db.query_data_from_db(save_vote_to_db)
+        db.queryData(save_vote_to_db)
 
     # check if a user already voted
     @staticmethod

@@ -51,20 +51,16 @@ def create_party(user):
         """
             if email matches, admin's then create the party
         """
-        if email == "tevinthuku@gmail.com":
-            newparty = PartiesModel(
-                name=name, hqAddress=hqAddress, logoUrl=logoUrl)
-
-            check_matching_items_in_db_table({"name": name}, "parties")
-
-            newparty.save_party()
-
-            return utils.response_fn(201, "data", [{
-                "name": name
-            }])
-
-        return utils.response_fn(401, "error", "You are not an admin")
-
+        # check if the user is an admin
+        isUserAdmin(email)
+        newparty = PartiesModel(
+            name=name, hqAddress=hqAddress, logoUrl=logoUrl)
+        check_matching_items_in_db_table({"name": name}, "parties")
+        id = newparty.save_party()
+        return utils.response_fn(201, "data", [{
+            "name": name,
+            "id": id
+        }])
     except psycopg2.DatabaseError as _error:
         abort(utils.response_fn(500, "error", "Server error"))
 
@@ -140,6 +136,6 @@ def delete_party(user, party_id):
         # delete party here
         PartiesModel.delete_specific_party(party_id)
         return utils.response_fn(200, "data", [{
-            "id": party_id
+            "message": "The party with id {} has been deleted".format(party_id)
         }])
     return utils.response_fn(404, "error", "The party does not exist")

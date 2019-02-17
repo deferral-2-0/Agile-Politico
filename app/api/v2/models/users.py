@@ -35,7 +35,7 @@ class UserModel:
             '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
         )""".format(self.username, self.firstname, self.lastname, self.phone, self.email, self.password, self.passportUrl, self.isPolitician, self.othername, False)
 
-        db.query_data_from_db(save_user_query)
+        db.queryData(save_user_query)
 
     @staticmethod
     def get_user(mechanism="email", value=""):

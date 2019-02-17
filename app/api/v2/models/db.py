@@ -92,9 +92,9 @@ def set_up_tables():
     )""".format('admin', 'Tevin', 'Gachagua', 'Thuku', '0742546892',
                 'tevinthuku@gmail.com', password, "", False, True)
 
-
     return [table_users, create_admin_query, parties_table,
             offices_table, canditates_table, voters_table]
+
 
 def drop_table_if_exists():
     """
@@ -115,12 +115,13 @@ def drop_table_if_exists():
             drop_candidates_table, drop_voters_table]
 
 
-def connect_to_db(query=None, DB_URL=None):
+def connect_to_db(query=None):
     """
         Initiates a connection to the db and executes a query
     """
     conn = None
     cursor = None
+    DB_URL = None
     if app.config['TESTING']:
         DB_URL = os.getenv('DATABASE_TEST_URL')  # get the TEST DATABASE_URL
     else:
@@ -145,13 +146,17 @@ def connect_to_db(query=None, DB_URL=None):
     return conn, cursor
 
 
-def query_data_from_db(query):
+def queryData(query, get_inserted_item=False):
     """
-        Handles INSERT queries
+        Handles INSERT/PATCH/DELETE queries
     """
     try:
-        conn = connect_to_db(query)[0]
-        # After successful INSERT query
+        conn, cursor = connect_to_db(query)
+        if(get_inserted_item):
+            lastitem = cursor.fetchone()[0]
+            conn.close()
+            return lastitem
+        # After successful query
         conn.close()
     except psycopg2.Error as _error:
         sys.exit(1)
