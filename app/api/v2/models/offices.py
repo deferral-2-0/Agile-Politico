@@ -25,8 +25,8 @@ class OfficesModel:
         save_new_office = """
         INSERT INTO offices(name, type) VALUES(
             '{}', '{}'
-        )""".format(self.name, self.type)
-        db.query_data_from_db(save_new_office)
+        ) RETURNING id;""".format(self.name, self.type)
+        return db.queryData(save_new_office, True)
 
     @staticmethod
     def formatOffices(iterable):

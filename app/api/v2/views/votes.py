@@ -15,6 +15,8 @@ import psycopg2
 @token_required
 def create_vote(user):
     """
+    a voter can vote for a particular office
+    if he has hasn't voted for it yet
     """
     try:
         user_id = user[0][1]
@@ -41,7 +43,11 @@ def create_vote(user):
                 return utils.response_fn(401, "error", "You have already voted")
             newvote = VotesModel(office, candidate, user_id)
             newvote.save_vote()
-            return utils.response_fn(201, "data", "Voted succeffully")
+            return utils.response_fn(201, "data", [{
+                "office": office,
+                "candidate": candidate,
+                "voter": user_id
+            }])
         return utils.response_fn(404, "error", "Either Candidate or party doesn't exist")
 
     except psycopg2.DatabaseError as _error:

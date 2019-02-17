@@ -22,8 +22,8 @@ class PartiesModel:
         save_party_query = """
         INSERT INTO parties(name, hqAddress, logoUrl) VALUES(
             '{}', '{}', '{}'
-        )""".format(self.name, self.hqAddress, self.logoUrl)
-        db.query_data_from_db(save_party_query)
+        ) RETURNING id;""".format(self.name, self.hqAddress, self.logoUrl)
+        return db.queryData(save_party_query, True)
 
     @staticmethod
     def formatParties(iterable):
@@ -71,7 +71,7 @@ class PartiesModel:
         UPDATE parties SET name = '{}' WHERE parties.id = '{}'
         """.format(name, party_id)
 
-        db.query_data_from_db(update_party)
+        db.queryData(update_party)
 
     @staticmethod
     def delete_specific_party(party_id):
@@ -83,4 +83,4 @@ class PartiesModel:
         DELETE FROM parties
         WHERE parties.id = '{}'""".format(party_id)
 
-        db.query_data_from_db(delete_query)
+        db.queryData(delete_query)

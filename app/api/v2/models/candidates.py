@@ -22,4 +22,4 @@ class CandidateModel:
         save_candidate_info = """
             INSERT INTO candidates(office, candidate) VALUES(
                 '{}', '{}')""".format(office_id, candidate_id)
-        db.query_data_from_db(save_candidate_info)
+        db.queryData(save_candidate_info)
