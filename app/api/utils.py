@@ -75,8 +75,7 @@ def type_checks(pred, errormessage, data, checklist):
         if they dont pass, an error is thrown
     """
     for key, value in data.items():
-        if key in checklist:
-            if not pred(value):
-                abort(response_fn(400, "error",
-                                  '{} {}'.format(key, errormessage)))
+        if key in checklist and not pred(value):
+            abort(response_fn(400, "error",
+                              '{} {}'.format(key, errormessage)))
     return True
