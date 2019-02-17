@@ -55,13 +55,7 @@ def check_for_ints(data, checklist):
         this function checks if the items in the data selected
         from the checklist are integers.
     """
-    for key, value in data.items():
-        if key in checklist:
-            if not isint(value):
-                abort(response_fn(400, "error",
-                                  '{} field cannot be a non integer.'.format(key)))
-
-    return True
+    return type_checks(isint, "field cannot be a non integer.", data, checklist)
 
 
 def check_for_strings(data, checklist):
@@ -71,10 +65,18 @@ def check_for_strings(data, checklist):
     we cannot call .strip on an int.
     type error issues
     """
+    return type_checks(is_valid_string, "field cannot be a non string.", data, checklist)
+
+
+def type_checks(pred, errormessage, data, checklist):
+    """
+        this function checks that values provided in the data args
+        conform or pass the pred function test.
+        if they dont pass, an error is thrown
+    """
     for key, value in data.items():
         if key in checklist:
-            if not is_valid_string(value):
+            if not pred(value):
                 abort(response_fn(400, "error",
-                                  '{} field cannot be a non string.'.format(key)))
-
+                                  '{} {}'.format(key, errormessage)))
     return True

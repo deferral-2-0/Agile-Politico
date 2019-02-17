@@ -186,3 +186,13 @@ class TestUserEndpoints(BaseTestClass):
                 "candidate": "2"
             }), headers={'x-access-token': usertoken}, content_type="application/json")
         self.assertEqual(response.status_code, 400)
+
+    def test_user_voting_for_office_with_missing_info_on_candidate(self):
+        self.RepeatProcedureBeforeVoting()
+        usertoken = jwt.encode(
+            {"email": "tevinku@gmail.com"}, KEY, algorithm='HS256')
+        response = self.client.post(
+            "api/v2/votes", data=json.dumps({
+                "office": 1,
+            }), headers={'x-access-token': usertoken}, content_type="application/json")
+        self.assertEqual(response.status_code, 400)
