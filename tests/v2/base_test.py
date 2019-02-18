@@ -15,10 +15,8 @@ class BaseTestClass(unittest.TestCase):
     def setUp(self):
         self.app = app("testing")
         self.client = self.app.test_client()
-        self.app.config['TESTING'] = True
         init_db()
 
     def tearDown(self):
         """Clear the db after tests finish running"""
-        self.app.testing = False
         init_db()

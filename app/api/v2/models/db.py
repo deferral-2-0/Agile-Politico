@@ -130,12 +130,7 @@ def connect_to_db(query=None):
     """
     conn = None
     cursor = None
-    DB_URL = None
-    if app.config['TESTING']:
-        DB_URL = os.getenv('DATABASE_TEST_URL')  # get the TEST DATABASE_URL
-    else:
-        DB_URL = os.getenv('DATABASE_URL')
-
+    DB_URL = app.config["DATABASE_URI"]
     try:
         # connect to db
         conn = psycopg2.connect(DB_URL)
