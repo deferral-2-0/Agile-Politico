@@ -82,13 +82,6 @@ You can view a specific parties details via its ID
                      "hqAddress": "HQ1"
             }]
         }
-
-+ Response 404 (application/json)
-
-        {
-            "status": 404,
-            "error": "Party not found"
-        }
       
 ### Delete a Party Details [DELETE]
 An Admin can delete a specific parties details via its ID
@@ -190,7 +183,7 @@ if it does not exist
             }]
         }
 
-## Specific Office [/api/v2/parties/{office_id}]
+## Get Specific Office [/api/v2/parties/{office_id}]
 
 + Parameters
     + office_id (number) - ID of the Office in the form of an integer
@@ -208,14 +201,37 @@ You can view a specific office details via its ID
                     "name": "Governor Kajiado"
             }]
         }
+        
 
-+ Response 404 (application/json)
+## Register candidate for office [/api/v2/offices/{office_id}/register]
++ Parameters
+    + office_id (number) - ID of the office where the candidate is to be registered in.
+    
+### Register a new candidate [POST]
+
+Only an admin can register a new candidate
+
++ Request (application/json)
+
+    + Body
+
+            {
+                    "user": 2
+            }
+
+
+    + Headers
+
+            x-access-token: ""
+
++ Response 201 (application/json)
 
         {
-            "status": 404,
-            "error": "Office not found"
+        
+            "status": 201,
+            "office": {office_id},
+            "user": 2
         }
- 
 
 ## VOTE [/api/v2/votes]
 
@@ -309,3 +325,49 @@ A user who already signed up can login  with their credentials.
                     }]
                 }]
             }
+            
+            
+            
+## Password Reset [/api/v2/auth/reset]
+
+### Reset account password [POST]
+A user can reset his password if it was forgotten.
++ Request (application/json)
+
+    + Body
+
+            {
+                    "email": "forgotpassword@gmail.com"
+            }
+
+
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [{
+                "message": "Check your email for password reset link",
+                "email": "forgotpassword@gmail.com"
+            }]
+        }
+        
+## Results of an office [/api/v2/offices/{office_id}/result]
++ Parameters
+    + office_id (number) - ID of the office where the candidate is to be registered in.
+
+### View office results [GET]
+
+A user can view the results of a particular office after election period.
+
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [
+                    {
+                    "candidate": 2,
+                    "office": 1,
+                    "result": 2
+                    }
+            ]
+        }
