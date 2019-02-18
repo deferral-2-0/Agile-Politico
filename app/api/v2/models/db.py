@@ -79,7 +79,9 @@ def set_up_tables():
             id SERIAL,
             candidate INTEGER,
             office INTEGER,
-            PRIMARY KEY (office, candidate)
+            PRIMARY KEY (office, candidate),
+            FOREIGN KEY (candidate) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (office) REFERENCES offices(id) ON DELETE CASCADE
         )"""
 
     voters_table = """
@@ -88,7 +90,10 @@ def set_up_tables():
             office INTEGER,
             candidate INTEGER,
             voter INTEGER,
-            PRIMARY KEY (office, voter)
+            PRIMARY KEY (office, voter),
+            FOREIGN KEY (office) REFERENCES offices(id) ON DELETE CASCADE,
+            FOREIGN KEY (candidate) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (voter) REFERENCES users(id) ON DELETE CASCADE
         )"""
 
     # I'm the admin of this system.
