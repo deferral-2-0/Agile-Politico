@@ -13,8 +13,6 @@ A Platform for driving political change and engagement
 
 [Documentation on APIARY](https://tevzpolitico.docs.apiary.io/#)
 
-
-
 ## Setup and installation
 
 1. Set up virtualenv
@@ -35,21 +33,23 @@ A Platform for driving political change and engagement
         pip install -r requirements.txt
    ```
 
-4. Setup env variables
-   - \$ export FLASK_APP=run.py
-   - \$ export FLASK_DEBUG=1
-   - \$ export FLASK_ENV=development
-   - \$ export SECRET_KEY=`<SECRET KEY>`
-   - \$ export DATABASE_URL=`<URI>`
-   - \$ export DATABASE_TEST_URL=`<URI>`
+4. SET up envs
+   Follow the format provided in the `.env.sample` file to create your own local `.env` file
+   Once your `.env` is ready run
 
-5) Running tests
+```
+
+source ./env
+
+```
+
+5. Running tests
 
    ```
       python -m pytest --cov=app/api
    ```
 
-6) Start the server
+6. Start the server
    ```
       flask run
    ```
