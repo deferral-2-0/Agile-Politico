@@ -5,6 +5,7 @@ import unittest
 from app import app
 from config import app_config
 from app.api.v2.models.db import init_db
+from .base_test import BaseTestClass
 
 import jwt
 import os
@@ -12,37 +13,16 @@ KEY = os.getenv('SECRET_KEY')
 ADMIN_TOKEN = os.getenv("ADMIN_TOKEN")
 
 
-class BaseTestClass(unittest.TestCase):
-    """
-    Setting up tests
-    """
-
-    def setUp(self):
-        self.app = app("testing")
-        self.client = self.app.test_client()
-        self.app.config['TESTING'] = True
-        init_db()
-
-        self.admintoken = ADMIN_TOKEN
-
-        self.newoffice = {
-            "type": "Governor",
-            "name": "Governor Narok County"
-        }
-
-    def tearDown(self):
-        """Clear the db after tests finish running"""
-        self.app.testing = False
-        init_db()
-
-
 class TestOfficesFunctionality(BaseTestClass):
 
     def AdminPostOffice(self):
         return self.client.post(
             "api/v2/offices",
-            data=json.dumps(self.newoffice),
-            headers={'x-access-token': self.admintoken},
+            data=json.dumps({
+                "type": "Governor",
+                "name": "Governor Narok County"
+            }),
+            headers={'x-access-token': ADMIN_TOKEN},
             content_type="application/json")
 
     def test_admin_creating_office(self):
@@ -55,14 +35,17 @@ class TestOfficesFunctionality(BaseTestClass):
             data=json.dumps({
                 "name": "Office 2"
             }),
-            headers={'x-access-token': self.admintoken},
+            headers={'x-access-token': ADMIN_TOKEN},
             content_type="application/json")
         self.assertEqual(response.status_code, 400)
 
     def test_create_office_with_bad_token(self):
         response = self.client.post(
             "api/v2/offices",
-            data=json.dumps(self.newoffice),
+            data=json.dumps({
+                "type": "Governor",
+                "name": "Governor Narok County"
+            }),
             headers={'x-access-token': "hsankerereewe3424"},
             content_type="application/json")
         self.assertEqual(response.status_code, 401)
@@ -72,7 +55,10 @@ class TestOfficesFunctionality(BaseTestClass):
             {"email": "johndoe@gmail.com"}, KEY, algorithm='HS256')
         response = self.client.post(
             "api/v2/offices",
-            data=json.dumps(self.newoffice),
+            data=json.dumps({
+                "type": "Governor",
+                "name": "Governor Narok County"
+            }),
             headers={'x-access-token': usertoken},
             content_type="application/json")
         self.assertEqual(response.status_code, 401)
@@ -108,6 +94,6 @@ class TestOfficesFunctionality(BaseTestClass):
                 "name": "Senator Office",
                 "type": ""
             }),
-            headers={'x-access-token': self.admintoken},
+            headers={'x-access-token': ADMIN_TOKEN},
             content_type="application/json")
         self.assertEqual(res.status_code, 400)
