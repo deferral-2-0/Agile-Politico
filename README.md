@@ -10,7 +10,10 @@
 A Platform for driving political change and engagement
 
 [Hosted on Heroku](https://tevpolitico.herokuapp.com/)
-[Documentation on APIARY]()
+
+[Documentation on APIARY](https://tevzpolitico.docs.apiary.io/#)
+
+
 
 ## Setup and installation
 
