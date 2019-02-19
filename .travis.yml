@@ -15,7 +15,8 @@ env:
   global:
     - PGPORT=5432 SECRET_KEY="ABIGSECRET"
 before_script:
-  - psql -c "CREATE DATABASE politico_test_db;" -U postgres
+  - psql -c 'create database politico_test_db;' -U postgres
+
 script:
   - python -m pytest --cov=app/api
 after_success:
