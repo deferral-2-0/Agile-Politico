@@ -11,7 +11,7 @@ class UserModel:
     """
 
     def __init__(self, username, email, password,
-                 firstname, lastname, phone, passportUrl, isPolitician, othername):
+                 firstname, lastname, phone, passportUrl, isPolitician, othername, isAdmin):
         """
             Constructor of the user class
             New user objects are created with this method
@@ -25,15 +25,21 @@ class UserModel:
         self.passportUrl = passportUrl
         self.isPolitician = isPolitician
         self.othername = othername
+        self.isAdmin = isAdmin
 
     def save_user(self):
         """
         Add a new user to the users table
         """
         save_user_query = """
-        INSERT INTO users(username, firstname, lastname, phone, email, password, passportUrl, isPolitician, othername, isAdmin) VALUES(
+        INSERT INTO users(username,
+        firstname, lastname, phone, email,
+        password, passportUrl, isPolitician, othername, isAdmin) VALUES(
             '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
-        )""".format(self.username, self.firstname, self.lastname, self.phone, self.email, self.password, self.passportUrl, self.isPolitician, self.othername, False)
+        )""".format(self.username, self.firstname, self.lastname,
+                    self.phone, self.email, self.password,
+                    self.passportUrl, self.isPolitician,
+                    self.othername, self.isAdmin)
 
         db.queryData(save_user_query)
 
@@ -44,7 +50,7 @@ class UserModel:
             to check the user by ID or by email or username.
         """
         select_user_by_email = """
-        SELECT id, username, password FROM users
+        SELECT id, username, password, email FROM users
         WHERE users.{} = '{}'""".format(mechanism, value)
 
         return db.select_data_from_db(select_user_by_email)
@@ -67,6 +73,20 @@ class UserModel:
             provided in the arguments.
         """
         return UserModel.get_user(mechanism="id", value=id)
+
+    @staticmethod
+    def get_user_by_id_formatted(id):
+        """
+            returns a record of a user
+        """
+        data = UserModel.get_user_by_id(id)
+        d = {
+            "id": data[0][0],
+            "username": data[0][1],
+            "email": data[0][3]
+        }
+
+        return d
 
     @staticmethod
     def check_if_password_n_hash_match(password_hash, password):

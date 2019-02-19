@@ -5,35 +5,11 @@ import unittest
 from app import app
 from config import app_config
 from app.api.v2.models.db import init_db
+from .base_test import BaseTestClass
 
 import jwt
 import os
 KEY = os.getenv('SECRET_KEY')
-ADMIN_TOKEN = os.getenv("ADMIN_TOKEN")
-
-
-class BaseTestClass(unittest.TestCase):
-    """
-    Setting up tests
-    """
-
-    def setUp(self):
-        self.app = app("testing")
-        self.client = self.app.test_client()
-        self.app.config['TESTING'] = True
-        init_db()
-
-        self.admintoken = ADMIN_TOKEN
-
-        self.newoffice = {
-            "type": "Governor",
-            "name": "Governor Narok County"
-        }
-
-    def tearDown(self):
-        """Clear the db after tests finish running"""
-        self.app.testing = False
-        init_db()
 
 
 class TestOfficesFunctionality(BaseTestClass):
@@ -41,9 +17,37 @@ class TestOfficesFunctionality(BaseTestClass):
     def AdminPostOffice(self):
         return self.client.post(
             "api/v2/offices",
-            data=json.dumps(self.newoffice),
-            headers={'x-access-token': self.admintoken},
+            data=json.dumps({
+                "type": "Governor",
+                "name": "Governor Narok County"
+            }),
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
+
+    def AdminRegisterCandidate(self):
+        return self.client.post("api/v2/offices/1/register",
+                                data=json.dumps({
+                                    "office": 1,
+                                    "user": 2
+                                }),
+                                headers={'x-access-token': self.ADMIN_TOKEN},
+                                content_type="application/json")
+
+    def CreatePoliticianUser(self):
+        return self.client.post("api/v2/auth/signup",
+                                data=json.dumps({
+                                    "username": "Tevyn",
+                                    "firstname": "Tevin",
+                                    "lastname": "Gach",
+                                    "email": "tevinku@gmail.com",
+                                    "phone": "0735464438",
+                                    "othername": "Thuku",
+                                    "password": "Tevin1995",
+                                    "retypedpassword": "Tevin1995",
+                                    "passportUrl": "http",
+                                    "isPolitician": True
+                                }),
+                                content_type="application/json")
 
     def test_admin_creating_office(self):
         res = self.AdminPostOffice()
@@ -55,14 +59,17 @@ class TestOfficesFunctionality(BaseTestClass):
             data=json.dumps({
                 "name": "Office 2"
             }),
-            headers={'x-access-token': self.admintoken},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
         self.assertEqual(response.status_code, 400)
 
     def test_create_office_with_bad_token(self):
         response = self.client.post(
             "api/v2/offices",
-            data=json.dumps(self.newoffice),
+            data=json.dumps({
+                "type": "Governor",
+                "name": "Governor Narok County"
+            }),
             headers={'x-access-token': "hsankerereewe3424"},
             content_type="application/json")
         self.assertEqual(response.status_code, 401)
@@ -72,7 +79,10 @@ class TestOfficesFunctionality(BaseTestClass):
             {"email": "johndoe@gmail.com"}, KEY, algorithm='HS256')
         response = self.client.post(
             "api/v2/offices",
-            data=json.dumps(self.newoffice),
+            data=json.dumps({
+                "type": "Governor",
+                "name": "Governor Narok County"
+            }),
             headers={'x-access-token': usertoken},
             content_type="application/json")
         self.assertEqual(response.status_code, 401)
@@ -108,6 +118,24 @@ class TestOfficesFunctionality(BaseTestClass):
                 "name": "Senator Office",
                 "type": ""
             }),
-            headers={'x-access-token': self.admintoken},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
         self.assertEqual(res.status_code, 400)
+
+    def test_get_candidates_in_particular_office(self):
+        req = self.client.get("api/v2/offices/1/candidates",
+                              content_type="application/json")
+        self.assertEqual(req.status_code, 200)
+        dataresponse = json.loads(req.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"], [])
+
+    def test_getting_candidate_after_registering_candidate_to_an_office(self):
+        self.CreatePoliticianUser()
+        self.AdminPostOffice()
+        self.AdminRegisterCandidate()
+        req = self.client.get("api/v2/offices/1/candidates",
+                              content_type="application/json")
+        self.assertEqual(req.status_code, 200)
+        dataresponse = json.loads(req.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"], [
+                         {'email': 'tevinku@gmail.com', 'id': 2, 'username': 'Tevyn'}])

@@ -17,7 +17,16 @@ def init_db():
     """
     try:
         conn, cursor = connect_to_db()
-        create_db_query = drop_table_if_exists() + set_up_tables()
+        """
+            first check if the app is in test mode,
+            if its in test mode, then drop all tables and create them
+            if not then don't drop them at all.
+        """
+        create_db_query = []
+        if app.config['TESTING']:
+            create_db_query = drop_table_if_exists() + set_up_tables()
+        else:
+            create_db_query = set_up_tables()
         i = 0
         while i != len(create_db_query):
             query = create_db_query[i]
@@ -36,7 +45,7 @@ def set_up_tables():
         Queries run to set up and create tables
     """
     table_users = """
-    CREATE TABLE users (
+    CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
         username VARCHAR (24) NOT NULL UNIQUE,
         firstname VARCHAR (24) NOT NULL,
@@ -51,7 +60,7 @@ def set_up_tables():
     )"""
 
     parties_table = """ 
-    CREATE TABLE parties (
+    CREATE TABLE IF NOT EXISTS parties (
         id SERIAL PRIMARY KEY,
         name VARCHAR (35) NOT NULL UNIQUE,
         hqAddress VARCHAR (30),
@@ -59,40 +68,35 @@ def set_up_tables():
     )"""
 
     offices_table = """
-        CREATE TABLE offices (
+        CREATE TABLE IF NOT EXISTS offices (
             id SERIAL PRIMARY KEY,
             name VARCHAR (35) NOT NULL UNIQUE,
             type VARCHAR (35)
         )"""
 
     canditates_table = """
-        CREATE TABLE candidates (
+        CREATE TABLE IF NOT EXISTS candidates (
             id SERIAL,
             candidate INTEGER,
             office INTEGER,
-            PRIMARY KEY (office, candidate)
+            PRIMARY KEY (office, candidate),
+            FOREIGN KEY (candidate) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (office) REFERENCES offices(id) ON DELETE CASCADE
         )"""
 
     voters_table = """
-        CREATE TABLE votes (
+        CREATE TABLE IF NOT EXISTS votes (
             id SERIAL,
             office INTEGER,
             candidate INTEGER,
             voter INTEGER,
-            PRIMARY KEY (office, voter)
+            PRIMARY KEY (office, voter),
+            FOREIGN KEY (office) REFERENCES offices(id) ON DELETE CASCADE,
+            FOREIGN KEY (candidate) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (voter) REFERENCES users(id) ON DELETE CASCADE
         )"""
 
-    # I'm the admin of this system.
-    password = generate_password_hash('BootcampWeek1')
-    create_admin_query = """
-    INSERT INTO users(username, firstname, lastname, othername ,
-    phone, email, password, passportUrl , isPolitician ,isAdmin) 
-    VALUES(
-        '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
-    )""".format('admin', 'Tevin', 'Gachagua', 'Thuku', '0742546892',
-                'tevinthuku@gmail.com', password, "", False, True)
-
-    return [table_users, create_admin_query, parties_table,
+    return [table_users, parties_table,
             offices_table, canditates_table, voters_table]
 
 
@@ -121,12 +125,7 @@ def connect_to_db(query=None):
     """
     conn = None
     cursor = None
-    DB_URL = None
-    if app.config['TESTING']:
-        DB_URL = os.getenv('DATABASE_TEST_URL')  # get the TEST DATABASE_URL
-    else:
-        DB_URL = os.getenv('DATABASE_URL')
-
+    DB_URL = app.config["DATABASE_URI"]
     try:
         # connect to db
         conn = psycopg2.connect(DB_URL)

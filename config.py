@@ -14,6 +14,8 @@ class Config:
     Set Debug to False
     """
     DEBUG = False
+    TESTING = False
+    DATABASE_URI = os.getenv('DATABASE_URL')
 
 
 class DevelopmentConfig(Config):
@@ -30,6 +32,8 @@ class TestingConfig(Config):
     Set Debug to True
     """
     DEBUG = True
+    TESTING = True
+    DATABASE_URI = os.getenv('DATABASE_TEST_URL')
 
 
 """
@@ -38,7 +42,5 @@ for development and testing
 """
 app_config = {
     "development": DevelopmentConfig,
-    "testing": TestingConfig,
-    "DB_URL": os.getenv('DATABASE_URL'),
-    "TEST_DB_URL": os.getenv('DATABASE_TEST_URL')
+    "testing": TestingConfig
 }

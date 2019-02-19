@@ -72,7 +72,7 @@ def token_required(f):
         try:
             data = jwt.decode(token, KEY, algorithms='HS256')
             query = """
-            SELECT email, id FROM users
+            SELECT email, id, isAdmin FROM users
             WHERE users.email = '{}'""".format(data['email'])
 
             user = select_data_from_db(query)
@@ -84,11 +84,11 @@ def token_required(f):
     return decorated
 
 
-def isUserAdmin(email):
+def isUserAdmin(adminProp):
     """
         This function checks if the user is an admin.
     """
-    if email != "tevinthuku@gmail.com":
+    if not adminProp:
         abort(response_fn(401, "error", "You are not an admin"))
 
 # SELECT candidate, COUNT(candidate) AS result, office FROM votes WHERE votes.office = 1 GROUP BY candidate, office;
