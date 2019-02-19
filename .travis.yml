@@ -11,11 +11,11 @@ addons:
     packages:
       - postgresql-10
       - postgresql-client-10
-before_script:
-  - psql -c "CREATE DATABASE politico_test_db;" -U postgres
 env:
   global:
     - PGPORT=5432 SECRET_KEY="ABIGSECRET"
+before_script:
+  - psql -c "CREATE DATABASE politico_test_db;" -U postgres
 script:
   - python -m pytest --cov=app/api
 after_success:
