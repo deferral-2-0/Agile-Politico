@@ -11,7 +11,6 @@ from .base_test import BaseTestClass
 import jwt
 import os
 KEY = os.getenv('SECRET_KEY')
-ADMIN_TOKEN = os.getenv("ADMIN_TOKEN")
 
 
 class TestUserEndpoints(BaseTestClass):

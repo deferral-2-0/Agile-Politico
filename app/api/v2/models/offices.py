@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import db
 
+from .users import UserModel
+
 
 class OfficesModel:
     """
@@ -92,3 +94,22 @@ class OfficesModel:
         """.format(office_id)
 
         return OfficesModel.formatResults(db.select_data_from_db(get_all_office_results))
+
+    @staticmethod
+    def get_all_candidates(office_id):
+        """
+        this method returns all the candidates registered to a certain office.
+
+        """
+        get_all_candidates = """
+        SELECT candidate FROM candidates WHERE candidates.office = {}
+        """.format(office_id)
+
+        allcandidates = db.select_data_from_db(get_all_candidates)
+        candidates = []
+
+        for candidate in allcandidates:
+            user = UserModel.get_user_by_id_formatted(candidate[0])
+            candidates.append(user)
+
+        return candidates

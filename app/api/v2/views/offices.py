@@ -136,3 +136,9 @@ def get_office_results(office_id):
     if results:
         return utils.response_fn(200, "data", results)
     return utils.response_fn(200, "data", [])
+
+
+@path_2.route("/offices/<int:office_id>/candidates", methods=["GET"])
+def get_candidates(office_id):
+    candidates = OfficesModel.get_all_candidates(office_id)
+    return utils.response_fn(200, "data", candidates)

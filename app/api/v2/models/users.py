@@ -50,7 +50,7 @@ class UserModel:
             to check the user by ID or by email or username.
         """
         select_user_by_email = """
-        SELECT id, username, password FROM users
+        SELECT id, username, password, email FROM users
         WHERE users.{} = '{}'""".format(mechanism, value)
 
         return db.select_data_from_db(select_user_by_email)
@@ -73,6 +73,20 @@ class UserModel:
             provided in the arguments.
         """
         return UserModel.get_user(mechanism="id", value=id)
+
+    @staticmethod
+    def get_user_by_id_formatted(id):
+        """
+            returns a record of a user
+        """
+        data = UserModel.get_user_by_id(id)
+        d = {
+            "id": data[0][0],
+            "username": data[0][1],
+            "email": data[0][3]
+        }
+
+        return d
 
     @staticmethod
     def check_if_password_n_hash_match(password_hash, password):

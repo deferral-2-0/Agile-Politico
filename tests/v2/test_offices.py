@@ -10,7 +10,6 @@ from .base_test import BaseTestClass
 import jwt
 import os
 KEY = os.getenv('SECRET_KEY')
-ADMIN_TOKEN = os.getenv("ADMIN_TOKEN")
 
 
 class TestOfficesFunctionality(BaseTestClass):
@@ -24,6 +23,31 @@ class TestOfficesFunctionality(BaseTestClass):
             }),
             headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
+
+    def AdminRegisterCandidate(self):
+        return self.client.post("api/v2/offices/1/register",
+                                data=json.dumps({
+                                    "office": 1,
+                                    "user": 2
+                                }),
+                                headers={'x-access-token': self.ADMIN_TOKEN},
+                                content_type="application/json")
+
+    def CreatePoliticianUser(self):
+        return self.client.post("api/v2/auth/signup",
+                                data=json.dumps({
+                                    "username": "Tevyn",
+                                    "firstname": "Tevin",
+                                    "lastname": "Gach",
+                                    "email": "tevinku@gmail.com",
+                                    "phone": "0735464438",
+                                    "othername": "Thuku",
+                                    "password": "Tevin1995",
+                                    "retypedpassword": "Tevin1995",
+                                    "passportUrl": "http",
+                                    "isPolitician": True
+                                }),
+                                content_type="application/json")
 
     def test_admin_creating_office(self):
         res = self.AdminPostOffice()
@@ -97,3 +121,21 @@ class TestOfficesFunctionality(BaseTestClass):
             headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
         self.assertEqual(res.status_code, 400)
+
+    def test_get_candidates_in_particular_office(self):
+        req = self.client.get("api/v2/offices/1/candidates",
+                              content_type="application/json")
+        self.assertEqual(req.status_code, 200)
+        dataresponse = json.loads(req.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"], [])
+
+    def test_getting_candidate_after_registering_candidate_to_an_office(self):
+        self.CreatePoliticianUser()
+        self.AdminPostOffice()
+        self.AdminRegisterCandidate()
+        req = self.client.get("api/v2/offices/1/candidates",
+                              content_type="application/json")
+        self.assertEqual(req.status_code, 200)
+        dataresponse = json.loads(req.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"], [
+                         {'email': 'tevinku@gmail.com', 'id': 2, 'username': 'Tevyn'}])
