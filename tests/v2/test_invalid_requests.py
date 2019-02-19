@@ -22,7 +22,7 @@ class TestInvalidRequestsFunctionality(BaseTestClass):
                 "type": "Governor",
                 "name": "Governor Narok County"
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/text")
         self.assertEqual(res.status_code, 400)
         dataresponse = json.loads(res.data.decode("utf-8"))
@@ -36,7 +36,7 @@ class TestInvalidRequestsFunctionality(BaseTestClass):
                 "type": "Governor",
                 "name": "Governor Narok County"
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/text")
         self.assertEqual(res.status_code, 400)
         dataresponse = json.loads(res.data.decode("utf-8"))
@@ -47,7 +47,7 @@ class TestInvalidRequestsFunctionality(BaseTestClass):
         res = self.client.post(
             "api/v2/offices",
             data="type: governor, name: governor of narok",
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
         self.assertEqual(res.status_code, 400)
         dataresponse = json.loads(res.data.decode("utf-8"))

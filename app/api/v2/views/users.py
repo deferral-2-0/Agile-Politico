@@ -31,6 +31,7 @@ def signup():
         password = data["password"]
         retypedpassword = data["retypedpassword"]
         isPolitician = data.get("isPolitician", False)
+        isAdmin = data.get("isAdmin", False)
 
     except:
         return abort(utils.response_fn(400, "error", 'Check your json keys. '
@@ -42,6 +43,8 @@ def signup():
 
     utils.check_for_whitespace(
         data, ["firstname", "lastname", "username", "email", "phone"])
+
+    utils.check_for_bools(data, ["isAdmin", "isPolitician"])
     # check the passwords.
     v2utils.doPasswordsMatch(password, retypedpassword)
     # check the email provided
@@ -53,7 +56,7 @@ def signup():
     v2utils.check_matching_items_in_db_table({"email": email}, "users")
 
     newuser = UserModel(username, email, password, firstname,
-                        lastname, phone, passportUrl, isPolitician, othername)
+                        lastname, phone, passportUrl, isPolitician, othername, isAdmin)
     newuser.save_user()
     token = jwt.encode({"email": email}, KEY, algorithm='HS256')
     return utils.response_fn(201, "data", [{

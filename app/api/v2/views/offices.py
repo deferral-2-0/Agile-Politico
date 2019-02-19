@@ -21,7 +21,7 @@ def create_office(user):
         This method allows the admin to creates a specific office to the database
     """
     try:
-        email = user[0][0]
+        isAdmin = user[0][2]
     except:
         return utils.response_fn(401, "error",
                                  "You don't have an account, Create one first")
@@ -41,7 +41,7 @@ def create_office(user):
             if email matches, admin's then create the party
         """
         # check if details are for an admin.
-        isUserAdmin(email)
+        isUserAdmin(isAdmin)
         # check if fields are blank
         utils.check_for_whitespace(data, ["name", "type"])
         check_matching_items_in_db_table({"name": name}, "offices")
@@ -92,7 +92,7 @@ def register_candidate_to_office(userobj, office_id):
     eligible so that it can be registered to an office.
     """
     try:
-        email = userobj[0][0]
+        isAdmin = userobj[0][2]
     except:
         abort(utils.response_fn(401, "error",
                                 "You don't have an account Create one"))
@@ -105,7 +105,7 @@ def register_candidate_to_office(userobj, office_id):
         abort(utils.response_fn(400, "error", "User key should be present"))
 
     # check if details are for an admin.
-    isUserAdmin(email)
+    isUserAdmin(isAdmin)
     # check if fields are integers.
     utils.check_for_ints(data, ["user"])
     # does the candidate & office exist in the db.

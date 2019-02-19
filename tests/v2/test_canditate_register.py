@@ -38,7 +38,7 @@ class TestUserEndpoints(BaseTestClass):
                 "type": "Governor",
                 "name": "Governor Narok County"
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
 
     def AdminCreateParty(self):
@@ -49,7 +49,7 @@ class TestUserEndpoints(BaseTestClass):
                 "hqAddress": "Nairobi",
                 "logoUrl": ""
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
 
     def AdminRegisterCandidate(self):
@@ -58,7 +58,7 @@ class TestUserEndpoints(BaseTestClass):
                                     "office": 1,
                                     "user": 2
                                 }),
-                                headers={'x-access-token': ADMIN_TOKEN},
+                                headers={'x-access-token': self.ADMIN_TOKEN},
                                 content_type="application/json")
 
     def test_admin_register_politician_candidate(self):
@@ -83,7 +83,7 @@ class TestUserEndpoints(BaseTestClass):
         res = self.client.post("api/v2/offices/1/register",
                                data=json.dumps({
                                }),
-                               headers={'x-access-token': ADMIN_TOKEN},
+                               headers={'x-access-token': self.ADMIN_TOKEN},
                                content_type="application/json")
         self.assertEqual(res.status_code, 400)
 
@@ -95,7 +95,7 @@ class TestUserEndpoints(BaseTestClass):
                                data=json.dumps({
                                    "user": 2
                                }),
-                               headers={'x-access-token': ADMIN_TOKEN},
+                               headers={'x-access-token': self.ADMIN_TOKEN},
                                content_type="application/json")
         self.assertEqual(res.status_code, 404)
 
@@ -107,7 +107,7 @@ class TestUserEndpoints(BaseTestClass):
                                data=json.dumps({
                                    "user": 20
                                }),
-                               headers={'x-access-token': ADMIN_TOKEN},
+                               headers={'x-access-token': self.ADMIN_TOKEN},
                                content_type="application/json")
         self.assertEqual(res.status_code, 404)
 
@@ -134,6 +134,6 @@ class TestUserEndpoints(BaseTestClass):
                                    "office": 1,
                                    "user": ""
                                }),
-                               headers={'x-access-token': ADMIN_TOKEN},
+                               headers={'x-access-token': self.ADMIN_TOKEN},
                                content_type="application/json")
         self.assertEqual(res.status_code, 400)

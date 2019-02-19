@@ -11,7 +11,7 @@ class UserModel:
     """
 
     def __init__(self, username, email, password,
-                 firstname, lastname, phone, passportUrl, isPolitician, othername):
+                 firstname, lastname, phone, passportUrl, isPolitician, othername, isAdmin):
         """
             Constructor of the user class
             New user objects are created with this method
@@ -25,15 +25,21 @@ class UserModel:
         self.passportUrl = passportUrl
         self.isPolitician = isPolitician
         self.othername = othername
+        self.isAdmin = isAdmin
 
     def save_user(self):
         """
         Add a new user to the users table
         """
         save_user_query = """
-        INSERT INTO users(username, firstname, lastname, phone, email, password, passportUrl, isPolitician, othername, isAdmin) VALUES(
+        INSERT INTO users(username,
+        firstname, lastname, phone, email,
+        password, passportUrl, isPolitician, othername, isAdmin) VALUES(
             '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
-        )""".format(self.username, self.firstname, self.lastname, self.phone, self.email, self.password, self.passportUrl, self.isPolitician, self.othername, False)
+        )""".format(self.username, self.firstname, self.lastname,
+                    self.phone, self.email, self.password,
+                    self.passportUrl, self.isPolitician,
+                    self.othername, self.isAdmin)
 
         db.queryData(save_user_query)
 

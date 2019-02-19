@@ -126,8 +126,8 @@ class TestUserEndpoints(BaseTestClass):
     def test_successfull_admin_login(self):
         res = self.client.post(
             "api/v2/auth/signin", data=json.dumps({
-                "email": "tevinthuku@gmail.com",
-                "password": "BootcampWeek1"
+                "email": "tevinadmin@gmail.com",
+                "password": "Tevin1995"
             }), content_type="application/json")
         self.assertEqual(res.status_code, 200)
         result = json.loads(res.data.decode("utf-8"))
@@ -206,6 +206,23 @@ class TestUserEndpoints(BaseTestClass):
                                    "retypedpassword": "Tevin1995",
                                    "passportUrl": "http",
                                    "isPolitician": False
+                               }),
+                               content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
+    def test_non_bool_params(self):
+        res = self.client.post("api/v2/auth/signup",
+                               data=json.dumps({
+                                   "username": "Tevyn",
+                                   "firstname": "Tevin",
+                                   "lastname": "Gach",
+                                   "email": "tevinku@gmail.com",
+                                   "phone": "0735464438",
+                                   "othername": "Thuku",
+                                   "password": "Tevin1995",
+                                   "retypedpassword": "Tevin1995",
+                                   "passportUrl": "http",
+                                   "isPolitician": "dsdwe"
                                }),
                                content_type="application/json")
         self.assertEqual(res.status_code, 400)

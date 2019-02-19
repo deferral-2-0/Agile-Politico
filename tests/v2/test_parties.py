@@ -38,7 +38,7 @@ class TestPartiesFunctionality(BaseTestClass):
                 "hqAddress": "Nairobi",
                 "logoUrl": ""
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
 
     def test_fetching_all_parties(self):
@@ -62,7 +62,7 @@ class TestPartiesFunctionality(BaseTestClass):
                             "hqAddress": "",
                             "logoUrl": ""
                             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
 
         self.assertEqual(res.status_code, 400)
@@ -109,7 +109,7 @@ class TestPartiesFunctionality(BaseTestClass):
                 "hqAddress": "Nairobi",
                 "logoUrl": ""
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode("utf-8"))
@@ -123,7 +123,7 @@ class TestPartiesFunctionality(BaseTestClass):
                 "hqAddress": "Int name",
                 "logoUrl": "logoUrl"
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
         self.assertEqual(response.status_code, 400)
 
@@ -178,7 +178,7 @@ class TestPartiesFunctionality(BaseTestClass):
         self.AdminPostParty()
         res = self.client.patch("api/v2/parties/1/name",
                                 data=json.dumps({"name": "Party A"}),
-                                headers={'x-access-token': ADMIN_TOKEN},
+                                headers={'x-access-token': self.ADMIN_TOKEN},
                                 content_type="application/json")
         self.assertEqual(res.status_code, 200)
         dataresponse = json.loads(res.data.decode("utf-8"))
@@ -191,7 +191,7 @@ class TestPartiesFunctionality(BaseTestClass):
         self.AdminPostParty()
         res = self.client.patch("api/v2/parties/1/name",
                                 data=json.dumps({"name": ""}),
-                                headers={'x-access-token': ADMIN_TOKEN},
+                                headers={'x-access-token': self.ADMIN_TOKEN},
                                 content_type="application/json")
         self.assertEqual(res.status_code, 400)
 
@@ -199,7 +199,7 @@ class TestPartiesFunctionality(BaseTestClass):
         self.AdminPostParty()
         res = self.client.patch("api/v2/parties/1/name",
                                 data=json.dumps({"name": 12}),
-                                headers={'x-access-token': ADMIN_TOKEN},
+                                headers={'x-access-token': self.ADMIN_TOKEN},
                                 content_type="application/json")
         self.assertEqual(res.status_code, 400)
 
@@ -207,7 +207,7 @@ class TestPartiesFunctionality(BaseTestClass):
         self.AdminPostParty()
         self.client.patch("api/v2/parties/1/name",
                           data=json.dumps({"name": "Party A"}),
-                          headers={'x-access-token': ADMIN_TOKEN},
+                          headers={'x-access-token': self.ADMIN_TOKEN},
                           content_type="application/json")
         response = self.client.get("api/v2/parties",
                                    content_type="application/json")
@@ -223,7 +223,7 @@ class TestPartiesFunctionality(BaseTestClass):
     def test_admin_updating_non_existent_party(self):
         res = self.client.patch("api/v2/parties/20/name",
                                 data=json.dumps({"name": "Party 20 num"}),
-                                headers={'x-access-token': ADMIN_TOKEN},
+                                headers={'x-access-token': self.ADMIN_TOKEN},
                                 content_type="application/json")
         self.assertEqual(res.status_code, 404)
         dataresponse = json.loads(res.data.decode("utf-8"))
@@ -234,7 +234,7 @@ class TestPartiesFunctionality(BaseTestClass):
         res = self.client.patch("api/v2/parties/1/name",
                                 data=json.dumps(
                                     {"newname": "Missing new name"}),
-                                headers={'x-access-token': ADMIN_TOKEN},
+                                headers={'x-access-token': self.ADMIN_TOKEN},
                                 content_type="application/json")
         self.assertEqual(res.status_code, 400)
         dataresponse = json.loads(res.data.decode("utf-8"))
@@ -255,7 +255,7 @@ class TestPartiesFunctionality(BaseTestClass):
         res = self.client.delete(
             "/api/v2/parties/{}".format(1),
             content_type="application/json",
-            headers={'x-access-token': ADMIN_TOKEN}
+            headers={'x-access-token': self.ADMIN_TOKEN}
         )
         self.assertEqual(res.status_code, 200)
 
@@ -264,7 +264,7 @@ class TestPartiesFunctionality(BaseTestClass):
         res = self.client.delete(
             "/api/v2/parties/{}".format(100),
             content_type="application/json",
-            headers={"x-access-token": ADMIN_TOKEN}
+            headers={"x-access-token": self.ADMIN_TOKEN}
         )
         self.assertEqual(res.status_code, 404)
 

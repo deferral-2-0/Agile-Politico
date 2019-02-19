@@ -22,7 +22,7 @@ class TestOfficesFunctionality(BaseTestClass):
                 "type": "Governor",
                 "name": "Governor Narok County"
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
 
     def test_admin_creating_office(self):
@@ -35,7 +35,7 @@ class TestOfficesFunctionality(BaseTestClass):
             data=json.dumps({
                 "name": "Office 2"
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
         self.assertEqual(response.status_code, 400)
 
@@ -94,6 +94,6 @@ class TestOfficesFunctionality(BaseTestClass):
                 "name": "Senator Office",
                 "type": ""
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
         self.assertEqual(res.status_code, 400)

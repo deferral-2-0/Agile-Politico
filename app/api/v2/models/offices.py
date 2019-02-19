@@ -20,7 +20,7 @@ class OfficesModel:
     def save_office(self):
         """
         Add a new office to the
-        database (ADMIN ONLY OPERATION)
+        database (ADMINS ONLY OPERATION)
         """
         save_new_office = """
         INSERT INTO offices(name, type) VALUES(

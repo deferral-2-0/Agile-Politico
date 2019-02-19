@@ -22,6 +22,14 @@ def is_valid_string(string_provided):
         return False
 
 
+def isBool(val):
+    """
+        This function checks if the value provided
+        is a boolean
+    """
+    return isinstance(val, bool)
+
+
 def response_fn(status, key, message):
     """
         reuses the make_response and jsonify function
@@ -66,6 +74,14 @@ def check_for_strings(data, checklist):
     type error issues
     """
     return type_checks(is_valid_string, "field cannot be a non string.", data, checklist)
+
+
+def check_for_bools(data, checklist):
+    """
+        This function checks if the items in the checklist are all
+        booleans, aborts if they aren't
+    """
+    return type_checks(isBool, "Field has to be a boolean", data, checklist)
 
 
 def type_checks(pred, errormessage, data, checklist):

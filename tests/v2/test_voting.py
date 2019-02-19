@@ -54,7 +54,7 @@ class TestUserEndpoints(BaseTestClass):
                 "type": "Governor",
                 "name": "Governor Narok County"
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
 
     def AdminCreateParty(self):
@@ -65,7 +65,7 @@ class TestUserEndpoints(BaseTestClass):
                 "hqAddress": "Nairobi",
                 "logoUrl": ""
             }),
-            headers={'x-access-token': ADMIN_TOKEN},
+            headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
 
     def AdminRegisterCandidate(self):
@@ -74,7 +74,7 @@ class TestUserEndpoints(BaseTestClass):
                                     "office": 1,
                                     "user": 2
                                 }),
-                                headers={'x-access-token': ADMIN_TOKEN},
+                                headers={'x-access-token': self.ADMIN_TOKEN},
                                 content_type="application/json")
 
     def RepeatProcedureBeforeVoting(self):

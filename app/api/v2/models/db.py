@@ -96,17 +96,7 @@ def set_up_tables():
             FOREIGN KEY (voter) REFERENCES users(id) ON DELETE CASCADE
         )"""
 
-    # I'm the admin of this system.
-    password = generate_password_hash('BootcampWeek1')
-    create_admin_query = """
-    INSERT INTO users(username, firstname, lastname, othername ,
-    phone, email, password, passportUrl , isPolitician ,isAdmin) 
-    VALUES(
-        '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
-    )""".format('admin', 'Tevin', 'Gachagua', 'Thuku', '0742546892',
-                'tevinthuku@gmail.com', password, "", False, True)
-
-    return [table_users, create_admin_query, parties_table,
+    return [table_users, parties_table,
             offices_table, canditates_table, voters_table]
 
 
