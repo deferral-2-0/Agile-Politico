@@ -17,7 +17,7 @@ before_script:
 
 env:
   global:
-    - PGPORT=5433 SECRET_KEY="ABIGSECRET" DATABASE_TEST_URL="postgres://tev:8279@localhost/politico_test_db"
+    - PGPORT=5432 SECRET_KEY="ABIGSECRET" DATABASE_TEST_URL="postgres://tev:8279@localhost/politico_test_db"
 script:
   - python -m pytest --cov=app/api
 after_success:
