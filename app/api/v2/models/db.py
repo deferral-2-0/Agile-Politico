@@ -96,8 +96,20 @@ def set_up_tables():
             FOREIGN KEY (voter) REFERENCES users(id) ON DELETE CASCADE
         )"""
 
+    password = generate_password_hash('BootcampWeek1')
+    create_admin_if_not_present = """
+    INSERT INTO users(username, firstname, lastname, othername ,
+    phone, email, password, passportUrl , isPolitician ,isAdmin) 
+    VALUES(
+        '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
+    ) ON CONFLICT DO NOTHING""".format('OriginalAdmin',
+                                       'FirstAdminName', 'LastAdminName',
+                                       'OtherAdminName', '0742546892',
+                                       'admindetails@gmail.com', password, "",
+                                       False, True)
+
     return [table_users, parties_table,
-            offices_table, canditates_table, voters_table]
+            offices_table, canditates_table, voters_table, create_admin_if_not_present]
 
 
 def drop_table_if_exists():

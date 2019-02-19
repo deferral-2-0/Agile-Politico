@@ -30,8 +30,6 @@ def signup():
         passportUrl = data.get("passportUrl", "")
         password = data["password"]
         retypedpassword = data["retypedpassword"]
-        isPolitician = data.get("isPolitician", False)
-        isAdmin = data.get("isAdmin", False)
 
     except:
         return abort(utils.response_fn(400, "error", 'Check your json keys. '
@@ -55,8 +53,8 @@ def signup():
     v2utils.check_matching_items_in_db_table({"username": username}, "users")
     v2utils.check_matching_items_in_db_table({"email": email}, "users")
 
-    newuser = UserModel(username, email, password, firstname,
-                        lastname, phone, passportUrl, isPolitician, othername, isAdmin)
+    newuser = UserModel(username=username, email=email, password=password, firstname=firstname,
+                        lastname=lastname, phone=phone, passportUrl=passportUrl, othername=othername)
     newuser.save_user()
     token = jwt.encode({"email": email}, KEY, algorithm='HS256')
     return utils.response_fn(201, "data", [{
@@ -135,3 +133,10 @@ def reset_password():
         }])
     except psycopg2.DatabaseError as _error:
         abort(utils.response_fn(500, "error", "Server error"))
+
+# getting list of all users
+
+
+@path_2.route("/users", methods=["GET"])
+def get_all_users():
+    return utils.response_fn(200, "data", UserModel.get_all_users())

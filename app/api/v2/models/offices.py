@@ -109,7 +109,12 @@ class OfficesModel:
         candidates = []
 
         for candidate in allcandidates:
-            user = UserModel.get_user_by_id_formatted(candidate[0])
-            candidates.append(user)
+            user = UserModel.get_user_by_id(candidate[0])
+            candidatel = user[0]
+            candidates.append({
+                "id": candidatel[0],
+                "email": candidatel[3],
+                "username": candidatel[1]
+            })
 
         return candidates

@@ -89,7 +89,8 @@ source ./env
 | `GET`    | `/api/v2/offices/<int:office_id>`          | Get a specific office from the DB                  |
 | `POST`   | `/api/v2/offices/<int:office_id>/register` | A admin can register a candidate to an office      |
 | `POST`   | `/api/v2/votes`                            | A registered user can vote                         |
-| `GET`    | `api/v2/offices/<int:office_id>/result`    | A user can view the results of a particular office |
+| `GET`    | `/api/v2/offices/<int:office_id>/result`   | A user can view the results of a particular office |
+| `GET`    | `/api/v2/users`                            | Should be able to get a list of all users          |
 
 </details>
 

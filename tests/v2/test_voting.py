@@ -25,8 +25,7 @@ class TestUserEndpoints(BaseTestClass):
                                     "othername": "Thuku",
                                     "password": "Tevin1995",
                                     "retypedpassword": "Tevin1995",
-                                    "passportUrl": "http",
-                                    "isPolitician": False
+                                    "passportUrl": "http"
                                 }),
                                 content_type="application/json")
 
@@ -41,8 +40,7 @@ class TestUserEndpoints(BaseTestClass):
                                     "othername": "Thuku",
                                     "password": "Tevin1995",
                                     "retypedpassword": "Tevin1995",
-                                    "passportUrl": "http",
-                                    "isPolitician": True
+                                    "passportUrl": "http"
                                 }),
                                 content_type="application/json")
 
@@ -71,7 +69,7 @@ class TestUserEndpoints(BaseTestClass):
         return self.client.post("api/v2/offices/1/register",
                                 data=json.dumps({
                                     "office": 1,
-                                    "user": 2
+                                    "user": 3
                                 }),
                                 headers={'x-access-token': self.ADMIN_TOKEN},
                                 content_type="application/json")
@@ -90,7 +88,7 @@ class TestUserEndpoints(BaseTestClass):
         response = self.client.post(
             "api/v2/votes", data=json.dumps({
                 "office": 1,
-                "candidate": 1
+                "candidate": 3
             }), headers={'x-access-token': usertoken}, content_type="application/json")
         self.assertEqual(response.status_code, 201)
 
@@ -100,12 +98,12 @@ class TestUserEndpoints(BaseTestClass):
             {"email": "tevinku@gmail.com"}, KEY, algorithm='HS256')
         self.client.post("api/v2/votes", data=json.dumps({
             "office": 1,
-            "candidate": 1
+            "candidate": 3
         }),
             headers={'x-access-token': usertoken}, content_type="application/json")
         response = self.client.post("api/v2/votes", data=json.dumps({
             "office": 1,
-            "candidate": 1}), headers={'x-access-token': usertoken}, content_type="application/json")
+            "candidate": 3}), headers={'x-access-token': usertoken}, content_type="application/json")
         self.assertEqual(response.status_code, 401)
 
     def test_vote_for_non_existent_office(self):
@@ -178,14 +176,14 @@ class TestUserEndpoints(BaseTestClass):
         self.client.post(
             "api/v2/votes", data=json.dumps({
                 "office": 1,
-                "candidate": 1
+                "candidate": 3
             }), headers={'x-access-token': usertoken}, content_type="application/json")
         res = self.client.get("api/v2/offices/1/result")
         self.assertEqual(res.status_code, 200)
         dataresponse = json.loads(res.data.decode("utf-8"))
         self.assertEqual(dataresponse["data"], [{
             "office": 1,
-            "candidate": 1,
+            "candidate": 3,
             "result": 1
         }])
 
