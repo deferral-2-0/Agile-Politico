@@ -14,18 +14,8 @@ addons:
 env:
   global:
     - PGPORT=5432 SECRET_KEY="ABIGSECRET"
-cache:
-  directories:
-    - "$HOME/.cache/pip"
-before_cache:
-  - rm -f $HOME/.cache/pip/log/debug.log
 before_script:
-  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/10/main/postgresql.conf
-  - sudo cp /etc/postgresql/{10}/main/pg_hba.conf
-  - sudo service postgresql restart
-  - psql -c 'create database politico_test_db;' -U postgres
-before_install:
-  - sudo rm -f /etc/boto.cfg
+  - psql -c "CREATE DATABASE politico_test_db;" -U postgres
 script:
   - python -m pytest --cov=app/api
 after_success:

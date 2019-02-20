@@ -102,3 +102,11 @@ class UserModel:
         select_all_users = """
         SELECT id, username, email FROM users"""
         return UserModel.format_user_list_to_record(db.select_data_from_db(select_all_users))
+
+    @staticmethod
+    def make_admin(userId):
+        update_user = """
+        UPDATE users SET isAdmin = True WHERE users.id = '{}'
+        """.format(userId)
+
+        db.queryData(update_user)
