@@ -33,17 +33,13 @@ def check_password_format(password):
         abort(response_fn(400, "error",
                           "Password should not be less than 8 characters or exceed 20"))
 
-    # check if password contains at least an alphabet(a-z)
-    if not re.search("[a-z]", password):
-        abort(response_fn(400, "error", "Password should contain a letter between a-z"))
-
-    # check if password contains at least an upper case letter
-    if not re.search("[A-Z]", password):
-        abort(response_fn(400, "error", "Password should contain a capital letter"))
-
-    # check if password contains at least a number(0-9)
-    if not re.search("[0-9]", password):
-        abort(response_fn(400, "error", "Password should contain a number(0-9)"))
+    smallreg = re.search("[a-z]", password)
+    largereg = re.search("[A-Z]", password)
+    numreg = re.search("[0-9]", password)
+    if not smallreg or not largereg or not numreg:
+        abort(response_fn(400,
+                          "error",
+                          "Password should contain at least 1 number, 1 small letter and 1 Capital letter"))
 
 
 def is_phone_number_valid(phone):
