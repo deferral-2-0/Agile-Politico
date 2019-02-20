@@ -20,8 +20,7 @@ class TestUserEndpoints(BaseTestClass):
                                     "othername": "Thuku",
                                     "password": "Tevin1995",
                                     "retypedpassword": "Tevin1995",
-                                    "passportUrl": "http",
-                                    "isPolitician": False
+                                    "passportUrl": "http"
                                 }),
                                 content_type="application/json")
 
@@ -126,8 +125,8 @@ class TestUserEndpoints(BaseTestClass):
     def test_successfull_admin_login(self):
         res = self.client.post(
             "api/v2/auth/signin", data=json.dumps({
-                "email": "tevinadmin@gmail.com",
-                "password": "Tevin1995"
+                "email": "admindetails@gmail.com",
+                "password": "BootcampWeek1"
             }), content_type="application/json")
         self.assertEqual(res.status_code, 200)
         result = json.loads(res.data.decode("utf-8"))
@@ -226,3 +225,13 @@ class TestUserEndpoints(BaseTestClass):
                                }),
                                content_type="application/json")
         self.assertEqual(res.status_code, 400)
+
+    def test_getting_users_list(self):
+        res = self.client.get("api/v2/users")
+        self.assertEqual(res.status_code, 200)
+
+    def test_getting_list_of_users(self):
+        res = self.client.get("api/v2/users")
+        result = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(result["data"], [
+                         {'email': 'admindetails@gmail.com', 'id': 1, 'username': 'OriginalAdmin'}])

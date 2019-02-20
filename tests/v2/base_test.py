@@ -17,23 +17,14 @@ class BaseTestClass(unittest.TestCase):
         self.app = app("testing")
         self.client = self.app.test_client()
         init_db()
-        admin = self.client.post("api/v2/auth/signup",
+        admin = self.client.post("api/v2/auth/signin",
                                  data=json.dumps({
-                                     "username": "AdminForTests",
-                                     "firstname": "Tevin",
-                                     "lastname": "Gach",
-                                     "email": "tevinadmin@gmail.com",
-                                     "phone": "0735464438",
-                                     "othername": "Thuku",
-                                     "password": "Tevin1995",
-                                     "retypedpassword": "Tevin1995",
-                                     "passportUrl": "http",
-                                     "isPolitician": False,
-                                     "isAdmin": True
+                                     "email": "admindetails@gmail.com",
+                                     "password": "BootcampWeek1"
                                  }),
                                  content_type="application/json")
         self.ADMIN_TOKEN = json.loads(
-            admin.data.decode("utf-8"))["data"][0]["token"]
+            admin.data.decode("utf-8"))["data"]["token"]
 
     def tearDown(self):
         """Clear the db after tests finish running"""

@@ -23,3 +23,9 @@ class CandidateModel:
             INSERT INTO candidates(office, candidate) VALUES(
                 '{}', '{}')""".format(office_id, candidate_id)
         db.queryData(save_candidate_info)
+
+        update_user_to_politician = """
+        UPDATE users SET isPolitician = True WHERE users.id = '{}'
+        """.format(candidate_id)
+
+        db.queryData(update_user_to_politician)

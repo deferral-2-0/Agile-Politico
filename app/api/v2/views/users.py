@@ -6,6 +6,9 @@ from app.api.v2 import utils as v2utils
 
 from app.api.v2.models.users import UserModel
 import psycopg2
+from app.api.v2.utils import token_required, check_matching_items_in_db_table
+from app.api.v2.utils import isUserAdmin
+
 
 import os
 import jwt
@@ -30,8 +33,6 @@ def signup():
         passportUrl = data.get("passportUrl", "")
         password = data["password"]
         retypedpassword = data["retypedpassword"]
-        isPolitician = data.get("isPolitician", False)
-        isAdmin = data.get("isAdmin", False)
 
     except:
         return abort(utils.response_fn(400, "error", 'Check your json keys. '
@@ -55,8 +56,8 @@ def signup():
     v2utils.check_matching_items_in_db_table({"username": username}, "users")
     v2utils.check_matching_items_in_db_table({"email": email}, "users")
 
-    newuser = UserModel(username, email, password, firstname,
-                        lastname, phone, passportUrl, isPolitician, othername, isAdmin)
+    newuser = UserModel(username=username, email=email, password=password, firstname=firstname,
+                        lastname=lastname, phone=phone, passportUrl=passportUrl, othername=othername)
     newuser.save_user()
     token = jwt.encode({"email": email}, KEY, algorithm='HS256')
     return utils.response_fn(201, "data", [{
@@ -135,3 +136,31 @@ def reset_password():
         }])
     except psycopg2.DatabaseError as _error:
         abort(utils.response_fn(500, "error", "Server error"))
+
+# getting list of all users
+
+
+@path_2.route("/users", methods=["GET"])
+def get_all_users():
+    return utils.response_fn(200, "data", UserModel.get_all_users())
+
+
+@path_2.route("/authorize/<int:user_id>", methods=["POST"])
+@token_required
+def authorize_user_to_admin(user, user_id):
+    try:
+        adminprop = user[0][2]
+    except:
+        return utils.response_fn(401, "error",
+                                 "You don't have an account. Create One")
+
+    isUserAdmin(adminprop)
+    userToBeElevated = UserModel.get_user_by_id(user_id)
+
+    if userToBeElevated:
+        UserModel.make_admin(userToBeElevated[0][0])
+        return utils.response_fn(200, "data", [{
+            "message": "Admin has been set"
+        }])
+    return utils.response_fn(404, "message",
+                             "The user you are trying to elevate is not registered")

@@ -11,7 +11,7 @@ class UserModel:
     """
 
     def __init__(self, username, email, password,
-                 firstname, lastname, phone, passportUrl, isPolitician, othername, isAdmin):
+                 firstname, lastname, phone, passportUrl, othername):
         """
             Constructor of the user class
             New user objects are created with this method
@@ -23,9 +23,7 @@ class UserModel:
         self.phone = phone
         self.password = self.encrypt_password_on_signup(password)
         self.passportUrl = passportUrl
-        self.isPolitician = isPolitician
         self.othername = othername
-        self.isAdmin = isAdmin
 
     def save_user(self):
         """
@@ -38,8 +36,8 @@ class UserModel:
             '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
         )""".format(self.username, self.firstname, self.lastname,
                     self.phone, self.email, self.password,
-                    self.passportUrl, self.isPolitician,
-                    self.othername, self.isAdmin)
+                    self.passportUrl, False,
+                    self.othername, False)
 
         db.queryData(save_user_query)
 
@@ -75,19 +73,40 @@ class UserModel:
         return UserModel.get_user(mechanism="id", value=id)
 
     @staticmethod
+    def format_user_list_to_record(iterable):
+        results = []
+        for item in iterable:
+            d = {
+                "id": item[0],
+                "username": item[1],
+                "email": item[2]
+            }
+            results.append(d)
+        return results
+
+    @staticmethod
     def get_user_by_id_formatted(id):
         """
             returns a record of a user
         """
         data = UserModel.get_user_by_id(id)
-        d = {
-            "id": data[0][0],
-            "username": data[0][1],
-            "email": data[0][3]
-        }
 
-        return d
+        return UserModel.format_user_list_to_record(data)[0]
 
     @staticmethod
     def check_if_password_n_hash_match(password_hash, password):
         return check_password_hash(password_hash, str(password))
+
+    @staticmethod
+    def get_all_users():
+        select_all_users = """
+        SELECT id, username, email FROM users"""
+        return UserModel.format_user_list_to_record(db.select_data_from_db(select_all_users))
+
+    @staticmethod
+    def make_admin(userId):
+        update_user = """
+        UPDATE users SET isAdmin = True WHERE users.id = '{}'
+        """.format(userId)
+
+        db.queryData(update_user)

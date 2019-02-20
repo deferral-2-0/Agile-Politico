@@ -8,6 +8,7 @@ from app.api.v2.utils import token_required, check_matching_items_in_db_table
 from app.api.v2.models.offices import OfficesModel
 from app.api.v2.models.users import UserModel
 from app.api.v2.models.votes import VotesModel
+from app.api.v2.models.candidates import CandidateModel
 import psycopg2
 
 
@@ -38,16 +39,20 @@ def create_vote(user):
         iscandidatePresent = UserModel.get_user_by_id(candidate)
         isOfficePresent = OfficesModel.get_specific_office(office)
         if iscandidatePresent and isOfficePresent:
-            voted = VotesModel.check_if_user_already_voted(user_id, office)
-            if voted:
-                return utils.response_fn(401, "error", "You have already voted")
-            newvote = VotesModel(office, candidate, user_id)
-            newvote.save_vote()
-            return utils.response_fn(201, "data", [{
-                "office": office,
-                "candidate": candidate,
-                "voter": user_id
-            }])
+            isCandidateRegistered = CandidateModel.check_if_candidate_is_already_registered(
+                candidate, office)
+            if isCandidateRegistered:
+                voted = VotesModel.check_if_user_already_voted(user_id, office)
+                if voted:
+                    return utils.response_fn(401, "error", "You have already voted")
+                newvote = VotesModel(office, candidate, user_id)
+                newvote.save_vote()
+                return utils.response_fn(201, "data", [{
+                    "office": office,
+                    "candidate": candidate,
+                    "voter": user_id
+                }])
+            return utils.response_fn(400, "error", "This candidate is not registered for the office.")
         return utils.response_fn(404, "error", "Either Candidate or party doesn't exist")
 
     except psycopg2.DatabaseError as _error:
