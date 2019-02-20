@@ -102,11 +102,11 @@ def set_up_tables():
     phone, email, password, passportUrl , isPolitician ,isAdmin)
     VALUES(
         '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
-    ) ON CONFLICT DO NOTHING""".format('OriginalAdmin',
-                                       'FirstAdminName', 'LastAdminName',
-                                       'OtherAdminName', '0742546892',
-                                       'admindetails@gmail.com', password, "",
-                                       False, True)
+    )""".format('OriginalAdmin',
+                'FirstAdminName', 'LastAdminName',
+                'OtherAdminName', '0742546892',
+                'admindetails@gmail.com', password, "",
+                False, True)
 
     return [table_users, parties_table,
             offices_table, canditates_table, voters_table, create_admin_if_not_present]
