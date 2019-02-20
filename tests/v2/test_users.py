@@ -235,3 +235,67 @@ class TestUserEndpoints(BaseTestClass):
         result = json.loads(res.data.decode("utf-8"))
         self.assertEqual(result["data"], [
                          {'email': 'admindetails@gmail.com', 'id': 1, 'username': 'OriginalAdmin'}])
+
+    def test_password_without_number(self):
+        res = self.client.post("api/v2/auth/signup",
+                               data=json.dumps({
+                                   "username": "Tevyn",
+                                   "firstname": "Tevin",
+                                   "lastname": "Gach",
+                                   "email": "tevinku@gmail.com",
+                                   "phone": "0735464438",
+                                   "othername": "Thuku",
+                                   "password": "Tevint",
+                                   "retypedpassword": "Tevint",
+                                   "passportUrl": "http"
+                               }),
+                               content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
+    def test_password_without_caps(self):
+        res = self.client.post("api/v2/auth/signup",
+                               data=json.dumps({
+                                   "username": "Tevyn",
+                                   "firstname": "Tevin",
+                                   "lastname": "Gach",
+                                   "email": "tevinku@gmail.com",
+                                   "phone": "0735464438",
+                                   "othername": "Thuku",
+                                   "password": "tevint",
+                                   "retypedpassword": "tevint",
+                                   "passportUrl": "http"
+                               }),
+                               content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
+    def test_password_less_than_5(self):
+        res = self.client.post("api/v2/auth/signup",
+                               data=json.dumps({
+                                   "username": "Tevyn",
+                                   "firstname": "Tevin",
+                                   "lastname": "Gach",
+                                   "email": "tevinku@gmail.com",
+                                   "phone": "0735464438",
+                                   "othername": "Thuku",
+                                   "password": "tev",
+                                   "retypedpassword": "tev",
+                                   "passportUrl": "http"
+                               }),
+                               content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
+    def test_password_all_caps(self):
+        res = self.client.post("api/v2/auth/signup",
+                               data=json.dumps({
+                                   "username": "Tevyn",
+                                   "firstname": "Tevin",
+                                   "lastname": "Gach",
+                                   "email": "tevinku@gmail.com",
+                                   "phone": "0735464438",
+                                   "othername": "Thuku",
+                                   "password": "TEVINTHUKU",
+                                   "retypedpassword": "TEVINTHUKU",
+                                   "passportUrl": "http"
+                               }),
+                               content_type="application/json")
+        self.assertEqual(res.status_code, 400)

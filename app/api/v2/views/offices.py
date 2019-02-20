@@ -21,7 +21,7 @@ def create_office(user):
         This method allows the admin to creates a specific office to the database
     """
     try:
-        isAdmin = user[0][2]
+        userAdminProperty = user[0][2]
     except:
         return utils.response_fn(401, "error",
                                  "You don't have an account, Create one first")
@@ -41,7 +41,9 @@ def create_office(user):
             if email matches, admin's then create the party
         """
         # check if details are for an admin.
-        isUserAdmin(isAdmin)
+        isUserAdmin(userAdminProperty)
+        # check if inputs are all strings
+        utils.check_for_strings(data, ["name", "type"])
         # check if fields are blank
         utils.check_for_whitespace(data, ["name", "type"])
         check_matching_items_in_db_table({"name": name}, "offices")
@@ -65,10 +67,7 @@ def get_all_offices():
         Get all offices from the
         database. No authentication is required here.
     """
-    offices = OfficesModel.get_all_offices()
-    if offices:
-        return utils.response_fn(200, "data", offices)
-    return utils.response_fn(200, "data", [])
+    return utils.response_fn(200, "data", OfficesModel.get_all_offices())
 
 
 @path_2.route("/offices/<int:office_id>", methods=["GET"])
@@ -92,7 +91,7 @@ def register_candidate_to_office(userobj, office_id):
     eligible so that it can be registered to an office.
     """
     try:
-        isAdmin = userobj[0][2]
+        userAdminProperty = userobj[0][2]
     except:
         abort(utils.response_fn(401, "error",
                                 "You don't have an account Create one"))
@@ -105,7 +104,7 @@ def register_candidate_to_office(userobj, office_id):
         abort(utils.response_fn(400, "error", "User key should be present"))
 
     # check if details are for an admin.
-    isUserAdmin(isAdmin)
+    isUserAdmin(userAdminProperty)
     # check if fields are integers.
     utils.check_for_ints(data, ["user"])
     # does the candidate & office exist in the db.
@@ -113,17 +112,17 @@ def register_candidate_to_office(userobj, office_id):
     office = OfficesModel.get_specific_office(office_id)
     if candidate and office:
         is_candidate_registered = CandidateModel.check_if_candidate_is_already_registered(
-            candidate[0][0], office[0]["id"])
+            user, office_id)
         if is_candidate_registered:
             abort(utils.response_fn(400, "error",
                                     "Candidate is already registered in this office"))
 
         # register the politician user.to a certain office.
         CandidateModel.register_politician_user_to_office(
-            office[0]["id"], candidate[0][0])
+            office_id, user)
         return utils.response_fn(201, "data", [{
-            "office": office[0]["id"],
-            "user": candidate[0][0]
+            "office": office_id,
+            "user": user
         }])
     else:
         return utils.response_fn(404, "error",
@@ -132,13 +131,9 @@ def register_candidate_to_office(userobj, office_id):
 
 @path_2.route("/offices/<int:office_id>/result", methods=["GET"])
 def get_office_results(office_id):
-    results = OfficesModel.get_office_results(office_id)
-    if results:
-        return utils.response_fn(200, "data", results)
-    return utils.response_fn(200, "data", [])
+    return utils.response_fn(200, "data", OfficesModel.get_office_results(office_id))
 
 
 @path_2.route("/offices/<int:office_id>/candidates", methods=["GET"])
 def get_candidates(office_id):
-    candidates = OfficesModel.get_all_candidates(office_id)
-    return utils.response_fn(200, "data", candidates)
+    return utils.response_fn(200, "data", OfficesModel.get_all_candidates(office_id))

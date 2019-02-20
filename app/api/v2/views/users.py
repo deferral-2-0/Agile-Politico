@@ -82,6 +82,8 @@ def user_login():
 
     # check for the validity of the email
     v2utils.isEmailValid(email)
+    # check if both values are stirngs
+    utils.check_for_strings(data, ["email", "password"])
     # check for whitespaces.
     utils.check_for_whitespace(data, ["email", "password"])
 

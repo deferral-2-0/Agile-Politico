@@ -20,7 +20,26 @@ def doPasswordsMatch(pass1, pass2):
     """
     if(pass1 != pass2):
         abort(response_fn(400, "error", "passwords dont match"))
-    return True
+    check_password_format(pass1)
+
+
+def check_password_format(password):
+    '''
+     Does password meet expectations
+     of passwords that need to be saved
+    '''
+    # check to confirm the password is of required length
+    if len(password) < 5 or len(password) > 20:
+        abort(response_fn(400, "error",
+                          "Password should not be less than 8 characters or exceed 20"))
+
+    smallreg = re.search("[a-z]", password)
+    largereg = re.search("[A-Z]", password)
+    numreg = re.search("[0-9]", password)
+    if not smallreg or not largereg or not numreg:
+        abort(response_fn(400,
+                          "error",
+                          "Password should contain at least 1 number, 1 small letter and 1 Capital letter"))
 
 
 def is_phone_number_valid(phone):
@@ -43,7 +62,7 @@ def isEmailValid(email):
 
 def check_matching_items_in_db_table(params, table_name):
     """
-        check if a value of key provided is 
+        check if a value of key provided is
         available in the database table
         if there's a duplicate then the test fails
     """
