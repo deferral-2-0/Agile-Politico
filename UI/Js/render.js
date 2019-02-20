@@ -1,6 +1,6 @@
 //the createElement function renders the items provided and calls itself recursively
 // based on whether children are provided or not
-function createElement(node) {
+const createElement = node => {
   if (typeof node === "string") {
     return document.createTextNode(node);
   }
@@ -10,7 +10,34 @@ function createElement(node) {
   }
   node.children.map(createElement).forEach($el.appendChild.bind($el));
   return $el;
-}
+};
+
+const isUserLoggedIn = window.localStorage.getItem("user")
+  ? [
+      {
+        type: "a",
+        props: {
+          onclick: `(function(){
+            alert('Are you sure you want to logout');
+            window.localStorage.removeItem("user")
+            location.reload();
+          })()`
+        },
+        children: ["Logout"]
+      }
+    ]
+  : [
+      {
+        type: "a",
+        props: { href: "login.html" },
+        children: ["Login"]
+      },
+      {
+        type: "a",
+        props: { href: "sign-up.html" },
+        children: ["Sign Up"]
+      }
+    ];
 
 const layout = {
   type: "header",
@@ -41,17 +68,21 @@ const layout = {
       props: { href: "vote.html" },
       children: ["Vote"]
     },
-    {
-      type: "a",
-      props: { href: "login.html" },
-      children: ["Login"]
-    },
-    {
-      type: "a",
-      props: { href: "sign-up.html" },
-      children: ["Sign Up"]
-    }
+    ...isUserLoggedIn
   ]
+};
+
+/**
+ *
+ * @param {id} - id of the node to be deleted.
+ */
+const destroyNodeChildren = id => {
+  var myNode = document.getElementById(id);
+  while (myNode.firstChild) {
+    myNode.removeChild(myNode.firstChild);
+  }
+
+  return myNode;
 };
 
 if ("serviceWorker" in navigator) {

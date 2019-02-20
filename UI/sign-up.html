@@ -1,161 +1,213 @@
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Sign Up page | Politico</title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Sign Up page | Politico</title>
-  <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+    />
+  </head>
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
-</head>
+  <body>
+    <div id="heading-container"></div>
+    <div class="center" id="center">
+      <div class="maxwidth500">
+        <form id="sigin-in-form">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+          /><br />
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="username"
+          /><br />
+          <input
+            type="text"
+            name="firstname"
+            id="firstname"
+            placeholder="firstname"
+          /><br />
 
-<body>
-  <div id="heading-container"></div>
-  <div class="center">
-    <div class="maxwidth500">
-      <form id="sigin-in-form">
-        <input type="email" name="email" id="email" placeholder="Email" /><br />
-        <input type="text" name="username" id="username" placeholder="username" /><br />
-        <input type="text" name="firstname" id="firstname" placeholder="firstname" /><br />
+          <input
+            type="text"
+            name="lastname"
+            id="lastname"
+            placeholder="lastname"
+          /><br />
 
-        <input type="text" name="lastname" id="lastname" placeholder="lastname" /><br />
+          <input
+            type="text"
+            name="phonenumber"
+            id="phonenumber"
+            placeholder="phonenumber"
+          /><br />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="password"
+          /><br /><br />
+          <input
+            type="password"
+            name="reenter-password"
+            id="reenter-password"
+            placeholder="reenter-password"
+          /><br /><br />
+          <br /><br />
 
-        <input type="text" name="phonenumber" id="phonenumber" placeholder="phonenumber" /><br />
-        <input type="password" name="password" id="password" placeholder="password" /><br /><br />
-        <input type="password" name="reenter-password" id="reenter-password"
-          placeholder="reenter-password" /><br /><br />
-        <br /><br />
-
-        <div id="submit-button">
-          <input type="submit" id="submit" disabled="true" value="Enter all fields to submit" />
+          <div id="submit-button">
+            <input
+              type="submit"
+              id="submit"
+              disabled="true"
+              value="Enter all fields to submit"
+            />
+          </div>
+        </form>
+        <div>
+          <a href="login.html" class="button button-color"
+            >Already Have an Account</a
+          >
+          <a href="passwordreset.html" class="button button-color"
+            >Forgot Password</a
+          >
         </div>
-      </form>
-      <div>
-        <a href="login.html" class="button button-color">Already Have an Account</a>
-        <a href="passwordreset.html" class="button button-color">Forgot Password</a>
       </div>
     </div>
-  </div>
-  <script src="./Js/render.js"></script>
-  <script src="./Js/validation.js"></script>
-  <script type="text/javascript">
-    let email,
-      username,
-      password,
-      reenterpassword,
-      firstname,
-      lastname,
-      phonenumber;
-    let submitbtn = document.getElementById("submit");
-    let politicianBoolean = document.getElementById("politician");
-
-    function getValue(event) {
-      return event.target.value;
-    }
-
-    //pred function for making sure the SUBMIT BUTTON IS disabled or active
-    function shouldSubmitBeActive() {
-      if (
-        validateEmail(email) &&
-        doesFieldContainValidValue(username) &&
-        doesFieldContainValidValue(password) &&
-        doesFieldContainValidValue(reenterpassword) &&
-        doesFieldContainValidValue(firstname) &&
-        doesFieldContainValidValue(lastname) &&
-        doesFieldContainValidValue(phonenumber) &&
-        areValuesEqual(password, reenterpassword)
-      ) {
-        submitbtn.removeAttribute("disabled");
-        submitbtn.setAttribute("value", "Submit");
-      } else {
-        submitbtn.setAttribute("disabled", true);
-      }
-    }
-
-    // monitor email field
-    document.getElementById("email").oninput = function (event) {
-      email = getValue(event);
-      shouldSubmitBeActive();
-    };
-    // monitor username field
-    document.getElementById("username").oninput = function (event) {
-      username = getValue(event);
-      shouldSubmitBeActive();
-    };
-
-    // monitor firstname field
-    document.getElementById("firstname").oninput = function (event) {
-      firstname = getValue(event);
-      shouldSubmitBeActive();
-    };
-
-    document.getElementById("lastname").oninput = function (event) {
-      lastname = getValue(event);
-      shouldSubmitBeActive();
-    };
-
-    //monitor password field
-    document.getElementById("password").oninput = function (event) {
-      password = getValue(event);
-      shouldSubmitBeActive();
-    };
-
-    // monitor re-enter password field
-    document.getElementById("reenter-password").oninput = function (event) {
-      reenterpassword = getValue(event);
-      shouldSubmitBeActive();
-    };
-
-    // monitor phonenumber
-    document.getElementById("phonenumber").oninput = function (event) {
-      phonenumber = getValue(event);
-      shouldSubmitBeActive();
-    };
-    document.getElementById("sigin-in-form").onsubmit = function (event) {
-      event.preventDefault();
-      // get all fields.
-      allfields = {
-        email: email,
-        username: username,
-        password: password,
-        retypedpassword: reenterpassword,
-        passportUrl: "",
-        phone: phonenumber
+    <script src="./Js/render.js"></script>
+    <script src="./Js/validation.js"></script>
+    <script type="text/javascript">
+      let email,
+        username,
+        password,
+        reenterpassword,
+        firstname,
+        lastname,
+        phonenumber;
+      let submitbtn = document.getElementById("submit");
+      let politicianBoolean = document.getElementById("politician");
+      let isAlreadySignedUp = {
+        type: "h3",
+        props: {},
+        children: ["You are signed in already"]
       };
-      console.log(allfields);
-      // if (email === "admin@politico.com") {
-      //   // redirect to login page
-      //   window.location.href = "login.html";
-      // } else {
-      //   // redirect to home  page
-      //   window.location.href = "profile.html";
-      // }
-      // fetch("https://tevpolitico.herokuapp.com/api/v2/auth/signup", {
-      //   method: "POST",
-      //   mode: "no-cors",
-      //   body: JSON.stringify(allfields) // data can be `string` or {object}!
-      // })
-      //   .then(res => res.json())
-      //   .then(console.log)
-      //   .catch(console.log);
+      if (window.localStorage.getItem("user")) {
+        mynode = destroyNodeChildren("center");
+        mynode.appendChild(createElement(isAlreadySignedUp));
+      } else {
+        /**
+         * register every event in the app
+         *
+         */
 
-      fetch("https://tevpolitico.herokuapp.com/api/v2/auth/signup", {
-        method: "POST",
-        mode: "no-cors",
-        body: allfields,
-        headers: new Headers({
-          "Content-Type": "application/json",
-          "Authorization": "Bearer"
-        })
-      })
-        .then(res => res.json())
-        .then(console.log);
-    };
+        function getValue(event) {
+          return event.target.value;
+        }
 
-    const $header = document.getElementById("heading-container");
-    $header.appendChild(createElement(layout));
-  </script>
-</body>
+        //pred function for making sure the SUBMIT BUTTON IS disabled or active
+        function shouldSubmitBeActive() {
+          if (
+            validateEmail(email) &&
+            doesFieldContainValidValue(username) &&
+            doesFieldContainValidValue(password) &&
+            doesFieldContainValidValue(reenterpassword) &&
+            doesFieldContainValidValue(firstname) &&
+            doesFieldContainValidValue(lastname) &&
+            doesFieldContainValidValue(phonenumber) &&
+            areValuesEqual(password, reenterpassword)
+          ) {
+            submitbtn.removeAttribute("disabled");
+            submitbtn.setAttribute("value", "Submit");
+          } else {
+            submitbtn.setAttribute("disabled", true);
+          }
+        }
 
+        // monitor email field
+        document.getElementById("email").oninput = function(event) {
+          email = getValue(event);
+          shouldSubmitBeActive();
+        };
+        // monitor username field
+        document.getElementById("username").oninput = function(event) {
+          username = getValue(event);
+          shouldSubmitBeActive();
+        };
+
+        // monitor firstname field
+        document.getElementById("firstname").oninput = function(event) {
+          firstname = getValue(event);
+          shouldSubmitBeActive();
+        };
+
+        document.getElementById("lastname").oninput = function(event) {
+          lastname = getValue(event);
+          shouldSubmitBeActive();
+        };
+
+        //monitor password field
+        document.getElementById("password").oninput = function(event) {
+          password = getValue(event);
+          shouldSubmitBeActive();
+        };
+
+        // monitor re-enter password field
+        document.getElementById("reenter-password").oninput = function(event) {
+          reenterpassword = getValue(event);
+          shouldSubmitBeActive();
+        };
+
+        // monitor phonenumber
+        document.getElementById("phonenumber").oninput = function(event) {
+          phonenumber = getValue(event);
+          shouldSubmitBeActive();
+        };
+        document.getElementById("sigin-in-form").onsubmit = function(event) {
+          event.preventDefault();
+          // get all fields.
+          allfields = {
+            email,
+            username,
+            password,
+            retypedpassword: reenterpassword,
+            passportUrl: "",
+            phone: phonenumber,
+            firstname,
+            lastname
+          };
+          fetch("https://tevpolitico.herokuapp.com/api/v2/auth/signup", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(allfields)
+          })
+            .then(res => res.json())
+            .then(({ data, status, error }) => {
+              if (status === 201) {
+                window.localStorage.setItem("user", JSON.stringify(data[0]));
+                alert("lSigned up successfully");
+                window.location.reload();
+              } else {
+                alert(error);
+              }
+            })
+            .then(console.log)
+            .catch(console.log);
+        };
+      }
+
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
+    </script>
+  </body>
 </html>
