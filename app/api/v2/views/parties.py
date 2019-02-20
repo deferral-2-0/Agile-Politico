@@ -29,7 +29,7 @@ def create_party(user):
         specific party to the database
     """
     try:
-        isAdmin = user[0][2]
+        userAdminProp = user[0][2]
     except:
         return utils.response_fn(401, "error",
                                  "You don't have an account. Create One")
@@ -52,7 +52,7 @@ def create_party(user):
             if email matches, admin's then create the party
         """
         # check if the user is an admin
-        isUserAdmin(isAdmin)
+        isUserAdmin(userAdminProp)
         newparty = PartiesModel(
             name=name, hqAddress=hqAddress, logoUrl=logoUrl)
         check_matching_items_in_db_table({"name": name}, "parties")
@@ -98,11 +98,11 @@ def update_party(user, party_id):
             is the isAdmin prop is present or empty
             if its empty then the user does not have an account.
         """
-        isAdmin = user[0][2]
+        userAdminProp = user[0][2]
     except:
         return utils.response_fn(401, "error", "You don't have an account")
     # check if the user is an admin
-    isUserAdmin(isAdmin)
+    isUserAdmin(userAdminProp)
     # check if data we want to apply strip on is actually a string.
     utils.check_for_strings(data, ["name"])
     # check if data is present ans is not just an empty string..
@@ -126,11 +126,11 @@ def delete_party(user, party_id):
             does the request agent have an account @
             politico.
         """
-        isAdmin = user[0][2]
+        userAdminProp = user[0][2]
     except:
         return utils.response_fn(401, "error", "You don't have an account")
     # check if the user is an admin user.
-    isUserAdmin(isAdmin)
+    isUserAdmin(userAdminProp)
     party = PartiesModel.get_specific_party(party_id)
     if party:
         # delete party here
