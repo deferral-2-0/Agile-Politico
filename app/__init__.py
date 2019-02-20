@@ -10,6 +10,9 @@ from app.api.v2.views.offices import path_2 as v2offices
 from app.api.v2.views.votes import path_2 as V2voters
 from app.api.v2.models.db import init_db
 
+from flask_cors import CORS
+
+
 """
 
 This is where we initialize the app
@@ -80,6 +83,8 @@ def app(config_name):
         registered.
     """
     flaskapp = Flask(__name__)
+    # enable CORS accross the app
+    CORS(flaskapp)
     flaskapp.config.from_object(app_config[config_name])
     flaskapp.app_context().push()
     flaskapp.url_map.strict_slashes = False
