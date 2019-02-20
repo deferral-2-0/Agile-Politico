@@ -99,7 +99,7 @@ def set_up_tables():
     password = generate_password_hash('BootcampWeek1')
     create_admin_if_not_present = """
     INSERT INTO users(username, firstname, lastname, othername ,
-    phone, email, password, passportUrl , isPolitician ,isAdmin) 
+    phone, email, password, passportUrl , isPolitician ,isAdmin)
     VALUES(
         '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
     ) ON CONFLICT DO NOTHING""".format('OriginalAdmin',
