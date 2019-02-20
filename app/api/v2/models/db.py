@@ -34,6 +34,7 @@ def init_db():
             conn.commit()
             i += 1
         print("--"*50)
+        createAdmin()
         conn.close()
 
     except Exception as error:
@@ -96,20 +97,8 @@ def set_up_tables():
             FOREIGN KEY (voter) REFERENCES users(id) ON DELETE CASCADE
         )"""
 
-    password = generate_password_hash('BootcampWeek1')
-    create_admin_if_not_present = """
-    INSERT INTO users(username, firstname, lastname, othername ,
-    phone, email, password, passportUrl , isPolitician ,isAdmin)
-    VALUES(
-        '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
-    )""".format('OriginalAdmin',
-                'FirstAdminName', 'LastAdminName',
-                'OtherAdminName', '0742546892',
-                'admindetails@gmail.com', password, "",
-                False, True)
-
     return [table_users, parties_table,
-            offices_table, canditates_table, voters_table, create_admin_if_not_present]
+            offices_table, canditates_table, voters_table]
 
 
 def drop_table_if_exists():
@@ -155,6 +144,34 @@ def connect_to_db(query=None):
            psycopg2.ProgrammingError) as error:
         print("DB ERROR: {}".format(error))
     return conn, cursor
+
+
+def createAdmin():
+    """
+    first check if admin already exists.
+    if not then create the admin
+    """
+    select_user_by_email = """
+        SELECT id, username, password, email FROM users
+        WHERE users.email = '{}'""".format("admindetails@gmail.com")
+
+    isUserPresent = select_data_from_db(select_user_by_email)
+    if not isUserPresent:
+        conn, cursor = connect_to_db()
+        password = generate_password_hash('BootcampWeek1')
+        create_admin_if_not_present = """
+        INSERT INTO users(username, firstname, lastname, othername ,
+        phone, email, password, passportUrl , isPolitician ,isAdmin)
+        VALUES(
+            '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
+        )""".format('OriginalAdmin',
+                    'FirstAdminName', 'LastAdminName',
+                    'OtherAdminName', '0742546892',
+                    'admindetails@gmail.com', password, "",
+                    False, True)
+        cursor.execute(create_admin_if_not_present)
+        conn.commit()
+        conn.close()
 
 
 def queryData(query, get_inserted_item=False):
