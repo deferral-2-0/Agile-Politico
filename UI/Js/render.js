@@ -96,7 +96,7 @@ function removeElementById(id) {
 }
 
 const callSnackBar = (message, status = "error") => {
-  const colorToPick = status === "error" ? "red" : "black";
+  const colorToPick = status === "error" ? "#b42121" : "#48b427";
   let snackbarcomponent = {
     type: "div",
     props: {

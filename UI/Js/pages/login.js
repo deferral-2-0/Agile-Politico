@@ -52,13 +52,18 @@ if (window.localStorage.getItem("user")) {
       .then(({ data, status, error }) => {
         if (status === 200) {
           window.localStorage.setItem("user", JSON.stringify(data));
-          callSnackBar("Signed in successfully");
+          callSnackBar("Signed in successfully", "success");
           // redirect admin to admin dash but user to home page.
           if (email === "admindetails@gmail.com") {
-            location.replace("admindash.html");
+            setTimeout(() => {
+              location.replace("admindash.html");
+            }, 3000);
+
             return;
           }
-          location.replace("index.html");
+          setTimeout(() => {
+            location.replace("index.html");
+          }, 3000);
         } else {
           callSnackBar(error);
         }

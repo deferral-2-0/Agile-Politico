@@ -109,7 +109,10 @@ if (window.localStorage.getItem("user")) {
         if (status === 201) {
           window.localStorage.setItem("user", JSON.stringify(data[0]));
           callSnackBar("Signed up successfully", "success");
-          window.location.reload();
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         } else {
           callSnackBar(error);
         }
