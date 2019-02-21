@@ -20,7 +20,7 @@ const isUserLoggedIn = window.localStorage.getItem("user")
           onclick: `(function(){
             alert('Are you sure you want to logout');
             window.localStorage.removeItem("user")
-            location.reload();
+            location.replace("index.html")
           })()`
         },
         children: ["Logout"]
