@@ -1,5 +1,3 @@
-![](https://img.shields.io/github/languages/count/Tevinthuku/Politico.svg?style=for-the-badge)
-![](https://img.shields.io/github/languages/top/Tevinthuku/Politico.svg?style=for-the-badge)
 ![](https://img.shields.io/github/repo-size/Tevinthuku/Politico.svg?style=for-the-badge)
 ![](https://img.shields.io/github/last-commit/Tevinthuku/Politico.svg?style=for-the-badge)
 
