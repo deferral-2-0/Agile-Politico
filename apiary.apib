@@ -279,7 +279,6 @@ an account.
                 "password": "Tevin1995",
                 "retypedpassword": "Tevin1995",
                 "passportUrl": "http",
-                "isPolitician": false
             }
         
 + Response 201 (application/json)
@@ -370,4 +369,73 @@ A user can view the results of a particular office after election period.
                     "result": 2
                     }
             ]
+        }
+        
+        
+## Candidate info of a certain office [/api/v2/offices/{office_id}/candidates]
++ Parameters
+    + office_id (number) - ID of a specific office
+    
+### View all the candidates information [GET]
+
+A user can view the details of the candidates that are vying for a particular office.
+
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [
+                    {
+                        "id": 1,
+                        "username": "Dan",
+                        "email": "dan@gmail.com"
+                    }
+            ]
+        }   
+        
+        
+## A list of all users [/api/v2/users]
+
+### View a list of all the users [GET]
+
+A User can view a list of all users in the application
+
+
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [
+                    {
+                        "id": 1,
+                        "username": "Dan",
+                        "email": "dan@gmail.com"
+                    }
+            ]
+        } 
+        
+
+## Make normal user an admin [/api/v2/authorize/{user_id}]
++ Parameters
+    + user_id (number) - ID of a specific user
+
+### An admin user can make other users to be admins [POST]
+
+An Admin can make an ordinary user an admin and this will give the elevated
+user all the rights of an admin.
+
++ Request (application/json)
+
+    + Body
+
+            {}
+
+
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [{
+                "message": "Admin has been set"
+            }]
         }
