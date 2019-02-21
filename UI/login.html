@@ -5,14 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Login Page</title>
     <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./css/components/components.css"
+    />
   </head>
   <body>
     <div id="heading-container"></div>
 
     <div class="center">
-      <div class="maxwidth500">
+      <div class="maxwidth500" id="center">
         <form id="sigin-in-form">
-          <input type="text" name="id" id="id" placeholder="id" /><br /><br />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="email"
+          /><br /><br />
           <input
             type="password"
             name="password"
@@ -37,55 +47,11 @@
 
     <script src="./Js/render.js"></script>
     <script src="./Js/validation.js"></script>
+    <script src="./Js/pages/login.js"></script>
 
     <script type="text/javascript">
-      let id, password;
-      let submitbtn = document.getElementById("submit");
-      alert(
-        `To login as a politician, enter 34567 in the ID field and put any password, 
-         to login as an admin, enter 1 as the ID and input any password, 
-         to login as a normal user enter anything else on both fields `
-      );
-      function getValue(event) {
-        return event.target.value;
-      }
-      function shouldSubmitBeActive() {
-        if (
-          doesFieldContainValidValue(id) &&
-          doesFieldContainValidValue(password)
-        ) {
-          submitbtn.removeAttribute("disabled");
-          submitbtn.setAttribute("value", "Submit");
-        } else {
-          submitbtn.setAttribute("disabled", true);
-        }
-      }
-
-      document.getElementById("id").oninput = function(event) {
-        id = getValue(event);
-        shouldSubmitBeActive();
-      };
-      document.getElementById("password").oninput = function(event) {
-        password = getValue(event);
-        shouldSubmitBeActive();
-      };
-
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));
-
-      document.getElementById("sigin-in-form").onsubmit = function(event) {
-        event.preventDefault();
-        if (id === "34567") {
-          // redirect to position interest page
-          window.location.href = "politicalinterest.html";
-        } else if (id === "1") {
-          // redirect to login page
-          window.location.href = "admindash.html";
-        } else {
-          // redirect to home  page
-          window.location.href = "profile.html";
-        }
-      };
     </script>
   </body>
 </html>

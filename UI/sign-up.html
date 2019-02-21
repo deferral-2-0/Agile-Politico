@@ -5,15 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Sign Up page | Politico</title>
     <link rel="stylesheet" type="text/css" href="./css/main.css" />
-
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./css/components/components.css"
+    />
     <link
       href="https://fonts.googleapis.com/css?family=Roboto"
       rel="stylesheet"
     />
   </head>
+
   <body>
     <div id="heading-container"></div>
-    <div class="center">
+    <div class="center" id="center">
       <div class="maxwidth500">
         <form id="sigin-in-form">
           <input
@@ -28,7 +33,26 @@
             id="username"
             placeholder="username"
           /><br />
-          <input type="text" name="id" id="id" placeholder="id" /><br /><br />
+          <input
+            type="text"
+            name="firstname"
+            id="firstname"
+            placeholder="firstname"
+          /><br />
+
+          <input
+            type="text"
+            name="lastname"
+            id="lastname"
+            placeholder="lastname"
+          /><br />
+
+          <input
+            type="text"
+            name="phonenumber"
+            id="phonenumber"
+            placeholder="phonenumber"
+          /><br />
           <input
             type="password"
             name="password"
@@ -41,12 +65,7 @@
             id="reenter-password"
             placeholder="reenter-password"
           /><br /><br />
-          <label for="politician">Are you a politician</label>
-          <input
-            type="checkbox"
-            name="politician"
-            id="politician"
-          /><br /><br />
+          <br /><br />
 
           <div id="submit-button">
             <input
@@ -69,81 +88,8 @@
     </div>
     <script src="./Js/render.js"></script>
     <script src="./Js/validation.js"></script>
+    <script src="Js/pages/signup.js"></script>
     <script type="text/javascript">
-      let email, username, id, password, reenterpassword;
-      let submitbtn = document.getElementById("submit");
-      let politicianBoolean = document.getElementById("politician");
-
-      alert(
-        `To sign up as a politician, enter your details and check the are you a politician button, 
-         to sign up as an admin, go to the login page, 
-         to sign up as a normal user enter anything else on all fields `
-      );
-
-      function getValue(event) {
-        return event.target.value;
-      }
-
-      //pred function for making sure the SUBMIT BUTTON IS disabled or active
-      function shouldSubmitBeActive() {
-        if (
-          validateEmail(email) &&
-          doesFieldContainValidValue(username) &&
-          doesFieldContainValidValue(password) &&
-          doesFieldContainValidValue(id) &&
-          doesFieldContainValidValue(reenterpassword) &&
-          areValuesEqual(password, reenterpassword)
-        ) {
-          submitbtn.removeAttribute("disabled");
-          submitbtn.setAttribute("value", "Submit");
-        } else {
-          submitbtn.setAttribute("disabled", true);
-        }
-      }
-
-      // monitor email field
-      document.getElementById("email").oninput = function(event) {
-        email = getValue(event);
-        shouldSubmitBeActive();
-      };
-      // monitor username field
-      document.getElementById("username").oninput = function(event) {
-        username = getValue(event);
-        shouldSubmitBeActive();
-      };
-      // monitor ID field
-      document.getElementById("id").oninput = function(event) {
-        id = getValue(event);
-        shouldSubmitBeActive();
-      };
-
-      //monitor password field
-      document.getElementById("password").oninput = function(event) {
-        password = getValue(event);
-        shouldSubmitBeActive();
-      };
-
-      // monitor re-enter password field
-      document.getElementById("reenter-password").oninput = function(event) {
-        reenterpassword = getValue(event);
-        shouldSubmitBeActive();
-      };
-
-      document.getElementById("sigin-in-form").onsubmit = function(event) {
-        event.preventDefault();
-        console.log(politicianBoolean);
-        if (politicianBoolean.checked) {
-          // redirect to politician page
-          window.location.href = "politicalinterest.html";
-        } else if (email === "admin@politico.com") {
-          // redirect to login page
-          window.location.href = "login.html";
-        } else {
-          // redirect to home  page
-          window.location.href = "profile.html";
-        }
-      };
-
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));
     </script>
