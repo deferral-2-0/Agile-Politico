@@ -26,7 +26,7 @@ def signup():
         firstname = data['firstname']
         lastname = data['lastname']
         username = data["username"]
-        othername = data.get("othername", "none")
+        othername = data.get("othername", "")
         email = data["email"]
         phone = data["phone"]
         # doesnt have to fail because of absence of this value
@@ -36,11 +36,11 @@ def signup():
 
     except:
         return abort(utils.response_fn(400, "error", 'Check your json keys. '
-                                       'username, firstname, lastname, othername,'
-                                       'phone, email, password, passportUrl'))
+                                       'username, firstname, lastname,'
+                                       'phone, email, password'))
 
     utils.check_for_strings(
-        data, ["firstname", "lastname", "username", "username", "email", "phone"])
+        data, ["firstname", "lastname", "username", "othername", "passportUrl", "email", "phone"])
 
     utils.check_for_whitespace(
         data, ["firstname", "lastname", "username", "email", "phone"])
@@ -101,7 +101,7 @@ def user_login():
             hashed_password, password)
         if not password:
             abort(utils.response_fn(400, "error",
-                                    "The paswwsord is wrong, try again"))
+                                    "The password is wrong, try again"))
         token = jwt.encode({"email": email}, KEY, algorithm='HS256')
         return utils.response_fn(200, "data", {
             "message": "Logged in successfully",
