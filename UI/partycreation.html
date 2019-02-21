@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Party Creation Page</title>
     <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./css/components/components.css"
+    />
   </head>
   <body>
     <div id="heading-container"></div>
@@ -18,13 +23,19 @@
             id="name"
             placeholder="Party Name"
           /><br /><br />
+          <input
+            type="text"
+            name="hqAddress"
+            id="hqAddress"
+            placeholder="Party hqAddress"
+          /><br /><br />
 
           <div id="submit-button">
             <input
               type="submit"
               id="submit"
               disabled="true"
-              value="Enter party name to submit"
+              value="Enter party to submit"
             />
           </div>
         </form>
@@ -38,6 +49,7 @@
     <script src="./Js/render.js"></script>
     <script src="./Js/validation.js"></script>
     <script src="Js/pages/partyviewership.js"></script>
+    <script src="Js/security.js"></script>
     <script src="Js/pages/partycreation.js"></script>
     <script>
       const $header = document.getElementById("heading-container");
