@@ -18,9 +18,9 @@ const isUserLoggedIn = window.localStorage.getItem("user")
         type: "a",
         props: {
           onclick: `(function(){
-            alert('Are you sure you want to logout');
             window.localStorage.removeItem("user")
             location.replace("index.html")
+            callSnackBar("Logged out User")
           })()`
         },
         children: ["Logout"]
@@ -83,6 +83,35 @@ const destroyNodeChildren = id => {
   }
 
   return myNode;
+};
+
+/**
+ *
+ * THis function removes an element
+ * by id.
+ */
+function removeElementById(id) {
+  var elem = document.getElementById(id);
+  return elem.parentNode.removeChild(elem);
+}
+
+const callSnackBar = (message, status = "error") => {
+  const colorToPick = status === "error" ? "red" : "black";
+  let snackbarcomponent = {
+    type: "div",
+    props: {
+      id: "snackbar",
+      class: "show",
+      style: `background-color: ${colorToPick}`
+    },
+    children: [message]
+  };
+  const $body = document.getElementsByTagName("body")[0];
+  $body.appendChild(createElement(snackbarcomponent));
+  // remove the snackbar after a few seconds.
+  setTimeout(function() {
+    removeElementById("snackbar");
+  }, 3000);
 };
 
 if ("serviceWorker" in navigator) {
