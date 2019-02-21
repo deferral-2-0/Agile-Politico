@@ -35,7 +35,6 @@ class TestPartiesFunctionality(BaseTestClass):
             data=json.dumps({
                 "name": "Party1",
                 "hqAddress": "Nairobi",
-                "logoUrl": ""
             }),
             headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
@@ -59,7 +58,6 @@ class TestPartiesFunctionality(BaseTestClass):
             data=json.dumps({
                             "name": "Party1",
                             "hqAddress": "",
-                            "logoUrl": ""
                             }),
             headers={'x-access-token': self.ADMIN_TOKEN},
             content_type="application/json")
@@ -92,8 +90,7 @@ class TestPartiesFunctionality(BaseTestClass):
             "api/v2/parties",
             data=json.dumps({
                 "name": "Party1",
-                "hqAddress": "Nairobi",
-                "logoUrl": ""
+                "hqAddress": "Nairobi"
             }),
             headers={'x-access-token': usertoken},
             content_type="application/json")
