@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>New Gvt Creation Page</title>
     <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./css/components/components.css"
+    />
   </head>
   <body>
     <div id="heading-container"></div>
@@ -17,6 +22,12 @@
             name="name"
             id="name"
             placeholder="Office Name"
+          /><br /><br />
+          <input
+            type="text"
+            name="type"
+            id="type"
+            placeholder="Office type"
           /><br /><br />
 
           <div id="submit-button">
@@ -37,66 +48,9 @@
 
     <script src="./Js/render.js"></script>
     <script src="./Js/validation.js"></script>
+    <script src="./Js/pages/newgvtposition.js"></script>
+    <script src="./Js/security.js"></script>
     <script>
-      let partyname;
-      let submitbtn = document.getElementById("submit");
-      let positionscontainer = document.getElementById("list-of-offices");
-      let positionslist = document.getElementById("positionslist");
-
-      function getValue(event) {
-        return event.target.value;
-      }
-
-      let offices = ["Secretary General", "Gvt Spokesman", "Treasurer"];
-
-      const renderingList = {
-        type: "ul",
-        props: { id: "positionslist" },
-        children: offices.map(party => ({
-          type: "li",
-          props: {},
-          children: [party]
-        }))
-      };
-
-      function shouldSubmitBeActive() {
-        if (doesFieldContainValidValue(partyname)) {
-          if (offices.includes(partyname)) {
-            submitbtn.setAttribute("value", "Government Post already exists");
-            submitbtn.setAttribute("disabled", true);
-          } else {
-            submitbtn.removeAttribute("disabled");
-            submitbtn.setAttribute("value", "Submit");
-          }
-        }
-      }
-
-      document.getElementById("name").oninput = function(event) {
-        partyname = getValue(event);
-        shouldSubmitBeActive();
-      };
-
-      // submit name
-      document.getElementById("sigin-in-form").onsubmit = function(event) {
-        event.preventDefault();
-        offices = [...offices, partyname];
-        const p = {
-          type: "li",
-          props: {},
-          children: [partyname]
-        };
-        document.getElementById("positionslist").appendChild(createElement(p));
-        document.getElementById("name").value = "";
-        submitbtn.setAttribute("disabled", true);
-        submitbtn.setAttribute("value", "Fill in name of position to enter");
-        setTimeout(() => {
-          location.replace("admindash.html");
-        }, 1000);
-      };
-
-      // RENDER THE LIST OF offices PRESENT
-      positionscontainer.appendChild(createElement(renderingList));
-
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));
     </script>

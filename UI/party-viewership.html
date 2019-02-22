@@ -18,62 +18,8 @@
     <div><div></div></div>
     <script src="./Js/render.js"></script>
     <script src="./Js/validation.js"></script>
+    <script src="Js/pages/partyviewership.js"></script>
     <script>
-      const partiescontainer = document.getElementById("render-parties");
-      const allparties = [
-        {
-          datecreated: new Date(),
-          name: "House Stark",
-          representative: "Jon Snow",
-          motto: "Winter is Coming"
-        },
-        {
-          datecreated: new Date(),
-          name: "House Lannister",
-          representative: "Cercei Lannister",
-          motto: "Hear my roar"
-        },
-        {
-          datecreated: new Date(),
-          name: "House Baratheon",
-          representative: "Gendry",
-          motto: "Our's is the fury"
-        }
-      ];
-
-      const partiestoBeRendered = {
-        type: "ol",
-        props: {},
-        children: allparties.map((party, idx) => ({
-          type: "li",
-          props: {},
-          children: [
-            {
-              type: "span",
-              props: {},
-              children: [`${idx}.`]
-            },
-            {
-              type: "p",
-              props: {},
-              children: [
-                ` ${party.name}: Created at: ${formatDate(party.datecreated)} `
-              ]
-            },
-            {
-              type: "p",
-              props: {},
-              children: [`Representative:  ${party.representative}`]
-            },
-            {
-              type: "p",
-              props: {},
-              children: [`Party Motto:  ${party.motto}`]
-            }
-          ]
-        }))
-      };
-      partiescontainer.appendChild(createElement(partiestoBeRendered));
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));
     </script>

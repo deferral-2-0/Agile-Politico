@@ -8,7 +8,7 @@
   </head>
   <body>
     <div id="heading-container"></div>
-
+    <div id="notifications"></div>
     <div>
       <ol>
         <li style="text-align: center">
@@ -31,6 +31,7 @@
     </div>
 
     <script src="./Js/render.js"></script>
+    <script src="./Js/utils/either.js"></script>
     <script type="text/javascript">
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));

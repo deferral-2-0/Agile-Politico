@@ -296,3 +296,26 @@ td {
   font-weight: lighter;
   text-align: center;
 }
+
+/* for the alert box */
+
+.alert {
+  padding: 20px;
+  background-color: hsla(85, 100%, 33%, 0.466);
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
