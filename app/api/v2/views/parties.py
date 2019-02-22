@@ -38,7 +38,7 @@ def create_party(user):
         data = request.get_json()
         name = data['name']
         hqAddress = data["hqAddress"]
-        logoUrl = data.get("logoUrl", "")
+        logoUrl = data.get("logoUrl", "http")
 
     except KeyError:
         abort(utils.response_fn(400, "error", "Should be name, hqAddress & logoUrl"))
