@@ -43,7 +43,7 @@ def create_party(user):
     except KeyError:
         abort(utils.response_fn(400, "error", "Should be name, hqAddress & logoUrl"))
     # check for the datatype
-    utils.check_for_strings(data, ["name", "hqAddress"])
+    utils.check_for_strings(data, ["name", "hqAddress", "logoUrl"])
     # check for whitespaces.
     utils.check_for_whitespace(data, ["name", "hqAddress"])
     try:

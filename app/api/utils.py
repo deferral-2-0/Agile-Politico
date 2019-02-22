@@ -16,10 +16,7 @@ def is_valid_string(string_provided):
     if the item provided is a string
     and is not empty
     """
-    if string_provided:
-        return isinstance(string_provided, str)
-    else:
-        return False
+    return isinstance(string_provided, str)
 
 
 def isBool(val):

@@ -40,7 +40,7 @@ class TestOfficesEndPoint(RoutesBaseTest):
 
     def test_save_invalid_office_type(self):
         res = self.client.post("api/v1/offices", data=json.dumps({
-            "type": "",
+            "type": 123,
             "name": "ppp"
         }), content_type="application/json")
         result = json.loads(res.data.decode('utf-8'))
@@ -49,7 +49,7 @@ class TestOfficesEndPoint(RoutesBaseTest):
     def test_save_invalid_office_name(self):
         res = self.client.post("api/v1/offices", data=json.dumps({
             "type": "typehere",
-            "name": ""
+            "name": 1312321
         }), content_type="application/json")
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result["status"], 400)
