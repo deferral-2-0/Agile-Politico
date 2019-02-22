@@ -53,7 +53,7 @@ class TestPartiesEndpoints(RoutesBaseTest):
     def test_saving_party_with_invalid_name_fields(self):
         res = self.client.post(
             "api/v1/parties", data=json.dumps({
-                "name": "",
+                "name": 123,
                 "logoUrl": "http"
             }), content_type="application/json")
         result = json.loads(res.data.decode("utf-8"))
@@ -95,7 +95,7 @@ class TestPartiesEndpoints(RoutesBaseTest):
     def test_updating_party_with_invalid_params(self):
         res = self.client.patch("/api/v1/parties/{}/name".format(0),
                                 data=json.dumps({
-                                    "name": ""
+                                    "name": 123
                                 }), content_type="application/json")
         self.assertEqual(res.status_code, 400)
 

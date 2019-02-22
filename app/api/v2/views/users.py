@@ -26,11 +26,11 @@ def signup():
         firstname = data['firstname']
         lastname = data['lastname']
         username = data["username"]
-        othername = data.get("othername", "none")
+        othername = data.get("othername", "")
         email = data["email"]
         phone = data["phone"]
         # doesnt have to fail because of absence of this value
-        passportUrl = data.get("passportUrl", "http")
+        passportUrl = data.get("passportUrl", "")
         password = data["password"]
         retypedpassword = data["retypedpassword"]
 
