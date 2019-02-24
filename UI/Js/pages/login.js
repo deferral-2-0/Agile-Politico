@@ -62,7 +62,7 @@ if (window.localStorage.getItem("user")) {
           }
           location.replace("index.html");
         } else {
-          callSnackBar(error);
+          callSnackBar(error.replace("Error.", ""));
         }
       })
       .catch(console.log);

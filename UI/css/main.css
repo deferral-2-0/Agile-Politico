@@ -301,8 +301,14 @@ td {
 
 .alert {
   padding: 20px;
-  background-color: hsla(85, 100%, 33%, 0.466);
+  background-color: hsla(85, 100%, 33%, 0.685);
   color: white;
+  width: 50%;
+  right: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  top: 60px;
 }
 
 .closebtn {

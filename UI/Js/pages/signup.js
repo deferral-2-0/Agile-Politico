@@ -112,7 +112,7 @@ if (window.localStorage.getItem("user")) {
           window.localStorage.setItem("notifications", newnotifications);
           location.replace("index.html");
         } else {
-          callSnackBar(error);
+          callSnackBar(error.replace("Error.", ""));
         }
       })
       .catch(console.log);
