@@ -108,13 +108,11 @@ if (window.localStorage.getItem("user")) {
       .then(({ data, status, error }) => {
         if (status === 201) {
           window.localStorage.setItem("user", JSON.stringify(data[0]));
-          callSnackBar("Signed up successfully", "success");
-
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+          newnotifications = JSON.stringify(["Signed up successfully"]);
+          window.localStorage.setItem("notifications", newnotifications);
+          location.replace("index.html");
         } else {
-          callSnackBar(error);
+          callSnackBar(error.replace("Error.", ""));
         }
       })
       .catch(console.log);
