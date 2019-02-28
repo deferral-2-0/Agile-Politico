@@ -18,95 +18,12 @@
     <div><div></div></div>
     <script src="./Js/render.js"></script>
     <script src="./Js/validation.js"></script>
+    <script src="./Js/pages/contestants.js"></script>
     <script>
       const postscontainer = document.getElementById(
         "render-posts-&-contestants"
       );
 
-      const positionnparticipants = [
-        {
-          position: "president",
-          contestants: [
-            {
-              name: "Jon Snow",
-              party: "House Stark"
-            },
-            {
-              name: "Khaleesi",
-              party: "House Targaryen"
-            },
-            {
-              name: "Cercie",
-              party: "House Lannister"
-            }
-          ]
-        },
-        {
-          position: "Secretary General",
-          contestants: [
-            {
-              name: "Sir Davos",
-              party: "House of Bravos"
-            },
-            {
-              name: "Sansa Stark",
-              party: "House Stark"
-            }
-          ]
-        },
-        {
-          position: "Treasurer",
-          contestants: [
-            {
-              name: "Tyrion Lannister",
-              party: "House Lannister"
-            },
-            {
-              name: "Sir Bron of the BlackWater",
-              party: "Unknown"
-            }
-          ]
-        }
-      ];
-
-      const posnpartiestoberenderes = {
-        type: "div",
-        props: {},
-        children: positionnparticipants.map(post => ({
-          type: "div",
-          props: {},
-          children: [
-            {
-              type: "div",
-              props: { class: "office-header" },
-              children: [post.position]
-            },
-            {
-              type: "ol",
-              props: {},
-              children: post.contestants.map((person, idx) => ({
-                type: "li",
-                props: { class: "contestants-names" },
-                children: [
-                  {
-                    type: "span",
-                    props: {},
-                    children: [`${idx + 1}.`]
-                  },
-                  {
-                    type: "p",
-                    props: {},
-                    children: [`Name: ${person.name}`]
-                  },
-                  { type: "p", props: {}, children: [`Party: ${person.party}`] }
-                ]
-              }))
-            }
-          ]
-        }))
-      };
-
-      postscontainer.appendChild(createElement(posnpartiestoberenderes));
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));
     </script>
