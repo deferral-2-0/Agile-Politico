@@ -57,3 +57,14 @@ def create_vote(user):
 
     except psycopg2.DatabaseError as _error:
         abort(utils.response_fn(500, "error", "Server error"))
+
+
+@path_2.route("/votes/activity", methods=["POST"])
+@token_required
+def view_activity(user):
+    try:
+        user_id = user[0][1]
+    except:
+        return utils.response_fn(401, "error", "You don't have an account")
+
+    return utils.response_fn(200, "data", VotesModel.resolve_user_voting_activity(user_id))

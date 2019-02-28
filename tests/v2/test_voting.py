@@ -193,3 +193,37 @@ class TestUserEndpoints(BaseTestClass):
         self.assertEqual(res.status_code, 200)
         dataresponse = json.loads(res.data.decode("utf-8"))
         self.assertEqual(dataresponse["data"], [])
+
+    def test_getting_voting_pattern_for_a_user_after_a_vote(self):
+        self.RepeatProcedureBeforeVoting()
+        usertoken = jwt.encode(
+            {"email": "tevinku@gmail.com"}, KEY, algorithm='HS256')
+        self.client.post(
+            "api/v2/votes", data=json.dumps({
+                "office": 1,
+                "candidate": 3
+            }), headers={'x-access-token': usertoken}, content_type="application/json")
+        res = self.client.post("api/v2/votes/activity",
+                               headers={'x-access-token': usertoken}, content_type="application/json", data=json.dumps({}))
+        dataresponse = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"],
+                         [{'id': 1,
+                           'info': 'You have already voted for TevynPolitician here',
+                           'name': 'Governor Narok County',
+                           'type': 'Governor'}])
+
+    def test_getting_voting_pattern_for_a_user(self):
+        self.RepeatProcedureBeforeVoting()
+        usertoken = jwt.encode(
+            {"email": "tevinku@gmail.com"}, KEY, algorithm='HS256')
+
+        res = self.client.post("api/v2/votes/activity",
+                               headers={'x-access-token': usertoken}, content_type="application/json", data=json.dumps({}))
+        dataresponse = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"],
+                         [{'id': 1,
+                           'info': [{'email': 'tevinkupolitician@gmail.com',
+                                     'id': 3,
+                                     'username': 'TevynPolitician'}],
+                           'name': 'Governor Narok County',
+                           'type': 'Governor'}])
