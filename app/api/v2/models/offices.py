@@ -118,3 +118,34 @@ class OfficesModel:
             })
 
         return candidates
+
+    @staticmethod
+    def get_meta_info():
+        """
+            this method returns information concerning 
+            the offices, candidates and the results from 
+            the voting process of the various offices.
+        """
+        data = []  # resultant data
+        for office in OfficesModel.get_all_offices():
+            candidatelist = []  # candiates list
+            for candidate in OfficesModel.get_all_candidates(office["id"]):
+                rawcandidateresults = [result["result"]
+                                       for result in
+                                       OfficesModel.get_office_results(
+                                           office["id"])
+                                       if result["candidate"] == candidate["id"]]
+                candidatenresult = {
+                    "email": candidate["email"],
+                    "username": candidate["username"],
+                    "result": rawcandidateresults[0] if rawcandidateresults else 0
+                }
+                candidatelist.append(candidatenresult)
+            result = {
+                "id": office["id"],
+                "name": office["name"],
+                "type": office["type"],
+                "candidates": candidatelist
+            }
+            data.append(result)
+        return data
