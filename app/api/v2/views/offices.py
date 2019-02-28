@@ -137,3 +137,8 @@ def get_office_results(office_id):
 @path_2.route("/offices/<int:office_id>/candidates", methods=["GET"])
 def get_candidates(office_id):
     return utils.response_fn(200, "data", OfficesModel.get_all_candidates(office_id))
+
+
+@path_2.route("/offices/metainfo", methods=["GET"])
+def get_meta_info():
+    return utils.response_fn(200, "data", OfficesModel.get_meta_info())

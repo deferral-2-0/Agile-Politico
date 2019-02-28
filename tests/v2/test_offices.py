@@ -139,3 +139,42 @@ class TestOfficesFunctionality(BaseTestClass):
         dataresponse = json.loads(req.data.decode("utf-8"))
         self.assertEqual(dataresponse["data"], [
                          {'email': 'tevinku@gmail.com', 'id': 2, 'username': 'Tevyn'}])
+
+    def test_getting_meta_info_after_registering_candidate_to_office_and_voting(self):
+        self.CreatePoliticianUser()
+        self.AdminPostOffice()
+        self.AdminRegisterCandidate()
+        usertoken = jwt.encode(
+            {"email": "tevinku@gmail.com"}, KEY, algorithm='HS256')
+        self.client.post(
+            "api/v2/votes", data=json.dumps({
+                "office": 1,
+                "candidate": 2
+            }), headers={'x-access-token': usertoken}, content_type="application/json")
+        req = self.client.get("api/v2/offices/metainfo",
+                              content_type="application/json")
+        self.assertEqual(req.status_code, 200)
+        dataresponse = json.loads(req.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"],
+                         [{'candidates': [{'email': 'tevinku@gmail.com',
+                                           'result': 1,
+                                           'username': 'Tevyn'}],
+                           'id': 1,
+                           'name': 'Governor Narok County',
+                           'type': 'Governor'}])
+
+    def test_getting_meta_info_after_registering_candidate_to_office(self):
+        self.CreatePoliticianUser()
+        self.AdminPostOffice()
+        self.AdminRegisterCandidate()
+        req = self.client.get("api/v2/offices/metainfo",
+                              content_type="application/json")
+        self.assertEqual(req.status_code, 200)
+        dataresponse = json.loads(req.data.decode("utf-8"))
+        self.assertEqual(dataresponse["data"],
+                         [{'candidates': [{'email': 'tevinku@gmail.com',
+                                           'result': 0,
+                                           'username': 'Tevyn'}],
+                           'id': 1,
+                           'name': 'Governor Narok County',
+                           'type': 'Governor'}])
