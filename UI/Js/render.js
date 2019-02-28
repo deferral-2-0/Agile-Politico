@@ -68,6 +68,11 @@ const layout = {
       props: { href: "vote.html" },
       children: ["Vote"]
     },
+    {
+      type: "a",
+      props: { href: "results.html" },
+      children: ["Results"]
+    },
     ...isUserLoggedIn
   ]
 };
