@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css?family=Bowlby+One+SC");
+@import url("https://fonts.googleapis.com/css?family=Cabin+Sketch");
+
 * {
   font-family: "Roboto", sans-serif;
   margin: 0px;
@@ -324,4 +327,20 @@ td {
 
 .closebtn:hover {
   color: black;
+}
+
+.positiontitle {
+  font-family: "Bowlby One SC", cursive;
+  margin-bottom: 20px;
+}
+
+.officename {
+  margin: 10px;
+  text-decoration: underline;
+  font-family: "Cabin Sketch", cursive;
+}
+
+.candidatesinfo {
+  margin: 20px;
+  margin-left: 35px;
 }
