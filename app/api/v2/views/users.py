@@ -59,7 +59,8 @@ def signup():
     newuser = UserModel(username=username, email=email, password=password, firstname=firstname,
                         lastname=lastname, phone=phone, passportUrl=passportUrl, othername=othername)
     newuser.save_user()
-    token = jwt.encode({"email": email}, KEY, algorithm='HS256')
+    token = jwt.encode({"email": email, "isAdmin": False},
+                       KEY, algorithm='HS256')
     return utils.response_fn(201, "data", [{
         "user": {
             "email": newuser.email,
@@ -96,13 +97,15 @@ def user_login():
         id = user[0][0]
         username = user[0][1]
         hashed_password = user[0][2]
+        is_admin_prop = user[0][4]
 
         password = UserModel.check_if_password_n_hash_match(
             hashed_password, password)
         if not password:
             abort(utils.response_fn(400, "error",
                                     "The password is wrong, try again"))
-        token = jwt.encode({"email": email}, KEY, algorithm='HS256')
+        token = jwt.encode(
+            {"email": email, "isAdmin": is_admin_prop}, KEY, algorithm='HS256')
         return utils.response_fn(200, "data", {
             "message": "Logged in successfully",
             "token": token.decode('UTF-8'),

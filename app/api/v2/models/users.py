@@ -48,7 +48,7 @@ class UserModel:
             to check the user by ID or by email or username.
         """
         select_user_by_email = """
-        SELECT id, username, password, email FROM users
+        SELECT id, username, password, email, isAdmin FROM users
         WHERE users.{} = '{}'""".format(mechanism, value)
 
         return db.select_data_from_db(select_user_by_email)
