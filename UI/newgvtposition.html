@@ -14,8 +14,10 @@
   <body>
     <div id="heading-container"></div>
 
-    <div class="center">
+    <div class="center" id="center">
       <div class="maxwidth500">
+        <a href="admindash.html" class="button button-color">Dashboard Page</a>
+
         <form id="sigin-in-form">
           <input
             type="text"
@@ -45,11 +47,11 @@
         <div id="list-of-offices"></div>
       </div>
     </div>
+    <script src="./Js/security.js"></script>
 
     <script src="./Js/render.js"></script>
     <script src="./Js/validation.js"></script>
     <script src="./Js/pages/newgvtposition.js"></script>
-    <script src="./Js/security.js"></script>
     <script>
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));

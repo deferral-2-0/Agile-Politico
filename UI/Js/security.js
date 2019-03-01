@@ -14,7 +14,10 @@ const isUserAnAdmin = () => {
   const userobj = getToken();
   if (userobj) {
     const token = userobj;
-    return parseJwt(token).email === "admindetails@gmail.com";
+    return (
+      parseJwt(token).email === "admindetails@gmail.com" ||
+      parseJwt(token).isAdmin === true
+    );
   } else {
     return false;
   }

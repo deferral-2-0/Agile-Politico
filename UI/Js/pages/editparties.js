@@ -97,10 +97,23 @@ if (isUserAnAdmin()) {
       partiescontainer.appendChild(createElement(vdom));
     });
 } else {
+  destroyNodeChildren("render-parties");
+
   const renderalternative = {
-    type: "h3",
+    type: "div",
     props: {},
-    children: ["you are not an admin"]
+    children: [
+      {
+        type: "h3",
+        props: { style: "margin-bottom: 20px" },
+        children: ["You are not an admin"]
+      },
+      {
+        type: "a",
+        props: { class: "button button-color", href: "index.html" },
+        children: ["Kindly Navigate back to the home page"]
+      }
+    ]
   };
 
   partiescontainer.appendChild(createElement(renderalternative));

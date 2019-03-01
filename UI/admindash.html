@@ -16,7 +16,7 @@
         </li>
       </ol>
     </div>
-    <div class="center">
+    <div class="center" id="centergrid">
       <div class="grid-container">
         <div class="grid-item card" onclick="route('newgvtposition.html')">
           New Government Position
@@ -30,11 +30,37 @@
       </div>
     </div>
 
+    <script src="./Js/security.js"></script>
     <script src="./Js/render.js"></script>
     <script src="./Js/utils/either.js"></script>
+
     <script type="text/javascript">
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));
+      //if user is not admin destroy the dom nodes in
+      // and the links
+      const $links = document.getElementById("centergrid");
+      if (!isUserAnAdmin()) {
+        destroyNodeChildren("centergrid");
+        let vdommessage = {
+          type: "div",
+          props: {},
+          children: [
+            {
+              type: "h3",
+              props: { style: "margin-bottom: 20px" },
+              children: ["You are not an admin"]
+            },
+            {
+              type: "a",
+              props: { class: "button button-color", href: "index.html" },
+              children: ["Kindly Navigate back to the home page"]
+            }
+          ]
+        }
+
+        $links.appendChild(createElement(vdommessage));
+      }
       function route(page) {
         location.replace(page);
       }
