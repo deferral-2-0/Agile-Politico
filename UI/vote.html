@@ -5,17 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Voting Page</title>
     <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./css/components/components.css"
+    />
   </head>
   <body>
     <div>
       <div id="heading-container"></div>
       <div class="center">
         <div class="maxwidth500">
-          <div id="voting-activity"></div>
+          <div id="voting-activity-container"></div>
         </div>
       </div>
     </div>
     <script src="./Js/render.js"></script>
+    <script src="Js/security.js"></script>
+    <script src="Js/pages/vote.js"></script>
+
     <script>
       const votingcontainer = document.getElementById("voting-activity");
       // this is a list of all posts available in the platform
@@ -132,7 +140,7 @@
         }))
       };
 
-      votingcontainer.appendChild(createElement(renderList));
+      //votingcontainer.appendChild(createElement(renderList));
 
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));
