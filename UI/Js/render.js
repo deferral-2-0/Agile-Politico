@@ -132,3 +132,13 @@ if ("serviceWorker" in navigator) {
 } else {
   console.log("CLIENT: service worker is not supported.");
 }
+
+const loadingindicator = {
+  type: "div",
+  props: { class: "sk-cube-grid" },
+  children: Array.from({ length: 9 }, (v, k) => k + 1).map((cube, idx) => ({
+    type: "div",
+    props: { class: `sk-cube sk-cube${cube}` },
+    children: [""]
+  }))
+};

@@ -1,4 +1,5 @@
 const partiescontainer = document.getElementById("render-parties");
+partiescontainer.appendChild(createElement(loadingindicator));
 
 const getElementValue = id => {
   const input = document.getElementById(`editparty-${id}`);
@@ -55,6 +56,8 @@ if (isUserAnAdmin()) {
     .then(data => data.json())
     .then(data => data.data)
     .then(parties => {
+      destroyNodeChildren("render-parties");
+
       let vdomparties = {
         type: "div",
         props: {},

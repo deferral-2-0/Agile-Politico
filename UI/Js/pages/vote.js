@@ -89,6 +89,7 @@ const renderListOfPoliticians = (politicians, officeid) =>
       ];
 
 if (window.localStorage.getItem("user")) {
+  renderVotingActivity.appendChild(createElement(loadingindicator));
   fetch("https://tevpolitico.herokuapp.com/api/v2/votes/activity", {
     method: "POST",
     headers: {
@@ -100,7 +101,7 @@ if (window.localStorage.getItem("user")) {
   })
     .then(data => data.json())
     .then(({ data }) => {
-      console.log(data);
+      destroyNodeChildren("voting-activity-container");
       let formateditems = groupBy(data, "type");
       let officetypes = Object.keys(formateditems);
       let vdom = {
