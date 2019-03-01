@@ -56,7 +56,7 @@ if (window.localStorage.getItem("user")) {
           newnotifications = JSON.stringify(["Signed in successfully"]);
           window.localStorage.setItem("notifications", newnotifications);
           // redirect admin to admin dash but user to home page.
-          if (email === "admindetails@gmail.com") {
+          if (isUserAnAdmin()) {
             location.replace("admindash.html");
             return;
           }

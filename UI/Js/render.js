@@ -12,8 +12,21 @@ const createElement = node => {
   return $el;
 };
 
+const isUserAnAdminObject = isUserAnAdmin()
+  ? {
+      type: "a",
+      props: { href: "admindash.html" },
+      children: ["Admin Dash"]
+    }
+  : {
+      type: "div",
+      props: {},
+      children: [""]
+    };
+
 const isUserLoggedIn = window.localStorage.getItem("user")
   ? [
+      isUserAnAdminObject,
       {
         type: "a",
         props: {
