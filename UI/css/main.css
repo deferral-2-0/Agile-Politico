@@ -147,6 +147,7 @@ label:after {
   background-color: white;
   color: black;
   border: 2px solid #856a14a4;
+  max-height: 100px;
 }
 
 /* LANDING PAGE IMAGE */
@@ -343,4 +344,12 @@ td {
 .candidatesinfo {
   margin: 20px;
   margin-left: 35px;
+}
+
+.votecontainer {
+  display: flex; /* or inline-flex */
+  flex-direction: row;
+  height: 150px;
+  justify-content: space-around;
+  align-items: center;
 }

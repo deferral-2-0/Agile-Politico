@@ -116,7 +116,7 @@ const callSnackBar = (message, status = "error") => {
   // remove the snackbar after a few seconds.
   setTimeout(function() {
     removeElementById("snackbar");
-  }, 3000);
+  }, 1500);
 };
 
 if ("serviceWorker" in navigator) {
