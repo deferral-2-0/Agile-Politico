@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Party Editing and deleting</title>
     <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./css/components/components.css"
+    />
   </head>
   <body>
     <div id="heading-container"></div>
@@ -17,72 +22,11 @@
     </div>
     <div><div></div></div>
     <script src="./Js/render.js"></script>
+    <script src="Js/security.js"></script>
     <script src="./Js/validation.js"></script>
+    <script src="Js/utils/either.js"></script>
+    <script src="Js/pages/editparties.js"></script>
     <script>
-      const partiescontainer = document.getElementById("render-parties");
-      const allparties = [
-        {
-          datecreated: new Date(),
-          name: "House Stark",
-          representative: "Jon Snow",
-          motto: "Winter is Coming"
-        },
-        {
-          datecreated: new Date(),
-          name: "House Lannister",
-          representative: "Cercei Lannister",
-          motto: "Hear my roar"
-        },
-        {
-          datecreated: new Date(),
-          name: "House Baratheon",
-          representative: "Gendry",
-          motto: "Our's is the fury"
-        }
-      ];
-
-      const partiestoBeRendered = {
-        type: "div",
-        props: {},
-        children: allparties.map((party, idx) => ({
-          type: "div",
-          props: { style: "display: flex " },
-          children: [
-            {
-              type: "input",
-              props: { value: party.motto },
-              children: [""]
-            },
-            {
-              type: "button",
-              props: {
-                class: "button button-color",
-                style: "align-self: center",
-                onclick: `(function(){
-                                    alert('Are you sure you want to update ${
-                                      party.name
-                                    }"s name');
-                          })()`
-              },
-              children: ["\u{2714}"]
-            },
-            {
-              type: "button",
-              props: {
-                class: "button button-color",
-                style: "align-self: center",
-                onclick: `(function(){
-                                    alert('Are you sure you want to delete ${
-                                      party.name
-                                    }');
-                          })()`
-              },
-              children: ["\u{274C}"]
-            }
-          ]
-        }))
-      };
-      partiescontainer.appendChild(createElement(partiestoBeRendered));
       const $header = document.getElementById("heading-container");
       $header.appendChild(createElement(layout));
     </script>
