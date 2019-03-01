@@ -1,28 +1,11 @@
 const partiescontainer = document.getElementById("render-parties");
-const allparties = [
-  {
-    datecreated: new Date(),
-    name: "House Stark",
-    representative: "Jon Snow",
-    motto: "Winter is Coming"
-  },
-  {
-    datecreated: new Date(),
-    name: "House Lannister",
-    representative: "Cercei Lannister",
-    motto: "Hear my roar"
-  },
-  {
-    datecreated: new Date(),
-    name: "House Baratheon",
-    representative: "Gendry",
-    motto: "Our's is the fury"
-  }
-];
+
+partiescontainer.appendChild(createElement(loadingindicator));
 
 fetch("https://tevpolitico.herokuapp.com/api/v2/parties")
   .then(data => data.json())
   .then(({ status, data }) => {
+    destroyNodeChildren("render-parties");
     if (status === 200) {
       const partiestoBeRendered = {
         type: "ol",

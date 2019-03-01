@@ -4,6 +4,8 @@ let positionscontainer = document.getElementById("list-of-offices");
 let positionslist = document.getElementById("positionslist");
 let allofficenames = [];
 
+positionscontainer.appendChild(createElement(loadingindicator));
+
 function getValue(event) {
   return event.target.value;
 }
@@ -25,6 +27,7 @@ window.document.onload = function(e) {
 fetch("https://tevpolitico.herokuapp.com/api/v2/offices")
   .then(data => data.json())
   .then(({ status, data }) => {
+    destroyNodeChildren("list-of-offices");
     if (status === 200) {
       allofficenames = data.map(({ name }) => name);
       const renderingList = {

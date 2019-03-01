@@ -7,11 +7,15 @@ const groupBy = (items, key) =>
     {}
   );
 
+const $contestants = document.getElementById("render-posts-&-contestants");
+
+$contestants.appendChild(createElement(loadingindicator));
+
 fetch("https://tevpolitico.herokuapp.com/api/v2/offices/metainfo")
   .then(data => data.json())
   .then(data => groupBy(data.data, "type"))
   .then(data => {
-    console.log(data);
+    destroyNodeChildren("render-posts-&-contestants");
     let officetypelist = Object.keys(data);
     let vdom = {
       type: "div",
@@ -68,6 +72,5 @@ fetch("https://tevpolitico.herokuapp.com/api/v2/offices/metainfo")
     return vdom;
   })
   .then(vdom => {
-    const $contestants = document.getElementById("render-posts-&-contestants");
     $contestants.appendChild(createElement(vdom));
   });
