@@ -1,0 +1,44 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Admin Elevation page | Politico</title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./css/components/components.css"
+    />
+  </head>
+  <body>
+    <div id="heading-container"></div>
+    <div
+      style="height:100px; right: 0px; left: 0px; margin: auto; position: relative; width: 250px"
+    >
+      <a href="admindash.html" class="button button-color">Dashboard Page</a>
+    </div>
+
+    <div class="center">
+      <div id="container">
+        <h2 class="positiontitle">
+          Ordinary users
+        </h2>
+        <div id="ordinary-users"></div>
+        <h2 class="positiontitle">Admin Users</h2>
+        <div id="admin-users"></div>
+      </div>
+    </div>
+
+    <script src="./Js/security.js"></script>
+    <script src="./Js/render.js"></script>
+    <script src="./Js/validation.js"></script>
+    <script src="./Js/pages/adminelevate.js"></script>
+    <script src="Js/utils/either.js"></script>
+
+    <script type="text/javascript">
+      const $header = document.getElementById("heading-container");
+      $header.appendChild(createElement(layout));
+    </script>
+  </body>
+</html>
