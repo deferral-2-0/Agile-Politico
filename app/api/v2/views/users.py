@@ -135,6 +135,7 @@ def reset_password():
         if not user:
             abort(utils.response_fn(404, "error",
                                     "User does not exist. Create an account first"))
+        UserModel.sendmail(email)
         return utils.response_fn(200, "data", [{
             "message": "Check your email for password reset link",
             "email": email
