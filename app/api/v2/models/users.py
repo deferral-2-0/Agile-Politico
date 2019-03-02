@@ -2,6 +2,11 @@
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
+import sendgrid
+import os
+from sendgrid.helpers.mail import Email, Content, Mail
+import jwt
+
 from . import db
 
 
@@ -111,3 +116,27 @@ class UserModel:
         """.format(userId)
 
         db.queryData(update_user)
+
+    @staticmethod
+    def sendmail(email):
+        """
+            This function is responsible for sending an email 
+            to the address provided as a parameter so that the user
+            concerned can receive a notification via mail on 
+            how to update their password.
+        """
+        username = UserModel.get_user_by_mail(email)[0][1]
+        token = jwt.encode({"email": email},
+                           os.getenv('SECRET_KEY'), algorithm='HS256').decode('UTF-8')
+        link = "https://tevinthuku.github.io/Politico/UI/setnewpassword.html?token={}".format(
+            token)
+        sg = sendgrid.SendGridAPIClient(
+            apikey=os.environ.get('SENDGRID_API_KEY'))
+        from_email = Email("admin-noreply@politico.com")
+        to_email = Email(email)
+        subject = "Password reset instructions"
+        content = Content(
+            "text/plain",
+            "Hey {} click this link to go and reset your password {}".format(username, link))
+        mail = Mail(from_email, subject, to_email, content)
+        sg.client.mail.send.post(request_body=mail.get())

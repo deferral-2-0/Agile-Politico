@@ -35,11 +35,15 @@ A Platform for driving political change and engagement
 
 4. SET up envs
    Follow the format provided in the `.env.sample` file to create your own local `.env` file
-   Once your `.env` is ready run
+   Once your `.env` is ready run.
+
+   **NB**
+
+   - You will need a sendgrid account so that you can paste your API key in the SENDGRID env variable
 
 ```
 
-source ./env
+source ./.env
 
 ```
 
