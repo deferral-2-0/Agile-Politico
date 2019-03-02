@@ -115,6 +115,8 @@ if (window.localStorage.getItem("user")) {
           callSnackBar(error.replace("Error.", ""));
         }
       })
-      .catch(console.log);
+      .catch(_err => {
+        callSnackBar("Something went wrong");
+      });
   };
 }
