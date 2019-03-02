@@ -183,6 +183,8 @@ label:after {
 }
 
 .text-2 {
+  position: relative;
+  top: -20px;
   font-size: 2vw;
 }
 

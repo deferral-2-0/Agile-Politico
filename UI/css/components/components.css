@@ -8,7 +8,7 @@
   border-radius: 2px; /* Rounded borders */
   padding: 16px; /* Padding */
   position: fixed; /* Sit on top of the screen */
-  z-index: 1;
+  z-index: 1000;
   left: 50%;
   top: 30px;
 }

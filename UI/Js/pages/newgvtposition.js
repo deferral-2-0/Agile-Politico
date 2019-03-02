@@ -139,6 +139,8 @@ if (!isUserAnAdmin()) {
         .then(({ status, error }) => {
           if (status === 201) {
             callSnackBar("Office Created Successfully", "success");
+            var scrollingElement = document.scrollingElement || document.body;
+            scrollingElement.scrollTop = scrollingElement.scrollHeight;
           } else {
             callSnackBar(error);
           }
