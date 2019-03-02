@@ -79,7 +79,8 @@ class UserModel:
             d = {
                 "id": item[0],
                 "username": item[1],
-                "email": item[2]
+                "email": item[2],
+                "isAdmin": item[3]
             }
             results.append(d)
         return results
@@ -100,7 +101,7 @@ class UserModel:
     @staticmethod
     def get_all_users():
         select_all_users = """
-        SELECT id, username, email FROM users"""
+        SELECT id, username, email, isAdmin FROM users"""
         return UserModel.format_user_list_to_record(db.select_data_from_db(select_all_users))
 
     @staticmethod
