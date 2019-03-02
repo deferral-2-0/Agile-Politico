@@ -299,3 +299,24 @@ class TestUserEndpoints(BaseTestClass):
                                }),
                                content_type="application/json")
         self.assertEqual(res.status_code, 400)
+
+    def test_update_user_password(self):
+        res = self.client.post("api/v2/auth/newpassword", data=json.dumps({
+            "email": "admindetails@gmail.com",
+            "password": "Tevinrocks1995"
+        }), content_type="application/json")
+        self.assertEqual(res.status_code, 200)
+        loginres = self.client.post(
+            "api/v2/auth/signin", data=json.dumps({
+                "email": "admindetails@gmail.com",
+                "password": "Tevinrocks1995"
+            }), content_type="application/json")
+
+        self.assertEqual(loginres.status_code, 200)
+
+    def test_updating_password_of_non_user(self):
+        res = self.client.post("api/v2/auth/newpassword", data=json.dumps({
+            "email": "tevothuku@gmail.com",
+            "password": "Tevinrocks1995"
+        }), content_type="application/json")
+        self.assertEqual(res.status_code, 404)

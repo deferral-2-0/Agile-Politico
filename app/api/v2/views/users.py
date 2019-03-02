@@ -170,3 +170,26 @@ def authorize_user_to_admin(user, user_id):
         }])
     return utils.response_fn(404, "message",
                              "The user you are trying to elevate is not registered")
+
+
+@path_2.route("/auth/newpassword", methods=["POST"])
+def update_password():
+    try:
+        data = request.get_json()
+        email = data['email']
+        password = data['password']
+
+    except KeyError:
+        abort(utils.response_fn(400, "error", "Should be email & password"))
+
+    v2utils.check_password_format(password)
+
+    user = UserModel.get_user_by_mail(email)
+    if not user:
+        abort(utils.response_fn(404, "error", "User does not exist"))
+
+    UserModel.update_password(email, password)
+
+    return utils.response_fn(200, "data", {
+        "message": "Password reset successfully. Login with new password",
+    })
