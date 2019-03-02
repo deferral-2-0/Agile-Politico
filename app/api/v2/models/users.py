@@ -140,3 +140,16 @@ class UserModel:
             "Hey {} click this link to go and reset your password {}".format(username, link))
         mail = Mail(from_email, subject, to_email, content)
         sg.client.mail.send.post(request_body=mail.get())
+
+    @staticmethod
+    def update_password(email, newpassword):
+        """
+            This function updates the password of an account by setting the new
+            password as provided in the parameters, the new password is first
+            salted and then updated in the db
+        """
+        update_user = """
+        UPDATE users SET password = '{}' WHERE users.email = '{}'
+        """.format(generate_password_hash(str(newpassword)), email)
+
+        db.queryData(update_user)

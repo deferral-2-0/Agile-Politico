@@ -99,6 +99,7 @@ source ./.env
 | `GET`    | `/api/v2/offices/<int:office_id>/candidates` | This view shows a list of all the candidates in a particular office                                              |
 | `GET`    | `/api/v2/offices/metainfo`                   | This view returns results info on an office, candidates vying and also the results after voting for all offices  |
 | `POST`   | `/api/v2/votes/activity`                     | This request returns all offices with infomation as to whether a user has voted or not in that particular office |
+| `POST`   | `api/v2/auth/newpassword`                    | This endpoint updates the password of an existing user                                                           |
 
 </details>
 
