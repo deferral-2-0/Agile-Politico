@@ -1,12 +1,3 @@
-const groupBy = (items, key) =>
-  items.reduce(
-    (result, item) => ({
-      ...result,
-      [item[key]]: [...(result[item[key]] || []), item]
-    }),
-    {}
-  );
-
 const $contestants = document.getElementById("render-posts-&-contestants");
 
 $contestants.appendChild(createElement(loadingindicator));

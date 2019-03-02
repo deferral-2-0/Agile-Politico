@@ -2,15 +2,6 @@ const renderVotingActivity = document.getElementById(
   "voting-activity-container"
 );
 
-const groupBy = (items, key) =>
-  items.reduce(
-    (result, item) => ({
-      ...result,
-      [item[key]]: [...(result[item[key]] || []), item]
-    }),
-    {}
-  );
-
 const vote = (office, candidate) => {
   callSnackBar("Registering vote", (status = "Success"));
   fetch("https://tevpolitico.herokuapp.com/api/v2/votes", {
