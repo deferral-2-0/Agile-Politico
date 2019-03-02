@@ -1,12 +1,3 @@
-const groupBy = (items, key) =>
-  items.reduce(
-    (result, item) => ({
-      ...result,
-      [item[key]]: [...(result[item[key]] || []), item]
-    }),
-    {}
-  );
-
 const $results = document.getElementById("results");
 
 $results.appendChild(createElement(loadingindicator));
