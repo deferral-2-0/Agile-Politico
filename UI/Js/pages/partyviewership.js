@@ -9,10 +9,10 @@ fetch("https://tevpolitico.herokuapp.com/api/v2/parties")
     if (status === 200) {
       const partiestoBeRendered = {
         type: "ol",
-        props: {},
+        props: {id: "orderedlistofparties"},
         children: data.map((party, idx) => ({
           type: "li",
-          props: {},
+          props: { class: "partiesindb" },
           children: [
             {
               type: "span",

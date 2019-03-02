@@ -42,7 +42,9 @@ if (isUserAnAdmin()) {
         {
           type: "span",
           props: {},
-          children: [``]
+          children: [
+            `${document.getElementsByClassName("partiesindb").length + 1}.`
+          ]
         },
         {
           type: "p",
@@ -57,7 +59,9 @@ if (isUserAnAdmin()) {
       ]
     };
 
-    document.getElementById("render-parties").appendChild(createElement(p));
+    document
+      .getElementById("orderedlistofparties")
+      .appendChild(createElement(p));
     document.getElementById("name").value = "";
     document.getElementById("hqAddress").value = "";
     submitbtn.setAttribute("disabled", true);
@@ -79,6 +83,8 @@ if (isUserAnAdmin()) {
         .then(({ status, error }) => {
           if (status === 201) {
             callSnackBar("Party Created Successfully", "success");
+            var scrollingElement = document.scrollingElement || document.body;
+            scrollingElement.scrollTop = scrollingElement.scrollHeight;
           } else {
             callSnackBar(error);
           }
