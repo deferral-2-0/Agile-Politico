@@ -130,7 +130,8 @@ def reset_password():
 
     # check if email is valid
     v2utils.isEmailValid(email)
-    link = request.url.replace("reset", "securereset")
+    link = "https://tevpolitico.herokuapp.com/api/v2/auth/securereset"
+
     # send a request to the endpoint that will send the mail
     requests.post(
         link, data=json.dumps({"email": email}),
