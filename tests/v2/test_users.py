@@ -320,3 +320,45 @@ class TestUserEndpoints(BaseTestClass):
             "password": "Tevinrocks1995"
         }), content_type="application/json")
         self.assertEqual(res.status_code, 404)
+
+    def test_updating_password_with_missing_password(self):
+        res = self.client.post("api/v2/auth/newpassword", data=json.dumps({
+            "email": "tevothuku@gmail.com",
+        }), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
+    def test_secure_endpoint_for_sending_emails(self):
+        res = self.client.post("api/v2/auth/securereset", data=json.dumps({
+            "email": "admindetails@gmail.com",
+        }), content_type="application/json")
+        self.assertEqual(res.status_code, 200)
+
+    def test_secure_endpoint_for_sending_emails_with_no_email(self):
+        res = self.client.post("api/v2/auth/securereset", data=json.dumps({
+            "password": "tevothuku@gmail.com",
+        }), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
+    def test_secure_endpoint_for_sending_emails_with_invalid_email(self):
+        res = self.client.post("api/v2/auth/securereset", data=json.dumps({
+            "email": "tevotmail.com",
+        }), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
+    def test_secure_endpoint_for_sending_emails_with_non_existent_user(self):
+        res = self.client.post("api/v2/auth/securereset", data=json.dumps({
+            "email": "tevothuku@gmail.com",
+        }), content_type="application/json")
+        self.assertEqual(res.status_code, 404)
+
+    def test_sending_mail_with_no_mail_prop(self):
+        res = self.client.post("api/v2/auth/reset", data=json.dumps({
+            "emai": "tevothuku@gmail.com",
+        }), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
+    def test_sending_mail_with_poorly_formatted_mail(self):
+        res = self.client.post("api/v2/auth/reset", data=json.dumps({
+            "email": "tevothukgmail.com",
+        }), content_type="application/json")
+        self.assertEqual(res.status_code, 400)

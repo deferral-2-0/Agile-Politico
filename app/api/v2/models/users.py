@@ -1,11 +1,13 @@
 # imports
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask import abort
 import sendgrid
 import os
 from sendgrid.helpers.mail import Email, Content, Mail
 import jwt
+from app.api import utils
+
 
 from . import db
 
@@ -125,21 +127,30 @@ class UserModel:
             concerned can receive a notification via mail on 
             how to update their password.
         """
-        username = UserModel.get_user_by_mail(email)[0][1]
+        try:
+            username = UserModel.get_user_by_mail(email)[0][1]
+        except:
+            abort(utils.response_fn(404, "error",
+                                    "You are not a registered user of the app"))
         token = jwt.encode({"email": email},
                            os.getenv('SECRET_KEY'), algorithm='HS256').decode('UTF-8')
         link = "https://tevinthuku.github.io/Politico/UI/setnewpassword.html?token={}".format(
             token)
-        sg = sendgrid.SendGridAPIClient(
-            apikey=os.environ.get('SENDGRID_API_KEY'))
-        from_email = Email("admin-noreply@politico.com")
-        to_email = Email(email)
-        subject = "Password reset instructions"
-        content = Content(
-            "text/plain",
-            "Hey {} click this link to go and reset your password {}".format(username, link))
-        mail = Mail(from_email, subject, to_email, content)
-        sg.client.mail.send.post(request_body=mail.get())
+
+        try:
+
+            sg = sendgrid.SendGridAPIClient(
+                apikey=os.environ.get('SENDGRID_API_KEY'))
+            from_email = Email("admin-noreply@politico.com")
+            to_email = Email(email)
+            subject = "Password reset instructions"
+            content = Content(
+                "text/plain",
+                "Hey {} click this link to go and reset your password {}".format(username, link))
+            mail = Mail(from_email, subject, to_email, content)
+            sg.client.mail.send.post(request_body=mail.get())
+        except:
+            abort(utils.response_fn(400, "error", "Something went wrong"))
 
     @staticmethod
     def update_password(email, newpassword):

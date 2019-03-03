@@ -9,7 +9,8 @@ import psycopg2
 from app.api.v2.utils import token_required, check_matching_items_in_db_table
 from app.api.v2.utils import isUserAdmin
 
-
+import requests
+import json
 import os
 import jwt
 
@@ -129,23 +130,43 @@ def reset_password():
 
     # check if email is valid
     v2utils.isEmailValid(email)
-    # if user doesn't exist dont send an email to them
+    link = request.url.replace("reset", "securereset")
+    # send a request to the endpoint that will send the mail
+    requests.post(
+        link, data=json.dumps({"email": email}),
+        headers={'Content-Type': 'application/json'}
+    )
+    return utils.response_fn(200, "data", [{
+        "message": "Check your email for password reset link",
+        "email": email
+    }])
+
+# send the email securely from server
+@path_2.route("/auth/securereset", methods=["POST"])
+def secure_reset():
+    """
+        this endpoint is to be requested 
+        from the server only via the 
+        /auth/reset view. Client browsers accessing this view will
+        be forbidden and hence the mail will not be sent
+        view https://sendgrid.com/docs/for-developers/sending-email/cors/
+        for more details on the reasons this implementation is necessary
+    """
     try:
-        user = UserModel.get_user_by_mail(email)
-        if not user:
-            abort(utils.response_fn(404, "error",
-                                    "User does not exist. Create an account first"))
-        UserModel.sendmail(email)
-        return utils.response_fn(200, "data", [{
-            "message": "Check your email for password reset link",
-            "email": email
-        }])
-    except psycopg2.DatabaseError as _error:
-        abort(utils.response_fn(500, "error", "Server error"))
+        data = request.get_json()
+        email = data["email"]
+    except KeyError:
+        abort(utils.response_fn(400, "error", "Should be email"))
+    # check if email is valid
+    v2utils.isEmailValid(email)
+    UserModel.sendmail(email)
+    return utils.response_fn(200, "data", [{
+        "message": "Check your email for password reset link",
+        "email": email
+    }])
+
 
 # getting list of all users
-
-
 @path_2.route("/users", methods=["GET"])
 def get_all_users():
     return utils.response_fn(200, "data", UserModel.get_all_users())
