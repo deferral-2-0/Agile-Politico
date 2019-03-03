@@ -7,6 +7,7 @@ import os
 from sendgrid.helpers.mail import Email, Content, Mail
 import jwt
 from app.api import utils
+import sys
 
 
 from . import db
@@ -150,7 +151,13 @@ class UserModel:
             mail = Mail(from_email, subject, to_email, content)
             sg.client.mail.send.post(request_body=mail.get())
         except:
-            abort(utils.response_fn(400, "error", "Something went wrong"))
+            print('Unknown error detected:')
+            # Info about unknown error that caused exception.
+            a = sys.exc_info()
+            print('    ', a)
+            b = [str(p) for p in a]
+            print('    ', b)
+            abort(utils.response_fn(400, "error", "Something went wrongly here"))
 
     @staticmethod
     def update_password(email, newpassword):

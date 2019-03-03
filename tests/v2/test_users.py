@@ -328,8 +328,21 @@ class TestUserEndpoints(BaseTestClass):
         self.assertEqual(res.status_code, 400)
 
     def test_secure_endpoint_for_sending_emails(self):
+        self.client.post("api/v2/auth/signup",
+                         data=json.dumps({
+                             "username": "Tevyn",
+                             "firstname": "Tevin",
+                             "lastname": "Gach",
+                             "email": "tevinthuku@gmail.com",
+                             "phone": "0735464438",
+                             "othername": "Thuku",
+                             "password": "Tevinrocks1995",
+                             "retypedpassword": "Tevinrocks1995",
+                             "passportUrl": "http"
+                         }),
+                         content_type="application/json")
         res = self.client.post("api/v2/auth/securereset", data=json.dumps({
-            "email": "admindetails@gmail.com",
+            "email": "tevinthuku@gmail.com",
         }), content_type="application/json")
         self.assertEqual(res.status_code, 200)
 
@@ -362,3 +375,23 @@ class TestUserEndpoints(BaseTestClass):
             "email": "tevothukgmail.com",
         }), content_type="application/json")
         self.assertEqual(res.status_code, 400)
+
+    def test_sending_mail_with_mail(self):
+
+        self.client.post("api/v2/auth/signup",
+                         data=json.dumps({
+                             "username": "Tevyn",
+                             "firstname": "Tevin",
+                             "lastname": "Gach",
+                             "email": "tevinthuku@gmail.com",
+                             "phone": "0735464438",
+                             "othername": "Thuku",
+                             "password": "Tevinrocks1995",
+                             "retypedpassword": "Tevinrocks1995",
+                             "passportUrl": "http"
+                         }),
+                         content_type="application/json")
+        res = self.client.post("api/v2/auth/reset", data=json.dumps({
+            "email": "tevinthuku@gmail.com",
+        }), content_type="application/json")
+        self.assertEqual(res.status_code, 200)
