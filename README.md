@@ -78,28 +78,29 @@ source ./.env
 
 <summary>V2 Politico Endpoints</summary>
 
-| Method   | Endpoint                                     | Description                                                                                                      |
-| -------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `POST`   | `/api/v2/auth/signup`                        | Create a new user                                                                                                |
-| `POST`   | `/api/v2/auth/signin`                        | User can login                                                                                                   |
-| `POST`   | `/api/v2/auth/reset`                         | User can reset password                                                                                          |
-| `GET`    | `/api/v2/parties`                            | Fetch all parties                                                                                                |
-| `POST`   | `/api/v2/parties`                            | Admin can post a party                                                                                           |
-| `GET`    | `/api/v2/parties/<int:party_id>`             | Get specific party details                                                                                       |
-| `PATCH`  | `/api/v2/parties/<int:party_id>/name`        | Admin can Update a party by its name                                                                             |
-| `DELETE` | `/api/v2/parties/<int:party_id>`             | An Admin can delete a party                                                                                      |
-| `POST`   | `/api/v2/offices`                            | An Admin can create an office                                                                                    |
-| `GET`    | `/api/v2/offices`                            | Get all offices created in the DB                                                                                |
-| `GET`    | `/api/v2/offices/<int:office_id>`            | Get a specific office from the DB                                                                                |
-| `POST`   | `/api/v2/offices/<int:office_id>/register`   | A admin can register a candidate to an office                                                                    |
-| `POST`   | `/api/v2/votes`                              | A registered user can vote                                                                                       |
-| `GET`    | `/api/v2/offices/<int:office_id>/result`     | A user can view the results of a particular office                                                               |
-| `GET`    | `/api/v2/users`                              | Should be able to get a list of all users                                                                        |
-| `POST`   | `/api/v2/authorize/<int:user_id>`            | An admin can make other users admins                                                                             |
-| `GET`    | `/api/v2/offices/<int:office_id>/candidates` | This view shows a list of all the candidates in a particular office                                              |
-| `GET`    | `/api/v2/offices/metainfo`                   | This view returns results info on an office, candidates vying and also the results after voting for all offices  |
-| `POST`   | `/api/v2/votes/activity`                     | This request returns all offices with infomation as to whether a user has voted or not in that particular office |
-| `POST`   | `api/v2/auth/newpassword`                    | This endpoint updates the password of an existing user                                                           |
+| Method   | Endpoint                                     | Description                                                                                                                                        |
+| -------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POST`   | `/api/v2/auth/signup`                        | Create a new user                                                                                                                                  |
+| `POST`   | `/api/v2/auth/signin`                        | User can login                                                                                                                                     |
+| `POST`   | `/api/v2/auth/reset`                         | User can reset password                                                                                                                            |
+| `GET`    | `/api/v2/parties`                            | Fetch all parties                                                                                                                                  |
+| `POST`   | `/api/v2/parties`                            | Admin can post a party                                                                                                                             |
+| `GET`    | `/api/v2/parties/<int:party_id>`             | Get specific party details                                                                                                                         |
+| `PATCH`  | `/api/v2/parties/<int:party_id>/name`        | Admin can Update a party by its name                                                                                                               |
+| `DELETE` | `/api/v2/parties/<int:party_id>`             | An Admin can delete a party                                                                                                                        |
+| `POST`   | `/api/v2/offices`                            | An Admin can create an office                                                                                                                      |
+| `GET`    | `/api/v2/offices`                            | Get all offices created in the DB                                                                                                                  |
+| `GET`    | `/api/v2/offices/<int:office_id>`            | Get a specific office from the DB                                                                                                                  |
+| `POST`   | `/api/v2/offices/<int:office_id>/register`   | A admin can register a candidate to an office                                                                                                      |
+| `POST`   | `/api/v2/votes`                              | A registered user can vote                                                                                                                         |
+| `GET`    | `/api/v2/offices/<int:office_id>/result`     | A user can view the results of a particular office                                                                                                 |
+| `GET`    | `/api/v2/users`                              | Should be able to get a list of all users                                                                                                          |
+| `POST`   | `/api/v2/authorize/<int:user_id>`            | An admin can make other users admins                                                                                                               |
+| `GET`    | `/api/v2/offices/<int:office_id>/candidates` | This view shows a list of all the candidates in a particular office                                                                                |
+| `GET`    | `/api/v2/offices/metainfo`                   | This view returns results info on an office, candidates vying and also the results after voting for all offices                                    |
+| `POST`   | `/api/v2/votes/activity`                     | This request returns all offices with infomation as to whether a user has voted or not in that particular office                                   |
+| `POST`   | `api/v2/auth/newpassword`                    | This endpoint updates the password of an existing user                                                                                             |
+| `POST`   | `api/v2/auth/securereset`                    | This endpoint makes the actual request to sendgrid to send an email and is accessible via server side requests and non browser clients, eg POSTMAN |
 
 </details>
 

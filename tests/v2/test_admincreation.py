@@ -7,6 +7,10 @@ from config import app_config
 from app.api.v2.models.db import init_db
 from .base_test import BaseTestClass
 
+import jwt
+import os
+KEY = os.getenv('SECRET_KEY')
+
 
 class TestAdminEndpoint(BaseTestClass):
     def PostUser(self):
@@ -40,3 +44,12 @@ class TestAdminEndpoint(BaseTestClass):
                                headers={'x-access-token': self.ADMIN_TOKEN},
                                content_type="application/json")
         self.assertEqual(req.status_code, 404)
+
+    def test_non_existent_admin_setting_non_existent_user_to_admin(self):
+        usertoken = jwt.encode(
+            {"email": "tevinkumr@gmail.com"}, KEY, algorithm='HS256')
+        req = self.client.post("api/v2/authorize/200",
+                               data=json.dumps({}),
+                               headers={'x-access-token': usertoken},
+                               content_type="application/json")
+        self.assertEqual(req.status_code, 401)
