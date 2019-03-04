@@ -1,0 +1,62 @@
+.home-grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+}
+
+.home-grid-item {
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.title-one-vote {
+  top: -300px;
+  position: relative;
+}
+
+.parallax {
+  /* Set a specific height */
+  min-height: 500px;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parallax-first-image {
+  /* The image used */
+  background-image: url("../../images/crowd.jpeg");
+}
+
+.parallax-second-image {
+  background-image: url("../../images/onevote-min.jpeg");
+}
+
+.parallax-third-image {
+  background-image: url("../../images/jointhemovement.jpeg");
+}
+
+.paralax-fourth-image {
+  background-image: url("../../images/uptoyou.jpeg");
+}
+
+.paralax-header {
+  background-color: #542303;
+  color: #fff;
+  padding: 18px;
+  font-size: 25px;
+  letter-spacing: 10px;
+}
+
+.paralax-content-container {
+  color: #777;
+  background-color: white;
+  text-align: center;
+  padding: 50px 80px;
+}
