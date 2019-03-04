@@ -38,10 +38,24 @@ fetch("https://tevpolitico.herokuapp.com/api/v2/offices/metainfo")
                   children:
                     office.candidates.length > 0
                       ? office.candidates.map(candidate => ({
-                          type: "h3",
-                          props: { class: "candidatesinfo" },
+                          type: "div",
+                          props: { class: "votecontainer shadow" },
                           children: [
-                            `${candidate.username} - Email: ${candidate.email}`
+                            {
+                              type: "h3",
+                              props: {},
+                              children: [candidate.username]
+                            },
+                            {
+                              type: "h3",
+                              props: {},
+                              children: ["Email"]
+                            },
+                            {
+                              type: "h3",
+                              props: {},
+                              children: [candidate.email]
+                            }
                           ]
                         }))
                       : [
