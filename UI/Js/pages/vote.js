@@ -43,7 +43,7 @@ const renderListOfPoliticians = (politicians, officeid) =>
             children: [
               {
                 type: "div",
-                props: { class: "votecontainer" },
+                props: { class: "votecontainer votecontaineranimate" },
                 children: [
                   {
                     type: "div",

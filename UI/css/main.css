@@ -205,6 +205,8 @@ ol li {
   position: relative;
   font: bold italic 45px/1.5 Helvetica, Verdana, sans-serif;
   margin-bottom: 20px;
+  animation-name: marginanimation;
+  animation-duration: 1s;
 }
 
 li p {
@@ -354,4 +356,25 @@ td {
   height: 150px;
   justify-content: space-around;
   align-items: center;
+}
+
+.votecontaineranimate {
+  animation-name: marginanimation;
+  animation-duration: 2s;
+}
+
+.shadow {
+  box-shadow: 0px 7px 4px 3px grey;
+  margin-bottom: 20px;
+  animation-name: marginanimation;
+  animation-duration: 1s;
+}
+/* The animation code */
+@keyframes marginanimation {
+  from {
+    margin-top: 60px;
+  }
+  to {
+    margin-top: 0px;
+  }
 }
