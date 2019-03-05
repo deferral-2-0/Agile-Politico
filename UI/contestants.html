@@ -10,11 +10,13 @@
       type="text/css"
       href="./css/components/components.css"
     />
+    <link rel="stylesheet" type="text/css" href="./css/components/modal.css" />
   </head>
   <body>
     <div id="heading-container"></div>
     <div class="center">
       <div class="maxwidth500">
+        <div id="createoffice"></div>
         <h1 class="how_it_works">Posts & Contestants</h1>
         <div style="height: 40px"></div>
         <div id="render-posts-&-contestants"></div>
@@ -24,6 +26,7 @@
     <script src="./Js/security.js"></script>
     <script src="./Js/render.js"></script>
     <script src="./Js/validation.js"></script>
+    <script src="./Js/utils/either.js"></script>
     <script src="./Js/pages/contestants.js"></script>
     <script>
       const $header = document.getElementById("heading-container");
