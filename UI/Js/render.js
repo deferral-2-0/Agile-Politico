@@ -90,7 +90,13 @@ const layout = {
     {
       type: "a",
       props: { href: "#", onclick: `dropDownMenu()`, class: "icon" },
-      children: ["X"]
+      children: [
+        {
+          type: "img",
+          props: { src: "./images/menu.svg" },
+          children: [""]
+        }
+      ]
     }
   ]
 };

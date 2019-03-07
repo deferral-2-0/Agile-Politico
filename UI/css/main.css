@@ -127,6 +127,7 @@ label:after {
 }
 
 .topnav .icon {
+  color: "white";
   display: none;
 }
 
@@ -141,7 +142,7 @@ label:after {
     float: right;
     display: block;
     align-self: flex-end;
-    position: fixed;
+    position: absolute;
   }
 }
 
