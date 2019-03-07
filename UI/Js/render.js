@@ -54,7 +54,7 @@ const isUserLoggedIn = window.localStorage.getItem("user")
 
 const layout = {
   type: "header",
-  props: { class: "topnav" },
+  props: { class: "topnav", id: "myTopnav" },
   children: [
     {
       type: "a",
@@ -86,9 +86,23 @@ const layout = {
       props: { href: "results.html" },
       children: ["Results"]
     },
-    ...isUserLoggedIn
+    ...isUserLoggedIn,
+    {
+      type: "a",
+      props: { href: "#", onclick: `dropDownMenu()`, class: "icon" },
+      children: ["X"]
+    }
   ]
 };
+
+function dropDownMenu() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
 
 /**
  *
