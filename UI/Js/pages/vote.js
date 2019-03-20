@@ -157,7 +157,12 @@ if (window.localStorage.getItem("user")) {
   let loginfirst = {
     type: "h3",
     props: {},
-    children: ["You need to login first"]
+    children: ["You need to login first .."]
   };
   renderVotingActivity.appendChild(createElement(loginfirst));
+  renderVotingActivity.appendChild(createElement(loadingindicator));
+
+  setTimeout(function(){
+    window.location.replace('sign-up.html');
+  }, 1500)
 }
