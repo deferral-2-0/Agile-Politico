@@ -166,6 +166,5 @@ class OfficesModel:
     @staticmethod
     def get_all_accepted_candidates():
         select_all_accepts = """
-        SELECT email, position, acceptance FROM applications"""
+        SELECT email, position, acceptance FROM candidature"""
         return db.select_data_from_db(select_all_accepts)
-        
