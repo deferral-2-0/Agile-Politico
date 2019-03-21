@@ -171,3 +171,15 @@ class UserModel:
         """.format(generate_password_hash(str(newpassword)), email)
 
         db.queryData(update_user)
+
+    @staticmethod
+    def update_phone_number(new_phone_number, user_id):
+        """ Update phone number """
+        
+        phone_query = """ SELECT phone FROM users WHERE id = '{}' """.format(user_id)
+        if db.select_data_from_db(phone_query)[0][0] == new_phone_number:
+            abort(utils.response_fn(409, "error", "Use a different phone number"))
+
+        query = """ UPDATE users SET phone = '{}' WHERE id = '{}' """.format(new_phone_number, user_id)
+        db.queryData(query)
+        
