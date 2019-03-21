@@ -56,7 +56,8 @@ class UserModel:
             to check the user by ID or by email or username.
         """
         select_user_by_email = """
-        SELECT id, username, password, email, isAdmin FROM users
+        SELECT id, username, password, email, isAdmin, passportUrl, phone,
+        firstname, lastname FROM users
         WHERE users.{} = '{}'""".format(mechanism, value)
 
         return db.select_data_from_db(select_user_by_email)
@@ -87,9 +88,17 @@ class UserModel:
             d = {
                 "id": item[0],
                 "username": item[1],
-                "email": item[2],
-                "isAdmin": item[3]
+                "email": item[3],
+                "isAdmin": item[4],
             }
+            try:
+                d["passportUrl"] = item[5],
+                d["phone"] = item[6],
+                d["firstname"] = item[7],
+                d["lastname"] = item[8]
+            except IndexError:
+                pass
+
             results.append(d)
         return results
 
@@ -109,7 +118,7 @@ class UserModel:
     @staticmethod
     def get_all_users():
         select_all_users = """
-        SELECT id, username, email, isAdmin FROM users"""
+        SELECT id, username, password, email, isAdmin FROM users"""
         return UserModel.format_user_list_to_record(db.select_data_from_db(select_all_users))
 
     @staticmethod
