@@ -237,7 +237,9 @@ class TestUserEndpoints(BaseTestClass):
         res = self.client.get("api/v2/users")
         result = json.loads(res.data.decode("utf-8"))
         self.assertEqual(
-            len(result["data"]), 1)
+            result["data"], [
+                {'email': 'admindetails@gmail.com', 'id': 1,
+                    'username': 'OriginalAdmin', 'isAdmin': True}])
 
     def test_password_without_number(self):
         res = self.client.post("api/v2/auth/signup",
