@@ -1,6 +1,9 @@
 """Tests for users records"""
 import json
 import unittest
+import jwt
+import os
+KEY = os.getenv('SECRET_KEY')
 
 from app import app
 from config import app_config
@@ -23,6 +26,36 @@ class TestUserEndpoints(BaseTestClass):
                                     "passportUrl": "http"
                                 }),
                                 content_type="application/json")
+
+    def user_candidature_application(self):
+        """ Candidate application details """
+        return self.client.post("api/v2/offices/apply",
+                                data=json.dumps({
+                                    "name":"linc lidanya",
+                                    "email":"linclid@gmail.com",
+                                    "position":"president"
+                                }),
+                                content_type="application/json")
+
+    def test_apply_candidature(self):
+        """ Test for candidature application """
+        self.PostUser()
+        usertoken = jwt.encode(
+            {"email": "tevinkumr@gmail.com"}, KEY, algorithm='HS256')
+        self.client.post(
+            "api/v2/auth/signin", data=json.dumps({
+                "email": "tevinku@gmail.com",
+                "password": "Tevin1995"
+            }),content_type="application/json")
+        res=self.client.post("api/v2/offices/apply", data=json.dumps({
+                "email":"linclid@gmail.com",
+                "position":"president"
+            }),
+            headers={'x-access-token': usertoken},
+            content_type="application/json")
+        self.assertEqual(res.status_code, 201)
+        result = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(result["status"], 201)
 
     def test_user_creating_account_successfully(self):
         response = self.PostUser()

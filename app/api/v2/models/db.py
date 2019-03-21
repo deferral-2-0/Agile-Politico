@@ -85,6 +85,15 @@ def set_up_tables():
             FOREIGN KEY (office) REFERENCES offices(id) ON DELETE CASCADE
         )"""
 
+    aplication_table = """
+        CREATE TABLE IF NOT EXISTS applications (
+            id SERIAL,
+            name VARCHAR (24) NOT NULL,
+            email VARCHAR (24) NOT NULL,
+            position VARCHAR (24) NOT NULL,
+            username VARCHAR (24) NOT NULL
+        )"""
+
     voters_table = """
         CREATE TABLE IF NOT EXISTS votes (
             id SERIAL,
@@ -98,7 +107,7 @@ def set_up_tables():
         )"""
 
     return [table_users, parties_table,
-            offices_table, canditates_table, voters_table]
+            offices_table, canditates_table, voters_table, aplication_table]
 
 
 def drop_table_if_exists():
@@ -113,11 +122,13 @@ def drop_table_if_exists():
     DROP TABLE IF EXISTS offices CASCADE"""
     drop_candidates_table = """
     DROP TABLE IF EXISTS candidates CASCADE"""
+    drop_applications_table = """
+    DROP TABLE IF EXISTS applications CASCADE"""
 
     drop_voters_table = """
     DROP TABLE IF EXISTS votes CASCADE"""
     return [drop_users_table, drop_parties_table, drop_offices_table,
-            drop_candidates_table, drop_voters_table]
+            drop_candidates_table, drop_voters_table, drop_applications_table]
 
 
 def connect_to_db(query=None):
