@@ -102,7 +102,7 @@ def set_up_tables():
             id SERIAL PRIMARY KEY,
             candidate INTEGER,
             acceptance VARCHAR,
-            FOREIGN KEY (candidate) REFERENCES candidates(id) ON DELETE CASCADE
+            FOREIGN KEY (candidate) REFERENCES users(id) ON DELETE CASCADE
         )
     """
 
