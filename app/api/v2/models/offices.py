@@ -152,6 +152,7 @@ class OfficesModel:
         
     @staticmethod
     def make_request(name,email,position,username):
+        """ This method stores candidature application details """
         save_application_query = """
         INSERT INTO applications(name,
         email, position, username) VALUES(
@@ -164,6 +165,7 @@ class OfficesModel:
     
     @staticmethod
     def get_all_requests():
+        """ This method returns all candidature applications made by users """
         select_all_requests = """
         SELECT email, position FROM applications"""
         return db.select_data_from_db(select_all_requests)

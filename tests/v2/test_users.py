@@ -1,6 +1,9 @@
 """Tests for users records"""
 import json
 import unittest
+import jwt
+import os
+KEY = os.getenv('SECRET_KEY')
 
 from app import app
 from config import app_config
@@ -24,8 +27,8 @@ class TestUserEndpoints(BaseTestClass):
                                 }),
                                 content_type="application/json")
 
-    """ Candidate application details """
     def user_candidature_application(self):
+        """ Candidate application details """
         return self.client.post("api/v2/offices/apply",
                                 data=json.dumps({
                                     "name":"linc lidanya",
@@ -34,18 +37,22 @@ class TestUserEndpoints(BaseTestClass):
                                 }),
                                 content_type="application/json")
 
-    """ Test for candidature application """
     def test_apply_candidature(self):
+        """ Test for candidature application """
         self.PostUser()
+        usertoken = jwt.encode(
+            {"email": "tevinkumr@gmail.com"}, KEY, algorithm='HS256')
         self.client.post(
             "api/v2/auth/signin", data=json.dumps({
                 "email": "tevinku@gmail.com",
                 "password": "Tevin1995"
-            }), content_type="application/json")
+            }),content_type="application/json")
         res=self.client.post("api/v2/offices/apply", data=json.dumps({
                 "email":"linclid@gmail.com",
                 "position":"president"
-            }), content_type="application/json")
+            }),
+            headers={'x-access-token': usertoken},
+            content_type="application/json")
         self.assertEqual(res.status_code, 201)
         result = json.loads(res.data.decode("utf-8"))
         self.assertEqual(result["status"], 201)

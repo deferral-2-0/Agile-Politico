@@ -146,16 +146,13 @@ def get_meta_info():
 @path_2.route("/offices/apply", methods=["POST"])
 @token_required
 def apply_candidature(user):
+    """ Method defines user candidature application """
     data = request.get_json(user)
     all_requests = OfficesModel.get_all_requests()
     for requests in all_requests:
         if requests[0] == data['email']:
-            return jsonify({
-                'status':400,
-                'data':[{
-                    'message':'you have already applied for the position of {}'.format(requests[1])
-                }]
-            }),400
+            return utils.response_fn(400, "error",
+                 'you have already applied for the position of {}'.format(requests[1]))
     all_users= UserModel.get_all_users()
     for item in all_users:
         if item['email']==data['email']:
@@ -165,11 +162,5 @@ def apply_candidature(user):
                 data['position'],
                 item['username']
                 )
-    return jsonify({
-        'status': 201,
-        'Data':[
-            {
-                'message':'Your application has been created successfully'
-            }
-        ]
-    }), 201
+    return utils.response_fn(201, "message",
+                 'Your application has been created successfully')
