@@ -97,8 +97,18 @@ def set_up_tables():
             FOREIGN KEY (voter) REFERENCES users(id) ON DELETE CASCADE
         )"""
 
+    feedback_table = """
+            CREATE TABLE IF NOT EXISTS feedback (
+                id SERIAL,
+                voter INTEGER,
+                body VARCHAR (200),
+                upvotes INTEGER,
+                downvotes INTEGER,
+                FOREIGN KEY (voter) REFERENCES users(id) ON DELETE CASCADE
+            )"""
+
     return [table_users, parties_table,
-            offices_table, canditates_table, voters_table]
+            offices_table, canditates_table, voters_table, feedback_table]
 
 
 def drop_table_if_exists():
@@ -116,8 +126,10 @@ def drop_table_if_exists():
 
     drop_voters_table = """
     DROP TABLE IF EXISTS votes CASCADE"""
+    drop_feedback_table = """
+        DROP TABLE IF EXISTS feedback CASCADE"""
     return [drop_users_table, drop_parties_table, drop_offices_table,
-            drop_candidates_table, drop_voters_table]
+            drop_candidates_table, drop_voters_table, drop_feedback_table]
 
 
 def connect_to_db(query=None):
