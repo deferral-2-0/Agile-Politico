@@ -1,4 +1,4 @@
-from flask import request, abort
+from flask import request, abort, jsonify
 
 from app.api.v2 import path_2
 from app.api import utils
@@ -142,3 +142,33 @@ def get_candidates(office_id):
 @path_2.route("/offices/metainfo", methods=["GET"])
 def get_meta_info():
     return utils.response_fn(200, "data", OfficesModel.get_meta_info())
+
+@path_2.route("/offices/apply", methods=["POST"])
+def apply_candidature():
+    data = request.get_json()
+    all_requests = OfficesModel.get_all_requests()
+    for requests in all_requests:
+        if requests[0] == data['email']:
+            return jsonify({
+                'status':400,
+                'data':[{
+                    'message':'you have already applied for the position of {}'.format(requests[1])
+                }]
+            }),400
+    all_users= UserModel.get_all_users()
+    for item in all_users:
+        if item['email']==data['email']:
+            OfficesModel.make_request(
+                data['name'],
+                data['email'],
+                data['position'],
+                item['username']
+                )
+    return jsonify({
+        'status': 201,
+        'Data':[
+            {
+                'message':'Your application has been created successfully'
+            }
+        ]
+    }), 201

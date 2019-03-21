@@ -149,3 +149,21 @@ class OfficesModel:
             }
             data.append(result)
         return data
+        
+    @staticmethod
+    def make_request(name,email,position,username):
+        save_application_query = """
+        INSERT INTO applications(name,
+        email, position, username) VALUES(
+            '{}', '{}', '{}', '{}')""".format(
+                    name, 
+                    email, 
+                    position,
+                    username)
+        db.queryData(save_application_query)
+    
+    @staticmethod
+    def get_all_requests():
+        select_all_requests = """
+        SELECT email, position FROM applications"""
+        return db.select_data_from_db(select_all_requests)
