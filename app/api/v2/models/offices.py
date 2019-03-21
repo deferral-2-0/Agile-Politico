@@ -151,7 +151,7 @@ class OfficesModel:
         return data
 
     @staticmethod
-    def accept_request(name,email,position,username,acceptance):
+    def accept_request(name, email, position, username, acceptance):
         save_acceptance_query = """
         INSERT INTO candidature(name,
         email, position, username,acceptance) VALUES(
