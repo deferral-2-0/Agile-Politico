@@ -143,6 +143,8 @@ def reset_password():
     }])
 
 # send the email securely from server
+
+
 @path_2.route("/auth/securereset", methods=["POST"])
 def secure_reset():
     """
@@ -215,3 +217,46 @@ def update_password():
     return utils.response_fn(200, "data", {
         "message": "Password reset successfully. Login with new password",
     })
+
+
+@path_2.route('/users/<int:user_id>/edit', methods=['PATCH'])
+@token_required
+def bio_update(user, user_id):
+    """ Updates user phone number """
+    print(user)
+    if user[0][1] == user_id:
+        try:
+            data = request.get_json()
+            username = data['username']
+            phone_num = data['phone_number']
+            firstname = data['firstname']
+            lastname = data['lastname']
+            email = data['email']
+            passportUrl = data['passporturl']
+            othername = data['othername']
+
+        except KeyError:
+            abort(utils.response_fn(400, "error", "Missing Key"))
+
+        v2utils.is_phone_number_valid(phone_num)
+
+        utils.check_for_strings(
+            data, ["username", "firstname", "lastname", "username", "othername", "passportUrl", "email", "phone"])
+
+        utils.check_for_whitespace(
+            data, ["username", "firstname", "lastname", "username", "email", "phone"])
+
+        v2utils.isEmailValid(email)
+
+        user = UserModel.get_user_by_id(user_id)
+
+        if not user:
+            abort(utils.response_fn(404, "error", "User does not exists"))
+
+        UserModel.update_user_data(
+            username, firstname, lastname, othername, phone_num, email, passportUrl, user_id)
+
+        return utils.response_fn(200, "data", {
+            "message": "You have successfuly updated your profile."
+        })
+    return utils.response_fn(401, "error", "You have to be the owner of the account to make changes.")
