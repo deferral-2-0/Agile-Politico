@@ -6,6 +6,9 @@ from app import app
 from config import app_config
 from app.api.v2.models.db import init_db
 from .base_test import BaseTestClass
+import jwt
+import os
+KEY = os.getenv('SECRET_KEY')
 
 
 class TestUserEndpoints(BaseTestClass):
@@ -233,8 +236,10 @@ class TestUserEndpoints(BaseTestClass):
     def test_getting_list_of_users(self):
         res = self.client.get("api/v2/users")
         result = json.loads(res.data.decode("utf-8"))
-        self.assertEqual(result["data"], [
-                         {'email': 'admindetails@gmail.com', 'id': 1, 'username': 'OriginalAdmin', 'isAdmin': True}])
+        self.assertEqual(
+            result["data"], [
+                {'email': 'admindetails@gmail.com', 'id': 1,
+                    'username': 'OriginalAdmin', 'isAdmin': True}])
 
     def test_password_without_number(self):
         res = self.client.post("api/v2/auth/signup",
@@ -395,3 +400,30 @@ class TestUserEndpoints(BaseTestClass):
             "email": "tevinthuku@gmail.com",
         }), content_type="application/json")
         self.assertEqual(res.status_code, 200)
+
+    # test get user profile
+    def test_get_user_profile(self):
+        self.PostUser()
+        usertoken = jwt.encode(
+            {"email": "tevinku@gmail.com"}, KEY, algorithm='HS256')
+        res = self.client.get(
+            "api/v2/users/2", headers={'x-access-token': usertoken},
+            content_type="application/json")
+
+        self.assertEqual(res.status_code, 200)
+        result = json.loads(res.data.decode("utf-8"))
+        user = result["data"][0]
+        self.assertEqual(user["username"], "Tevyn")
+        self.assertEqual(result["status"], 200)
+
+    def test_get_user_profile_no_user(self):
+        self.PostUser()
+        usertoken = jwt.encode(
+            {"email": "tevinku@gmail.com"}, KEY, algorithm='HS256')
+        res = self.client.get(
+            "api/v2/users/3", headers={'x-access-token': usertoken},
+            content_type="application/json")
+
+        self.assertEqual(res.status_code, 404)
+        result = json.loads(res.data.decode("utf-8"))
+        self.assertEqual(result["status"], 404)

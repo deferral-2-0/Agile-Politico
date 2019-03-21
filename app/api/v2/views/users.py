@@ -142,6 +142,7 @@ def reset_password():
         "email": email
     }])
 
+
 # send the email securely from server
 @path_2.route("/auth/securereset", methods=["POST"])
 def secure_reset():
@@ -171,6 +172,24 @@ def secure_reset():
 @path_2.route("/users", methods=["GET"])
 def get_all_users():
     return utils.response_fn(200, "data", UserModel.get_all_users())
+
+
+@path_2.route("/users/<int:user_id>", methods=["GET"])
+@token_required
+def get_user_profile(user, user_id):
+    try:
+        adminprop = user[0][2]
+    except:
+        return utils.response_fn(401, "error",
+                                 "You don't have an account. Create One")
+
+    data = UserModel.get_user_by_id(user_id)
+
+    if data:
+        userFound = UserModel.format_user_list_to_record(data)[0]
+        return utils.response_fn(200, "data", [userFound])
+    return utils.response_fn(404, "message",
+                             "The user requested was not found")
 
 
 @path_2.route("/authorize/<int:user_id>", methods=["POST"])
