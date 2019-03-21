@@ -395,3 +395,20 @@ class TestUserEndpoints(BaseTestClass):
             "email": "tevinthuku@gmail.com",
         }), content_type="application/json")
         self.assertEqual(res.status_code, 200)
+
+    def test_profile_update(self):
+        """ Tests the route to update user phone number """
+
+        res = self.client.patch('api/v2/users/1/edit',
+                                data=json.dumps({
+                                    "phone_number": "0721175172",
+                                    "username": "MtuMkubwa",
+                                    "firstname": "Eric",
+                                    "lastname": "Cartman",
+                                    "email": "the@ymail.com",
+                                    "passporturl": "http:link",
+                                    "othername": "Griffins"
+                                }),
+                                headers={'x-access-token': self.ADMIN_TOKEN},
+                                content_type="application/json")
+        self.assertEqual(res.status_code, 200)

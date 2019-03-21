@@ -171,3 +171,11 @@ class UserModel:
         """.format(generate_password_hash(str(newpassword)), email)
 
         db.queryData(update_user)
+
+    @staticmethod
+    def update_user_data(username, firstname, lastname,  othername, phone_number, email, passportUrl, user_id):
+        """ Update user_data """
+
+        query = """ UPDATE users SET username = '{}', firstname = '{}', lastname = '{}', othername = '{}', phone = '{}', email = '{}', passporturl = '{}' WHERE id = '{}' """.format(
+            username, firstname, lastname, othername, phone_number, email, passportUrl, user_id)
+        db.queryData(query)
