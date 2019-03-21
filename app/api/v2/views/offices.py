@@ -144,8 +144,9 @@ def get_meta_info():
     return utils.response_fn(200, "data", OfficesModel.get_meta_info())
 
 @path_2.route("/offices/apply", methods=["POST"])
-def apply_candidature():
-    data = request.get_json()
+@token_required
+def apply_candidature(user):
+    data = request.get_json(user)
     all_requests = OfficesModel.get_all_requests()
     for requests in all_requests:
         if requests[0] == data['email']:
