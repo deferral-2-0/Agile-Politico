@@ -92,9 +92,9 @@ class UserModel:
                 "isAdmin": item[4],
             }
             try:
-                d["passportUrl"] = item[5],
-                d["phone"] = item[6],
-                d["firstname"] = item[7],
+                d["passportUrl"] = item[5]
+                d["phone"] = item[6]
+                d["firstname"] = item[7]
                 d["lastname"] = item[8]
             except IndexError:
                 pass
