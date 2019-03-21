@@ -100,9 +100,11 @@ def set_up_tables():
     candidature_table = """
         CREATE TABLE IF NOT EXISTS candidature (
             id SERIAL PRIMARY KEY,
-            candidate INTEGER,
-            acceptance VARCHAR,
-            FOREIGN KEY (candidate) REFERENCES users(id) ON DELETE CASCADE
+            name VARCHAR (24) NOT NULL,
+            email VARCHAR (24) NOT NULL,
+            position VARCHAR (24) NOT NULL,
+            username VARCHAR (24) NOT NULL,
+            acceptance VARCHAR NOT NULL
         )
     """
 
