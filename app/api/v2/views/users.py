@@ -1,4 +1,6 @@
 from flask import request, abort
+from flask import current_app as app
+from werkzeug.utils import secure_filename
 from app.api.v2 import path_2
 
 from app.api import utils
@@ -13,6 +15,8 @@ import requests
 import json
 import os
 import jwt
+import random
+import string
 
 KEY = os.getenv('SECRET_KEY')
 
@@ -143,6 +147,8 @@ def reset_password():
     }])
 
 # send the email securely from server
+
+
 @path_2.route("/auth/securereset", methods=["POST"])
 def secure_reset():
     """
@@ -215,3 +221,41 @@ def update_password():
     return utils.response_fn(200, "data", {
         "message": "Password reset successfully. Login with new password",
     })
+
+
+@path_2.route('/users/<int:user_id>/avatar', methods=['POST'])
+@token_required
+def upload_user_image(current_user, user_id):
+    """
+        Uploads an image for user as a
+        user's account picture
+    """
+
+    if not UserModel.get_user(mechanism='id', value=user_id):
+        abort(utils.response_fn(404, 'error', f'User {user_id} non-existent'))
+
+    file_part = request.files.get('file')
+    if file_part and v2utils.is_valid_image(file_part.filename):
+        file_name = secure_filename(file_part.filename)
+
+        # Secure_filename might return an empty value
+        # In this case, assign a random filename.
+        if not file_name:
+            random_part = ''.join(random.choices(
+                string.ascii_lowercase + string.ascii_uppercase, k=32))
+            file_name = random_part + file_part.filename.split['.'][-1]
+
+        v2utils.confirm_upload_dir(app.config.get('UPLOAD_DIR'))
+
+        full_upload_path = os.path.join(
+            app.config.get('UPLOAD_DIR'), file_name)
+
+        file_part.save(full_upload_path)
+
+        response = UserModel.add_profile_avatar(user_id, full_upload_path)
+        print('response: ', response)
+
+        return utils.response_fn(200, 'data',
+                                 [{'message': 'Upload successful',
+                                   'image': full_upload_path}])
+    return utils.response_fn(400, 'error', 'Invalid file')

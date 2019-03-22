@@ -16,6 +16,7 @@ class Config:
     DEBUG = False
     TESTING = False
     DATABASE_URI = os.getenv('DATABASE_URL')
+    UPLOAD_DIR = os.getenv('UPLOAD_DIR')
 
 
 class DevelopmentConfig(Config):

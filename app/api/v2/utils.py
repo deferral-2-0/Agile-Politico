@@ -111,4 +111,30 @@ def isUserAdmin(adminProp):
         abort(response_fn(401, "error", "You are not an admin"))
 
 # SELECT candidate, COUNT(candidate) AS result, office FROM votes WHERE votes.office = 1 GROUP BY candidate, office;
-# SELECT candidate, COUNT(candidate) AS result, office FROM votes GROUP BY candidate, office;
+# SELECT candidate, COUNT(candidate) AS result, office FROM votes GROUP BY
+# candidate, office;
+
+
+def is_valid_image(filename):
+    """
+        Checks whether an uploaded file has an allowable
+        image-type etension.
+    """
+    allowed_extensions = ['png', 'jpeg', 'gif', 'jpg', 'bmp']
+
+    return filename.split('.')[1] in allowed_extensions
+
+
+def confirm_upload_dir(path):
+    """
+        Checks existence of the selected upload directory
+        and creates it if non-existent.
+    """
+
+    access_level = 0o755
+    if not os.path.isdir(path):
+        try:
+            os.mkdir(path, access_level)
+        except OSError as er:
+            print(er)
+            abort(500, 'error', 'Problem creating the app storage folder')
