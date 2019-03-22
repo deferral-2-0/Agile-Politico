@@ -149,3 +149,22 @@ class OfficesModel:
             }
             data.append(result)
         return data
+
+    @staticmethod
+    def accept_request(name, email, position, username, acceptance):
+        save_acceptance_query = """
+        INSERT INTO candidature(name,
+        email, position, username,acceptance) VALUES(
+            '{}', '{}', '{}', '{}', '{}')""".format(
+                    name, 
+                    email, 
+                    position,
+                    username,
+                    acceptance)
+        db.queryData(save_acceptance_query)
+
+    @staticmethod
+    def get_all_accepted_candidates():
+        select_all_accepts = """
+        SELECT email, position, acceptance FROM candidature"""
+        return db.select_data_from_db(select_all_accepts)

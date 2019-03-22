@@ -1,4 +1,4 @@
-from flask import request, abort
+from flask import request, abort, jsonify
 
 from app.api.v2 import path_2
 from app.api import utils
@@ -142,3 +142,45 @@ def get_candidates(office_id):
 @path_2.route("/offices/metainfo", methods=["GET"])
 def get_meta_info():
     return utils.response_fn(200, "data", OfficesModel.get_meta_info())
+
+@path_2.route("/offices/acceptance", methods=["POST"])
+@token_required
+def accept_candidature_application(user):
+    """
+        This method allows the admin to accept a user as a candidate
+    """
+    try:
+        userAdminProperty = user[0][2]
+    except:
+        return utils.response_fn(401, "error",
+                                 "You don't have an account, Create one")
+
+    isUserAdmin(userAdminProperty)
+
+    data = request.get_json(user)
+    all_accepts = OfficesModel.get_all_accepted_candidates()
+    for accepts in all_accepts:
+        if accepts[0] == data['email']:
+            return utils.response_fn(404, "error",
+                                 "The user is already accepted as a candidate")
+        return utils.response_fn(404, "error",
+                                 "User with that email did not apply for candidature")
+
+    all_users= UserModel.get_all_users()
+    for item in all_users:
+        if item['email']==data['email']:
+            OfficesModel.accept_request(
+                data['name'],
+                data['email'],
+                data['position'],
+                item['username'],
+                data['acceptance']
+                )
+    return jsonify({
+        'status': 201,
+        'Data':[
+            {
+                'message':'Your have accepted {} as a candidate'.format(data['username'])
+            }
+        ]
+    }), 201
