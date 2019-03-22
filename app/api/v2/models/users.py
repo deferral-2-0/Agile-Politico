@@ -171,3 +171,17 @@ class UserModel:
         """.format(generate_password_hash(str(newpassword)), email)
 
         db.queryData(update_user)
+
+    @classmethod
+    def add_profile_avatar(cls, img_url, user_id):
+        """
+            Saves the path of the image to be used as a
+            user's profile picture to te database
+        """
+        # RETURNING gives back none
+        query = """
+            UPDATE users SET avatar = '{}'
+            WHERE id = '{}' RETURNING avatar
+        """.format(user_id, img_url)
+
+        return db.queryData(query)

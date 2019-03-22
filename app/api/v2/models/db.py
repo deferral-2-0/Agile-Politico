@@ -33,7 +33,7 @@ def init_db():
             cursor.execute(query)
             conn.commit()
             i += 1
-        print("--"*50)
+        print("--" * 50)
         createAdmin()
         conn.close()
 
@@ -57,10 +57,11 @@ def set_up_tables():
         password VARCHAR (128) NOT NULL,
         passportUrl VARCHAR (200),
         isPolitician BOOLEAN,
-        isAdmin BOOLEAN
+        isAdmin BOOLEAN,
+        avatar VARCHAR
     )"""
 
-    parties_table = """ 
+    parties_table = """
     CREATE TABLE IF NOT EXISTS parties (
         id SERIAL PRIMARY KEY,
         name VARCHAR (35) NOT NULL UNIQUE,

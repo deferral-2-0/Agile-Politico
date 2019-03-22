@@ -1,6 +1,7 @@
 """Tests for users records"""
 import json
 import unittest
+import io
 
 from app import app
 from config import app_config
@@ -9,6 +10,7 @@ from .base_test import BaseTestClass
 
 
 class TestUserEndpoints(BaseTestClass):
+
     def PostUser(self):
         return self.client.post("api/v2/auth/signup",
                                 data=json.dumps({
@@ -395,3 +397,34 @@ class TestUserEndpoints(BaseTestClass):
             "email": "tevinthuku@gmail.com",
         }), content_type="application/json")
         self.assertEqual(res.status_code, 200)
+
+    def test_upload_user_image(self):
+        """
+          Tests a user can be able to post an account picture
+        """
+        usr_id = 1
+        expected_response = 'upload successful'
+
+        res = self.client.post(f'api/v2/{usr_id}/avatar',
+                               data=self.file_object,
+                               content_type='multipart/form-data',
+                               headers=self.ADMIN_TOKEN)
+        self.assertEqual(expected_response,
+                         res.get_json().get('data').get('message'),
+                         "Fails to allow user to posts a profile \
+                         display image")
+
+        def test_upload_avatar_to_missing_account(self):
+            """
+              Tests that a non-registered user cannot upload account
+              pictures to profiles of others
+            """
+            missing_usr_id = 404
+            res = self.post(f'api/v1/users/{missing_usr_id}/avatar',
+                            data=self.file_object,
+                            content_type='multipart/form-data',
+                            headers=self.ADMIN_TOKEN)
+            self.assertEqual(res.get_json().get('error'),
+                             'User of ID 404 non-existent',
+                             "Fails to not upload an image \
+                             to a missing auser account")

@@ -64,7 +64,7 @@ def handle_requests(*_):
         valid
     """
     methods = ["POST", "PATCH"]
-    if(request.method in methods):
+    if(request.method in methods and not request.path.endswith('avatar')):
         if(not request.is_json):
             abort(response_fn(400, "error",
                               "content_type should be application/json"))
